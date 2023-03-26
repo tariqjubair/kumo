@@ -1,0 +1,283 @@
+
+/* ===== Custom CSS FrontEnd ========= */
+
+
+
+
+/* ===== Common ====== */
+#main-wrapper {
+    position: relative;
+    overflow: hidden;
+    /* overflow-y: scroll; */
+}
+
+#loader{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #FFFFFF url("/assets/img/loader/loader_bluesquare.gif") no-repeat center;
+    background-size: 450px;
+    z-index: 999;
+    display: none;
+}
+
+#shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+    display: none;
+    transition: .3s;
+}
+
+.breadcrumb a {
+    transition: .3s;
+}
+
+.breadcrumb a:hover {
+    color: red;
+}
+
+
+
+
+
+/* === Login Alert === */
+#main-wrapper .shw {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100vw;
+    z-index: 99999;
+    animation: shw 3s forwards;
+    transition: .3s;
+    opacity: 0;
+    visibility: hidden;
+}
+@keyframes shw {
+    0%   {opacity: 0;}
+    20%  {opacity: 1;}
+    80%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+#main-wrapper .alert_part {
+    position: absolute;
+    top: 10%;
+    left: 78%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    animation: alert 3s forwards;
+    transition: .3s;
+    opacity: 0;
+    visibility: hidden;
+}
+@keyframes alert {
+    0%   {opacity: 0; left: -10%;}
+    20%  {opacity: 1; left: 78%;}
+    80%  {opacity: 1; left: 78%;}
+    100% {opacity: 0; left: 110%;}
+}
+#main-wrapper .alert_part .alert {
+    position: relative;
+    top: 180px;
+    right: 310px;
+    background: whitesmoke;
+    padding: 40px;
+}
+#main-wrapper .alert_part .alert h2 {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+}
+#main-wrapper .alert_part .alert h3 {
+    padding-top: 8px;
+    padding-bottom: 30px;
+}
+#main-wrapper .alert_part img.alert_bg {
+    position: relative;
+    top: -162px;
+    right: 65px;
+}
+
+
+
+
+
+
+/* === Error Message === */
+.field {
+    position: relative;
+}
+.err_msg {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    text-align: center;
+    width: 280px;
+    height: 40px;
+    background: #2269F5;
+    border-radius: 5px;
+    animation: err_anim 5s forwards;
+    animation-delay: 0s;
+    transition: .3s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 99999;
+}
+.err_msg_log {
+    animation-delay: 4s !important;
+}
+.err_msg_cart {
+    top: unset;
+    right: 15px;
+}
+.err_msg_cart_page {
+    top: -50px;
+    right: 0;
+}
+.err_msg_coupon {
+    top: -50px;
+    right: 15px;
+}
+.err_msg_cart_page_left {
+    top: -50px;
+    right: unset;
+    left: 0;
+}
+.err_msg_prof {
+    top: -45px;
+    left: 15px;
+}
+.err_msg p {
+    color: #fff;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 40px;
+    transition: .3s;
+}
+@keyframes err_anim {
+    0%   {opacity: 0; width: 10px;}
+    20%  {opacity: 1; width: 280px;}
+    80%  {opacity: 1; width: 280px;}
+    100% {opacity: 0; width: 10px;}
+}
+
+
+
+
+
+/* === Home Wish Button === */
+.wish_btn_home {
+    padding: 8px 10px 4px 10px;
+    border-radius: 5px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    left: 0;
+}
+.wish_btn_home_clk {
+    padding: 8px 10px 4px 10px;
+    border-radius: 5px;
+    transition: .3s;
+}
+.wish_btn_home i {
+    font-size: 20px;
+    color: whitesmoke;
+    transition: .3s
+}
+.wish_btn_home_clk i {
+    font-size: 20px;
+    color: lawngreen;
+    transition: .3s
+}
+.wish_btn_home:hover {
+    cursor: pointer;
+}
+.wish_btn_home_clk:hover {
+    cursor: pointer;
+}
+.wish_btn_home:hover i {
+    transform: scale(1.1);
+    color: lawngreen;
+}
+.wish_btn_home_clk:hover i {
+    transform: scale(.9);
+    color: whitesmoke;
+}
+.product_grid:hover .wish_btn_home {
+    opacity: 1;
+    visibility: visible;
+    left: 0.7rem;
+}
+
+
+
+
+
+/* ========= Footer ========== */
+.copyright a {
+    transition: .3s;
+}
+
+.copyright a:hover {
+    color: #EE1C47;
+}
+
+
+
+
+
+
+/* === Details Page === */
+@media(min-width: 992px){
+    
+    .all_rev {
+        width: 700px !important;
+        padding: 30px 25px 30px 30px !important;
+    }
+        
+}
+
+@media(max-width: 767px){
+    
+    .single_rev_thumb {
+        width: 45px;
+    }
+    .single_rev_thumb img {
+        width: 100%;
+    }
+        
+}
+
+@media(max-width: 991px){
+
+    .prd_details {
+        margin-top: 20px !important;
+    }
+        
+}
+
+
+
+
+
+/* === Customer Profile === */
+@media(max-width: 767.98px){
+    
+    .cust_form {
+        margin-top: 15px;
+    }
+        
+}
+
+@media(min-width: 768px) and (max-width: 991.98px){
+    
+    .cust_form {
+        margin-top: 25px;
+    }
+        
+}
