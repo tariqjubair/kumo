@@ -1,0 +1,19 @@
+
+========= SSL Commerz: Sandbox Account ============
+
+Website: www.kumo.com
+Company Name: Kumo
+Company Address: Dhaka
+Name: Kumo Admin
+Email: tariq.wpdev@gmail.com
+Phone Number: +8801711317300
+Username: kumo
+Password: Kumo@123
+
+
+Store ID: kumo63e3e9d547dea
+Store Password (API/Secret Key): kumo63e3e9d547dea@ssl
+Store name: testkumox7tx
+
+
+Dasboard: https://sandbox.sslcommerz.com/manage/?request=c2VjdXJpdHllbmNyaXB0ZGFzaGJvYXJkOnZpZXdzZWN1cml0eWVuY3JpcHQ%3D&id=c2VjdXJpdHllbmNyaXB0MXNlY3VyaXR5ZW5jcmlwdA==
