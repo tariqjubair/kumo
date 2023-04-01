@@ -177,7 +177,7 @@
 									<li>
 										<a href="#" onclick="openCart()">
 											<div class="d-flex align-items-center justify-content-between">
-												<i class="fas fa-shopping-basket fs-lg"></i><span class="dn-counter theme-bg">{{App\Models\CartMod::where('customer_id', Auth::guard('CustLogin')->id())->count()}}</span>
+												<i class="fas fa-shopping-basket fs-lg"></i><span class="dn-counter theme-bg">{{App\Models\cartMod::where('customer_id', Auth::guard('CustLogin')->id())->count()}}</span>
 											</div>
 										</a>
 									</li>

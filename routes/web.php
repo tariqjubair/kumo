@@ -166,6 +166,9 @@ Route::post('/user/info/update', [userController::class, 'user_info_upd'])->name
 Route::post('/user/pass/update', [userController::class, 'user_pass_upd'])->name('user.pass.update');
 Route::post('/user/pic/update', [userController::class, 'user_pic_upd'])->name('user.pic.update');
 
+Route::get('/user/add_user', [userController::class, 'add_user'])->name('add.user');
+Route::post('/user/insert_user', [userController::class, 'insert_user'])->name('insert.user');
+
 
 // === Category ===
 Route::get('/category_list', [cataController::class, 'cata_list'])->name('category_list');
