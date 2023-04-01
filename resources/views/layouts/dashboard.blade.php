@@ -252,7 +252,9 @@
 										@endif
 										<div class="header-info">
 											<span class="text-black"><strong>{{Auth::user()->name}}</strong></span>
-											<p class="fs-12 mb-0">Super Admin</p>
+											<h5 class="fs-12 mb-0">
+												{{Auth::user()->role == 1 ?'Super Admin' :'Admin'}}
+											</h5>
 										</div>
 									@endauth
                                 </a>
@@ -303,6 +305,10 @@
                             <li><a href="{{route('user.profile')}}">Profile</a></li>
                             <li><a href="{{route('user_list')}}" aria-expanded="false">User List</a>
                             </li>
+							@if (Auth::user()->role == 1)
+								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a>
+								</li>
+							@endif
                         </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

@@ -45,7 +45,7 @@
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->created_at}}</td>
-                                <td style="text-align: center"><button class="btn btn-danger del_btn" value="{{route('user_del', $user->id)}}">Delete User</button></td>
+                                <td style="text-align: center"><button class="btn btn-danger del_btn" value="{{route('user_del', $user->id)}}" {{Auth::user()->role == 1 ?'' :'disabled'}}>Delete User</button></td>
                             </tr>
                             @endforeach
                         </tbody>

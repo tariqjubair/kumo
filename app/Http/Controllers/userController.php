@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -34,6 +35,38 @@ class userController extends Controller
     function profile(){
         return view('admin.user.profile');
     }
+
+    // === Add User ===
+    function add_user(){
+        return view('admin.user.add_user');
+    }
+
+
+
+    // === Insert User ===
+    function insert_user(Request $request){
+        $request->validate([
+            'name' => 'required|regex:/^[a-zA-Z\s]+$/u|min:3|max:255',
+            'email' => 'required|email:rfc,dns|unique:users,email',
+            'password'=> ['required', Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 'confirmed'],
+		    'password_confirmation'=> 'required',
+        ]);
+
+        User::insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'created_at' => Carbon::now(),
+        ]);
+
+        return back()->with([
+            'name' => $request->name,
+            'msg' => 'User Added!',
+        ]);
+    }
+
+
+
 
     // === User Info Update ===
     function user_info_upd(Request $request){
