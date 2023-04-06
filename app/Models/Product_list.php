@@ -14,6 +14,6 @@ class Product_list extends Model
     use SoftDeletes;
 
     function relto_cata(){
-        return $this->belongsTo(Category::class, 'cata_id');
+        return $this->belongsTo(category::class, 'cata_id');
     }
 }
