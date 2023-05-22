@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Inventory;
 use App\Models\OrdereditemsTab;
 use App\Models\Product_list;
+use App\Models\Size;
 use App\Models\Thumbnail;
 use App\Models\WishTable;
 use Illuminate\Http\Request;
@@ -36,10 +37,26 @@ class FrontendController extends Controller
         return view('frontend.about');
     }
 
+
+
+
+
     // === Frontend Shop ===
     function shop_page(){
-        return view('frontend.shop');
+        $cate_all = category::orderBy('cata_name')->get();
+        $color_all = Color::orderBy('color_name')->get();
+        $size_all = Size::orderBy('size')->get();
+
+        return view('frontend.shop', [
+            'cate_all' => $cate_all,
+            'color_all' => $color_all,
+            'size_all' => $size_all,
+        ]);
     }
+
+
+
+
 
     // === Frontend Contact ===
     function contact_page(){

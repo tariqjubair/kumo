@@ -70,38 +70,27 @@
                             </div>
                         </div>
 
-                        <!-- Single Option -->
+                        <!-- Categories -->
                         <div class="single_search_boxed">
                             <div class="widget-boxed-header">
                                 <h4><a href="#Categories" data-toggle="collapse" aria-expanded="false" role="button">Categories</a></h4>
                             </div>
                             <div class="widget-boxed-body collapse show" id="Categories" data-parent="#Categories">
                                 <div class="side-list no-border">
-                                    <!-- Single Filter Card -->
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="inner_widget_link">
                                                 <ul class="no-ul-list">
-                                                    <li>
-                                                        <input id="category1" class="checkbox-custom" name="category" type="radio">
-                                                        <label for="category1" class="checkbox-custom-label">Accesorries<span>142</span></label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="category2" class="checkbox-custom" name="category" type="radio">
-                                                        <label for="category2" class="checkbox-custom-label">Electronics<span>652</span></label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="category3" class="checkbox-custom" name="category" type="radio">
-                                                        <label for="category3" class="checkbox-custom-label">Fashion<span>232</span></label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="category4" class="checkbox-custom" name="category" type="radio">
-                                                        <label for="category4" class="checkbox-custom-label">Sports<span>192</span></label>
-                                                    </li>
-                                                    <li>
-                                                        <input id="category5" class="checkbox-custom" name="category" type="radio">
-                                                        <label for="category5" class="checkbox-custom-label">Home Appliances<span>265</span></label>
-                                                    </li>
+                                                    @foreach ($cate_all as $cate)
+                                                        @php
+                                                            $cate_products = App\models\Product_list::where('cata_id', $cate->id)->count();
+                                                        @endphp
+
+                                                        <li>
+                                                            <input id="category{{$cate->id}}" class="checkbox-custom" name="category" type="radio">
+                                                            <label for="category{{$cate->id}}" class="checkbox-custom-label">{{$cate->cata_name}}<span>{{$cate_products}}</span></label>
+                                                        </li>
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>
@@ -110,7 +99,7 @@
                             </div>
                         </div>
 
-                        <!-- Single Option -->
+                        <!-- Brands Option -->
                         <div class="single_search_boxed">
                             <div class="widget-boxed-header">
                                 <h4><a href="#brands" data-toggle="collapse" aria-expanded="false" role="button">Brands</a></h4>
@@ -150,41 +139,22 @@
                             </div>
                         </div>
 
-                        <!-- Single Option -->
+                        <!-- Colors -->
                         <div class="single_search_boxed">
                             <div class="widget-boxed-header">
                                 <h4><a href="#colors" data-toggle="collapse" class="collapsed" aria-expanded="false" role="button">Colors</a></h4>
                             </div>
                             <div class="widget-boxed-body collapse" id="colors" data-parent="#colors">
                                 <div class="side-list no-border">
-                                    <!-- Single Filter Card -->
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="text-left">
-                                                <div class="form-check form-option form-check-inline mb-1">
-                                                    <input class="form-check-input" type="radio" name="colora8" id="whitea8">
-                                                    <label class="form-option-label rounded-circle" for="whitea8"><span class="form-option-color rounded-circle blc7"></span></label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-1">
-                                                    <input class="form-check-input" type="radio" name="colora8" id="bluea8">
-                                                    <label class="form-option-label rounded-circle" for="bluea8"><span class="form-option-color rounded-circle blc2"></span></label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-1">
-                                                    <input class="form-check-input" type="radio" name="colora8" id="yellowa8">
-                                                    <label class="form-option-label rounded-circle" for="yellowa8"><span class="form-option-color rounded-circle blc5"></span></label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-1">
-                                                    <input class="form-check-input" type="radio" name="colora8" id="pinka8">
-                                                    <label class="form-option-label rounded-circle" for="pinka8"><span class="form-option-color rounded-circle blc3"></span></label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-1">
-                                                    <input class="form-check-input" type="radio" name="colora8" id="reda">
-                                                    <label class="form-option-label rounded-circle" for="reda"><span class="form-option-color rounded-circle blc4"></span></label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-1">
-                                                    <input class="form-check-input" type="radio" name="colora8" id="greena">
-                                                    <label class="form-option-label rounded-circle" for="greena"><span class="form-option-color rounded-circle blc6"></span></label>
-                                                </div>
+                                                @foreach ($color_all as $color)
+                                                    <div class="form-check form-option form-check-inline mb-1">
+                                                        <input class="form-check-input" type="radio" name="colora8" id="whitea{{$color->id}}" value="{{$color->id}}">
+                                                        <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" style="background: {{$color->color_code}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle"></span></label>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -192,7 +162,7 @@
                             </div>
                         </div>
                         
-                        <!-- Single Option -->
+                        <!-- Sizes -->
                         <div class="single_search_boxed">
                             <div class="widget-boxed-header">
                                 <h4><a href="#size" data-toggle="collapse" class="collapsed" aria-expanded="false" role="button">Size</a></h4>
@@ -203,42 +173,17 @@
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="text-left pb-0 pt-2">
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="26s">
-                                                    <label class="form-option-label" for="26s">26</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="28s">
-                                                    <label class="form-option-label" for="28s">28</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="30s" checked>
-                                                    <label class="form-option-label" for="30s">30</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="32s">
-                                                    <label class="form-option-label" for="32s">32</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="34s">
-                                                    <label class="form-option-label" for="34s">34</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="36s">
-                                                    <label class="form-option-label" for="36s">36</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="38s">
-                                                    <label class="form-option-label" for="38s">38</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="40s">
-                                                    <label class="form-option-label" for="40s">40</label>
-                                                </div>
-                                                <div class="form-check form-option form-check-inline mb-2">
-                                                    <input class="form-check-input" type="radio" name="sizes" id="42s">
-                                                    <label class="form-option-label" for="42s">42</label>
-                                                </div>
+                                                {{-- @foreach (App\models\Size::where() as )
+                                                    
+                                                @endforeach --}}
+                                                @foreach ($size_all as $sl=>$size)
+                                                    @for ($sl = 0; $sl <= {{count($size)}} $sl++)
+                                                        <div class="form-check form-option form-check-inline mb-2">
+                                                            <input class="form-check-input" type="radio" name="sizes" id="siz{{$size->id}}">
+                                                            <label class="form-option-label" for="siz{{$size->id}}">{{$size->size}}</label>
+                                                        </div>
+                                                    @endfor
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -447,4 +392,26 @@
     </div>
 </section>
 <!-- ======================= All Product List ======================== -->
+@endsection
+
+
+
+@section('footer_script')
+    
+{{-- === Master Search === --}}
+<script>
+    $('#master_search').click(function(){
+        var master_inp = $('#master_inp').val();
+        // var cate_id = $('input[class="cate_box"]:checked').attr('value');
+        // var brand_id = $('input[class="brand_box"]:checked').attr('value');
+        // var min_price = $('.min_price').val();
+        // var max_price = $('.max_price').val();
+        // var sorting = $('.sorting').val();
+        // var showing = $('.showing').val();
+
+        // var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&sort=" + sorting + "&show=" + showing;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp;
+        window.location.href = search_link;
+    });
+</script>
 @endsection

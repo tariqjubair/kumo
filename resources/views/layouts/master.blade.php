@@ -139,9 +139,9 @@
 								<div class="headd-sty-02 ml-3">
 									<form class="bg-white rounded-md border-bold">
 										<div class="input-group">
-											<input type="text" class="form-control custom-height b-0" placeholder="Search for products..." />
+											<input type="text" class="form-control custom-height b-0" placeholder="Search for products..." id="master_inp" />
 											<div class="input-group-append">
-												<div class="input-group-text"><button class="btn bg-white text-danger custom-height rounded px-3" type="button"><i class="fas fa-search"></i></button></div>
+												<div class="input-group-text"><button class="btn bg-white text-danger custom-height rounded px-3" type="button" id="master_search"><i class="fas fa-search"></i></button></div>
 											</div>
 										</div>
 									</form>
