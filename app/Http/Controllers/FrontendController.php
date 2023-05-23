@@ -45,12 +45,12 @@ class FrontendController extends Controller
     function shop_page(){
         $cate_all = category::orderBy('cata_name')->get();
         $color_all = Color::orderBy('color_name')->get();
-        $size_all = Size::orderBy('size')->get();
+        $size_type = Size::where('size_type', '!=', 'N/A')->get()->unique('size_type');
 
         return view('frontend.shop', [
             'cate_all' => $cate_all,
             'color_all' => $color_all,
-            'size_all' => $size_all,
+            'size_type' => $size_type,
         ]);
     }
 

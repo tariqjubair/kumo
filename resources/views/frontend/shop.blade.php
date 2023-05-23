@@ -44,7 +44,8 @@
             <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 p-xl-0">
                 <div class="search-sidebar sm-sidebar border">
                     <div class="search-sidebar-body">
-                        <!-- Single Option -->
+
+                        <!-- Price -->
                         <div class="single_search_boxed">
                             <div class="widget-boxed-header">
                                 <h4><a href="#pricing" data-toggle="collapse" aria-expanded="false" role="button">Pricing</a></h4>
@@ -173,16 +174,29 @@
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="text-left pb-0 pt-2">
-                                                {{-- @foreach (App\models\Size::where() as )
+                                                @foreach ($size_type as $type)
+                                                    @if ($type->size_type == 'General')
+                                                        @php
+                                                            $size_items = App\models\Size::where('size_type', $type->size_type)->get()
+                                                        @endphp
+                                                    @else
+                                                        @php
+                                                            $size_items = App\models\Size::where('size_type', $type->size_type)->orderBy('size')->get()
+                                                        @endphp
+                                                    @endif
                                                     
-                                                @endforeach --}}
-                                                @foreach ($size_all as $sl=>$size)
-                                                    @for ($sl = 0; $sl <= {{count($size)}} $sl++)
-                                                        <div class="form-check form-option form-check-inline mb-2">
-                                                            <input class="form-check-input" type="radio" name="sizes" id="siz{{$size->id}}">
-                                                            <label class="form-option-label" for="siz{{$size->id}}">{{$size->size}}</label>
-                                                        </div>
-                                                    @endfor
+                                                    @foreach ($size_items as  $size)
+                                                        @php
+                                                            $size_avail = App\Models\Inventory::where('size', $size->id)
+                                                        @endphp
+
+                                                        @if ($size_avail->exists())
+                                                            <div class="form-check form-option form-check-inline mb-2">
+                                                                <input class="form-check-input" type="radio" name="sizes" id="siz{{$size->id}}">
+                                                                <label class="form-option-label" for="siz{{$size->id}}">{{$size->size}}</label>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
                                                 @endforeach
                                             </div>
                                         </div>
