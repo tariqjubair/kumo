@@ -286,6 +286,6 @@
 
 
 /* === Shop Page === */
-.form-option-label {
-    /* height: auto; */
+.size_part .form-option-label {
+    height: auto;
 }

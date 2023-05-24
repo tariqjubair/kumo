@@ -13,6 +13,7 @@ use App\Models\Thumbnail;
 use App\Models\WishTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Product;
 
 class FrontendController extends Controller
 {
@@ -42,15 +43,68 @@ class FrontendController extends Controller
 
 
     // === Frontend Shop ===
-    function shop_page(){
+    function shop_page(Request $request){
         $cate_all = category::orderBy('cata_name')->get();
         $color_all = Color::orderBy('color_name')->get();
+        $brand_all = Product_list::orderBy('brand')->whereNotNull('brand')->get()->unique('brand');
         $size_type = Size::where('size_type', '!=', 'N/A')->get()->unique('size_type');
+
+        $data = $request->all();
+		$sorting = 'created_at';
+		$sort_type = 'DESC';
+		$showing = '9';
+
+        $product_all = Product_list::orderBy('updated_at', 'DESC')->paginate($showing);;
+
+        $searched_items = Product_list::where(function($q) use($data){
+
+			if((!empty($data['inp'])) && ($data['inp'] != '') && ($data['inp'] != 'undefined')){
+				$q->where(function($q) use ($data){
+					$q->where('product_name', 'like', '%' . $data['inp'] . '%');
+					$q->orWhere('short_desc', 'like', '%' . $data['inp'] . '%');
+					$q->orWhere('long_desc', 'like', '%' . $data['inp'] . '%');
+				});
+			};
+
+			if((!empty($data['cate'])) && ($data['cate'] != '') && ($data['cate'] != 'undefined')){
+				$q->where('cata_id', $data['cate']);
+			};
+
+			if((!empty($data['brand'])) && ($data['brand'] != '') && ($data['brand'] != 'undefined')){
+				$q->where('id', $data['brand']);
+			};
+
+			if(((!empty($data['min'])) && ($data['min'] != '') && ($data['min'] != 'undefined')) || ((!empty($data['max'])) && ($data['max'] != '') && ($data['max'] != 'undefined'))){
+				$q->whereBetween('after_disc', [$data['min'], $data['max']]);
+			};
+
+            if((!empty($data['col'])) && ($data['col'] != '') && ($data['col'] != 'undefined')){
+				$q->whereHas('relto_invent', function($q) use ($data){
+                    $q->where('color', $data['col']);
+				});
+			};
+
+            if((!empty($data['siz'])) && ($data['siz'] != '') && ($data['siz'] != 'undefined')){
+				$q->whereHas('relto_invent', function($q) use ($data){
+                    $q->where('size', $data['siz']);
+				});
+			};
+
+		})->orderBy($sorting, $sort_type)->paginate($showing);
+
+        if ($data){
+			$store_items = $searched_items;
+		}
+		else {
+			$store_items = $product_all;
+		}
 
         return view('frontend.shop', [
             'cate_all' => $cate_all,
             'color_all' => $color_all,
+            'brand_all' => $brand_all,
             'size_type' => $size_type,
+            'store_items' => $store_items,
         ]);
     }
 
