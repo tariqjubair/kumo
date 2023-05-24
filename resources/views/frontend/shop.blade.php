@@ -19,7 +19,7 @@
 
 
 <!-- ======================= Filter Wrap Style 1 ======================== -->
-<section class="py-3 br-bottom br-top">
+<section class="py-3 br-bottom br-top" id="crump">
     <div class="container">
         <div class="row align-items-center justify-content-between">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -41,7 +41,7 @@
     <div class="container">
         <div class="row">
             
-            <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 p-xl-0">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-xl-0">
                 <div class="search-sidebar sm-sidebar border">
                     <div class="search-sidebar-body">
 
@@ -118,8 +118,8 @@
                                                         @endphp
 
                                                         <li>
-                                                            <input {{@$_GET['brand'] == $brand->id ?'checked' :''}}
-                                                            id="brand{{$brand->id}}" class="checkbox-custom brand_box" name="brands" type="radio" value="{{$brand->id}}">
+                                                            <input {{@$_GET['brand'] == $brand->brand ?'checked' :''}}
+                                                            id="brand{{$brand->id}}" class="checkbox-custom brand_box" name="brands" type="radio" value="{{$brand->brand}}">
                                                             <label for="brand{{$brand->id}}" class="checkbox-custom-label">{{$brand->brand}}<span>{{$brand_products}}</span></label>
                                                         </li>
                                                     @endforeach
@@ -141,12 +141,33 @@
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="text-left">
-                                                @foreach ($color_all as $color)
-                                                    <div class="form-check form-option form-check-inline mb-1">
+                                                @foreach ($color_all as $sl=>$color)
+
+                                                    @if (@$_GET['cate'] && @$_GET['cate'] != '' && @$_GET['cate'] != 'undefined')
+                                                        @php
+                                                            $cate_products = App\Models\Product_list::where('cata_id', @$_GET['cate'])->get();
+                                                        @endphp
+
+                                                        @foreach ($cate_products as $item)
+                                                            @php
+                                                                $color_check = App\Models\Inventory::where('product_id', $item->id)->where('color', $color->id);
+                                                            @endphp
+
+                                                            @if ($color_check->exists())
+                                                                <div class="form-check form-option form-check-inline mb-1">
+                                                                    <input {{@$_GET['col'] == $color->id ?'checked' :''}}
+                                                                    class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
+                                                                    <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+
+                                                    {{-- <div class="form-check form-option form-check-inline mb-1">
                                                         <input {{@$_GET['col'] == $color->id ?'checked' :''}}
-                                                        class="form-check-input" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
+                                                        class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
                                                         <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
-                                                    </div>
+                                                    </div> --}}
                                                 @endforeach
                                             </div>
                                         </div>
@@ -184,7 +205,7 @@
                                                         @if ($size_avail->exists())
                                                             <div class="form-check form-option form-check-inline mb-2">
                                                                 <input {{@$_GET['siz'] == $size->id ?'checked' :''}}
-                                                                class="form-check-input" type="radio" name="size" id="siz{{$size->id}}" value="{{$size->id}}">
+                                                                class="form-check-input size_box" type="radio" name="size" id="siz{{$size->id}}" value="{{$size->id}}">
                                                                 <label class="form-option-label" for="siz{{$size->id}}">{{$size->size}}</label>
                                                             </div>
                                                         @endif
@@ -201,37 +222,44 @@
                 </div>
             </div>
             
-            <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12">
+            <div class="col-xl-9 col-lg-8 col-md-6 col-sm-12">
 
                 {{-- === Search Top === --}}
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
                         <div class="border mb-3 mfliud">
                             <div class="row align-items-center py-2 m-0">
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                                    <h6 class="mb-0">Searched Products Found: <span style="font-weight: 600">{{$store_items->total()}}</span></h6>
+                                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                                    <h6 class="mb-0" style="padding: 8px 0 8px 0;">Items Found: <span style="font-weight: 600">{{$store_items->total()}}</span></h6>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                                    <div class="filter_wraps d-flex align-items-center justify-content-end m-start">
+                                <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12">
+                                    <div class="filter_wraps d-flex align-items-center m-start">
                                         <div class="single_fitres mr-2 br-right">
-                                            <select class="custom-select simple">
-                                                <option selected value="1">Showing ( 9 )</option>
-                                                <option value="2">Showing ( 20 )</option>
-                                                <option value="3">Showing ( 50 )</option>
+                                            <select class="custom-select simple show_box" name="show">
+                                                <option {{@$_GET['show'] == 1 ?'selected' :''}} value="1">Showing ( 9 )</option>
+                                                <option {{@$_GET['show'] == 2 ?'selected' :''}} value="2">Showing ( 20 )</option>
+                                                <option {{@$_GET['show'] == 3 ?'selected' :''}} value="3">Showing ( 50 )</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                                    <div class="filter_wraps d-flex align-items-center justify-content-end m-start">
+                                <div class="col-xl-4 col-lg-5 col-md-12 col-sm-12">
+                                    <div class="filter_wraps d-flex align-items-center m-start">
                                         <div class="single_fitres mr-2 br-right">
-                                            <select class="custom-select simple">
-                                              <option selected value="1">Default Sorting (Latest)</option>
-                                              <option value="2">Sort by Name: A-Z</option>
-                                              <option value="3">Sory by Name: Z-A</option>
-                                              <option value="4">Sort by price: Low price</option>
-                                              <option value="5">Sort by price: Hight price</option>
+                                            <select class="custom-select simple sort_box">
+                                              <option {{@$_GET['sort'] == 1 ?'selected' :''}} value="1">Default Sorting (Latest)</option>
+                                              <option {{@$_GET['sort'] == 2 ?'selected' :''}} value="2">Sort by Name: A-Z</option>
+                                              <option {{@$_GET['sort'] == 3 ?'selected' :''}} value="3">Sory by Name: Z-A</option>
+                                              <option {{@$_GET['sort'] == 4 ?'selected' :''}} value="4">Sort by price: Low price</option>
+                                              <option {{@$_GET['sort'] == 5 ?'selected' :''}} value="5">Sort by price: High price</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-12 col-md-4 col-sm-12">
+                                    <div class="filter_wraps d-flex align-items-center m-start clear_box">
+                                        <div class="single_fitres br-right">
+                                            <a href="{{route('shop_page')}}" class="btn btn-block custom-height bg-dark">Clear</a>
                                         </div>
                                     </div>
                                 </div>
@@ -243,7 +271,7 @@
                 {{-- === Product Items === --}}
                 <div class="row align-items-center rows-products">
                     @forelse ($store_items as $product)
-                        <div class="col-xl-4 col-lg-6 col-md-6 col-6">
+                        <div class="col-xl-4 col-lg-6 col-md-12 col-12">
                             <div class="product_grid card">
                                 @if ($product->discount != 0)
                                     <div class="badge bg-success text-white position-absolute ft-regular ab-left text-upper">Sale</div>
@@ -348,7 +376,7 @@
     
 {{-- === Master Search === --}}
 <script>
-    $('#master_search').click(function(){
+    $('.cate_box').click(function(){
         var master_inp = $('#master_inp').val();
         var cate_id = $('input[name="category"]:checked').val();
         var brand_id = $('input[name="brands"]:checked').val();
@@ -356,19 +384,86 @@
         var max_price = $('.max_price').val();
         var color_id = $('input[name="color"]:checked').val();
         var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
 
-        alert(size_id)
-
-        // var sorting = $('.sorting').val();
-        // var showing = $('.showing').val();
-
-        // var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&sort=" + sorting + "&show=" + showing;
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
         window.location.href = search_link;
-
-        
     });
 
-    
+    $('.brand_box').click(function(){
+        var master_inp = $('#master_inp').val();
+        var cate_id = $('input[name="category"]:checked').val();
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = $('input[name="color"]:checked').val();
+        var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        window.location.href = search_link;
+    });
+
+    $('.color_box').click(function(){
+        var master_inp = $('#master_inp').val();
+        var cate_id = $('input[name="category"]:checked').val();
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = $('input[name="color"]:checked').val();
+        var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        window.location.href = search_link;
+    });
+
+    $('.size_box').click(function(){
+        var master_inp = $('#master_inp').val();
+        var cate_id = $('input[name="category"]:checked').val();
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = $('input[name="color"]:checked').val();
+        var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        window.location.href = search_link;
+    });
+
+    $('.show_box').change(function(){
+        var master_inp = $('#master_inp').val();
+        var cate_id = $('input[name="category"]:checked').val();
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = $('input[name="color"]:checked').val();
+        var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        window.location.href = search_link;
+    });
+
+    $('.sort_box').change(function(){
+        var master_inp = $('#master_inp').val();
+        var cate_id = $('input[name="category"]:checked').val();
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = $('input[name="color"]:checked').val();
+        var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        window.location.href = search_link;
+    });
 </script>
 @endsection

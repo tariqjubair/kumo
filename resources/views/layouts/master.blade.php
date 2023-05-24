@@ -635,6 +635,24 @@
 		</script>
 	@endif
 
+	{{-- === Master Search === --}}
+	<script>
+		$('#master_search').click(function(){
+			var master_inp = $('#master_inp').val();
+			var cate_id = $('input[name="category"]:checked').val();
+			var brand_id = $('input[name="brands"]:checked').val();
+			var min_price = $('.min_price').val();
+			var max_price = $('.max_price').val();
+			var color_id = $('input[name="color"]:checked').val();
+			var size_id = $('input[name="size"]:checked').val();
+			var sort = $('.sort_box').val();
+			var show = $('.show_box').val();
+
+			var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+			window.location.href = search_link;
+    	});
+	</script>
+
 	{{-- ==== Script HERE ==== --}}
 	@yield('footer_script')
 

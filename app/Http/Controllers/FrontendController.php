@@ -54,6 +54,41 @@ class FrontendController extends Controller
 		$sort_type = 'DESC';
 		$showing = '9';
 
+        if((!empty($data['sort'])) && ($data['sort'] != '') && ($data['sort'] != 'undefined')){
+			if($data['sort'] == 2){
+				$sorting = 'product_name';
+				$sort_type = 'ASC';
+			}
+			else if($data['sort'] == 3){
+				$sorting = 'product_name';
+				$sort_type = 'DESC';
+			}
+			else if($data['sort'] == 4){
+				$sorting = 'after_disc';
+				$sort_type = 'ASC';
+			}
+			else if($data['sort'] == 5){
+				$sorting = 'after_disc';
+				$sort_type = 'DESC';
+			}
+			else {
+				$sorting = 'updated_at';
+				$sort_type = 'DESC';
+			}
+		};
+
+        if((!empty($data['show'])) && ($data['show'] != '') && ($data['show'] != 'undefined')){
+			if($data['show'] == 2){
+				$showing = '20';
+			}
+			else if($data['show'] == 3){
+				$showing = '50';
+			}
+			else {
+				$showing = '9';
+			}
+		};
+
         $product_all = Product_list::orderBy('updated_at', 'DESC')->paginate($showing);;
 
         $searched_items = Product_list::where(function($q) use($data){
@@ -71,7 +106,7 @@ class FrontendController extends Controller
 			};
 
 			if((!empty($data['brand'])) && ($data['brand'] != '') && ($data['brand'] != 'undefined')){
-				$q->where('id', $data['brand']);
+				$q->where('brand', $data['brand']);
 			};
 
 			if(((!empty($data['min'])) && ($data['min'] != '') && ($data['min'] != 'undefined')) || ((!empty($data['max'])) && ($data['max'] != '') && ($data['max'] != 'undefined'))){
