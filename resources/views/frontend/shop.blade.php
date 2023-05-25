@@ -141,34 +141,53 @@
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="text-left">
-                                                @foreach ($color_all as $sl=>$color)
 
-                                                    @if (@$_GET['cate'] && @$_GET['cate'] != '' && @$_GET['cate'] != 'undefined')
+                                                @if (@$_GET['cate'] && @$_GET['cate'] != '' && @$_GET['cate'] != 'undefined')
+                                                    @foreach ($color_all as $color)
                                                         @php
                                                             $cate_products = App\Models\Product_list::where('cata_id', @$_GET['cate'])->get();
+
+                                                            
                                                         @endphp
 
-                                                        @foreach ($cate_products as $item)
+                                                        @foreach ($cate_products as $sl=>$item)
                                                             @php
                                                                 $color_check = App\Models\Inventory::where('product_id', $item->id)->where('color', $color->id);
+
+                                                                $prev_col = '';
+                                                                if ($sl > 0) {
+                                                                    $prev_col = $cate_products[$sl-1];
+                                                                }
                                                             @endphp
 
                                                             @if ($color_check->exists())
+                                                                {{$color}}
                                                                 <div class="form-check form-option form-check-inline mb-1">
                                                                     <input {{@$_GET['col'] == $color->id ?'checked' :''}}
                                                                     class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
                                                                     <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
                                                                 </div>
+                                                                {{$prev_col}}
                                                             @endif
                                                         @endforeach
-                                                    @endif
-
-                                                    {{-- <div class="form-check form-option form-check-inline mb-1">
+                                                    @endforeach
+                                                @else
+                                                    @foreach ($color_all as $color)
+                                                        <div class="form-check form-option form-check-inline mb-1">
+                                                            <input {{@$_GET['col'] == $color->id ?'checked' :''}}
+                                                            class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
+                                                            <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            
+                                                {{-- @foreach ($color_all as $color)
+                                                    <div class="form-check form-option form-check-inline mb-1">
                                                         <input {{@$_GET['col'] == $color->id ?'checked' :''}}
                                                         class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
                                                         <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
-                                                    </div> --}}
-                                                @endforeach
+                                                    </div>
+                                                @endforeach --}}
                                             </div>
                                         </div>
                                     </div>

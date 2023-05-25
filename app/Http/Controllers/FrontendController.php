@@ -46,6 +46,7 @@ class FrontendController extends Controller
     function shop_page(Request $request){
         $cate_all = category::orderBy('cata_name')->get();
         $color_all = Color::orderBy('color_name')->get();
+        $color_inv = Inventory::select('color')->distinct()->get();
         $brand_all = Product_list::orderBy('brand')->whereNotNull('brand')->get()->unique('brand');
         $size_type = Size::where('size_type', '!=', 'N/A')->get()->unique('size_type');
 
@@ -137,6 +138,7 @@ class FrontendController extends Controller
         return view('frontend.shop', [
             'cate_all' => $cate_all,
             'color_all' => $color_all,
+            'color_inv' => $color_inv,
             'brand_all' => $brand_all,
             'size_type' => $size_type,
             'store_items' => $store_items,
