@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group px-3">
-                                            <button type="submit" class="btn form-control">Submit</button>
+                                            <button type="submit" class="btn form-control price_box">Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -81,19 +81,48 @@
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="inner_widget_link">
-                                                <ul class="no-ul-list">
+                                                <select class="custom-select simple cate_box" name="show">
+                                                    <option value=""> -- Select --</option>
                                                     @foreach ($cate_all as $cate)
-                                                        @php
-                                                            $cate_products = App\models\Product_list::where('cata_id', $cate->id)->count();
-                                                        @endphp
-
-                                                        <li>
-                                                            <input {{@$_GET['cate'] == $cate->id ?'checked' :''}}
-                                                            id="category{{$cate->id}}" class="checkbox-custom cate_box" name="category" type="radio" value="{{$cate->id}}">
-                                                            <label for="category{{$cate->id}}" class="checkbox-custom-label">{{$cate->cata_name}}<span>{{$cate_products}}</span></label>
-                                                        </li>
+                                                        <option {{@$_GET['cate'] == $cate->id ?'selected' :''}} value="{{$cate->id}}">{{$cate->cata_name}}</option>
                                                     @endforeach
-                                                </ul>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sub-Categories -->
+                        <div class="single_search_boxed">
+                            <div class="widget-boxed-header">
+                                <h4><a href="#Subcategories" data-toggle="collapse" aria-expanded="false" role="button">Sub-Categories</a></h4>
+                            </div>
+                            <div class="widget-boxed-body collapse show" id="Subcategories" data-parent="#subcategories">
+                                <div class="side-list no-border">
+                                    <div class="single_filter_card">
+                                        <div class="card-body pt-0">
+                                            <div class="inner_widget_link">
+
+                                                @if (@$_GET['cate'] && @$_GET['cate'] != '' && @$_GET['cate'] != 'undefined')
+                                                    <ul class="no-ul-list">
+                                                        @foreach ($subcate_all->where('cata_id', @$_GET['cate']) as $subcate)
+                                                            @php
+                                                                $subcate_products = App\models\Product_list::where('subcata_id', $subcate->id)->count();
+                                                            @endphp
+
+                                                            <li>
+                                                                <input {{@$_GET['subcate'] == $subcate->id ?'checked' :''}} id="subcate{{$subcate->id}}" class="checkbox-custom subcate_box" name="subcate" type="radio" value="{{$subcate->id}}">
+                                                                <label for="subcate{{$subcate->id}}" class="checkbox-custom-label">{{$subcate->sub_cata_name}}<span>{{$subcate_products}}</span></label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @else
+                                                    <select class="custom-select simple cate_box" name="show">
+                                                        <option> -- -- Select Category -- -- </option>
+                                                    </select>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -143,31 +172,67 @@
                                             <div class="text-left">
 
                                                 @if (@$_GET['cate'] && @$_GET['cate'] != '' && @$_GET['cate'] != 'undefined')
-                                                    @foreach ($color_all as $color)
+
+                                                    {{-- === Idea 1 === --}}
+                                                    {{-- @foreach ($color_all as $sl=>$color)
                                                         @php
                                                             $cate_products = App\Models\Product_list::where('cata_id', @$_GET['cate'])->get();
-
-                                                            
                                                         @endphp
 
-                                                        @foreach ($cate_products as $sl=>$item)
+                                                        @foreach ($cate_products as $key=>$item)
                                                             @php
                                                                 $color_check = App\Models\Inventory::where('product_id', $item->id)->where('color', $color->id);
-
-                                                                $prev_col = '';
-                                                                if ($sl > 0) {
-                                                                    $prev_col = $cate_products[$sl-1];
-                                                                }
                                                             @endphp
 
-                                                            @if ($color_check->exists())
-                                                                {{$color}}
+                                                            @if ($color_check->first())
+                                                                {{$sl.'|'.$key}}=>{{$color->id}}
                                                                 <div class="form-check form-option form-check-inline mb-1">
                                                                     <input {{@$_GET['col'] == $color->id ?'checked' :''}}
                                                                     class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
                                                                     <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
                                                                 </div>
-                                                                {{$prev_col}}
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach --}}
+
+
+
+                                                    {{-- === Idea 2 === --}}
+                                                    {{-- @foreach (App\Models\Product_list::where('cata_id', @$_GET['cate'])->get() as $sl=>$product)
+
+                                                        {{$product->relto_invent->unique('color')}}<br>
+                                                    @endforeach --}}
+
+
+
+                                                    {{-- === Idea 3 === --}}
+                                                    @php
+                                                        $store = '';
+                                                    @endphp
+
+                                                    @foreach ($color_all as $sl=>$color)
+                                                        @php
+                                                            $cate_products = App\Models\Product_list::where('cata_id', @$_GET['cate'])->get();
+                                                        @endphp
+
+                                                        @foreach ($cate_products as $key=>$item)
+                                                            @php
+                                                                $color_check = App\Models\Inventory::where('product_id', $item->id)->where('color', $color->id);
+                                                            @endphp
+
+                                                            @if ($color_check->first() && $store != $color->id)
+                                                                {{-- {{$sl.'|'.$key}}=>{{$color->id}} --}}
+                                                                <div class="form-check form-option form-check-inline mb-1">
+                                                                    <input {{@$_GET['col'] == $color->id ?'checked' :''}}
+                                                                    class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
+                                                                    <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
+                                                                </div>
+
+                                                                @php
+                                                                    $store = $color->id;
+                                                                @endphp
+
+                                                                {{-- {{$store}} --}}
                                                             @endif
                                                         @endforeach
                                                     @endforeach
@@ -180,14 +245,6 @@
                                                         </div>
                                                     @endforeach
                                                 @endif
-                                            
-                                                {{-- @foreach ($color_all as $color)
-                                                    <div class="form-check form-option form-check-inline mb-1">
-                                                        <input {{@$_GET['col'] == $color->id ?'checked' :''}}
-                                                        class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
-                                                        <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
-                                                    </div>
-                                                @endforeach --}}
                                             </div>
                                         </div>
                                     </div>
@@ -395,9 +452,26 @@
     
 {{-- === Master Search === --}}
 <script>
-    $('.cate_box').click(function(){
+    $('.cate_box').change(function(){
         var master_inp = $('#master_inp').val();
-        var cate_id = $('input[name="category"]:checked').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = '';
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = '';
+        var size_id = '';
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        window.location.href = search_link;
+    });
+
+    $('.subcate_box').click(function(){
+        var master_inp = $('#master_inp').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
         var brand_id = $('input[name="brands"]:checked').val();
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
@@ -406,13 +480,14 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
         window.location.href = search_link;
     });
 
     $('.brand_box').click(function(){
         var master_inp = $('#master_inp').val();
-        var cate_id = $('input[name="category"]:checked').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
         var brand_id = $('input[name="brands"]:checked').val();
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
@@ -421,13 +496,14 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
         window.location.href = search_link;
     });
 
     $('.color_box').click(function(){
         var master_inp = $('#master_inp').val();
-        var cate_id = $('input[name="category"]:checked').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
         var brand_id = $('input[name="brands"]:checked').val();
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
@@ -436,13 +512,14 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
         window.location.href = search_link;
     });
 
     $('.size_box').click(function(){
         var master_inp = $('#master_inp').val();
-        var cate_id = $('input[name="category"]:checked').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
         var brand_id = $('input[name="brands"]:checked').val();
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
@@ -451,13 +528,14 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
         window.location.href = search_link;
     });
 
     $('.show_box').change(function(){
         var master_inp = $('#master_inp').val();
-        var cate_id = $('input[name="category"]:checked').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
         var brand_id = $('input[name="brands"]:checked').val();
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
@@ -466,13 +544,14 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
         window.location.href = search_link;
     });
 
     $('.sort_box').change(function(){
         var master_inp = $('#master_inp').val();
-        var cate_id = $('input[name="category"]:checked').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
         var brand_id = $('input[name="brands"]:checked').val();
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
@@ -481,7 +560,23 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        window.location.href = search_link;
+    });
+
+    $('.price_box').click(function(){
+        var master_inp = $('#master_inp').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = $('input[name="color"]:checked').val();
+        var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
         window.location.href = search_link;
     });
 </script>
