@@ -51,6 +51,7 @@ class FrontendController extends Controller
         // $color_inv = Inventory::select('color')->distinct()->get();
         $brand_all = Product_list::orderBy('brand')->whereNotNull('brand')->get()->unique('brand');
         $size_type = Size::where('size_type', '!=', 'N/A')->get()->unique('size_type');
+        $size_all = Size::all();
 
         $data = $request->all();
 		$sorting = 'created_at';
@@ -145,7 +146,7 @@ class FrontendController extends Controller
             'cate_all' => $cate_all,
             'subcate_all' => $subcate_all,
             'color_all' => $color_all,
-            // 'color_inv' => $color_inv,
+            'size_all' => $size_all,
             'brand_all' => $brand_all,
             'size_type' => $size_type,
             'store_items' => $store_items,

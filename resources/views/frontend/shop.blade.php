@@ -9,7 +9,7 @@
         <div class="row align-items-center justify-content-center">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="text-left py-5 mt-3 mb-3">
-                    <h1 class="ft-medium mb-3">Shop</h1>
+                    <h1 class="ft-medium mb-3" id={{@$_GET['chk'] ?'crump' :''}}>Shop</h1>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
 
 
 <!-- ======================= Filter Wrap Style 1 ======================== -->
-<section class="py-3 br-bottom br-top" id="crump">
+<section class="py-3 br-bottom br-top">
     <div class="container">
         <div class="row align-items-center justify-content-between">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -130,89 +130,25 @@
                             </div>
                         </div>
 
-                        <!-- Brands Option -->
-                        <div class="single_search_boxed">
-                            <div class="widget-boxed-header">
-                                <h4><a href="#brands" data-toggle="collapse" aria-expanded="false" role="button">Brands</a></h4>
-                            </div>
-                            <div class="widget-boxed-body collapse show" id="brands" data-parent="#brands">
-                                <div class="side-list no-border">
-                                    <div class="single_filter_card">
-                                        <div class="card-body pt-0">
-                                            <div class="inner_widget_link">
-                                                <ul class="no-ul-list">
-                                                    @foreach ($brand_all as $brand)
-                                                        @php
-                                                            $brand_products = App\models\Product_list::where('brand', $brand->brand)->count();
-                                                        @endphp
-
-                                                        <li>
-                                                            <input {{@$_GET['brand'] == $brand->brand ?'checked' :''}}
-                                                            id="brand{{$brand->id}}" class="checkbox-custom brand_box" name="brands" type="radio" value="{{$brand->brand}}">
-                                                            <label for="brand{{$brand->id}}" class="checkbox-custom-label">{{$brand->brand}}<span>{{$brand_products}}</span></label>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Colors -->
                         <div class="single_search_boxed">
                             <div class="widget-boxed-header">
-                                <h4><a href="#colors" data-toggle="collapse" class="{{@$_GET['col'] && @$_GET['col'] != '' && @$_GET['col'] != 'undefined' ?'' :'collapsed'}}" aria-expanded="false" role="button">Colors</a></h4>
+                                <h4><a href="#colors" data-toggle="collapse" class="{{@$_GET['subcate'] && @$_GET['subcate'] != '' && @$_GET['subcate'] != 'undefined' || @$_GET['col'] && @$_GET['col'] != '' && @$_GET['col'] != 'undefined' ?'' :'collapsed'}}" aria-expanded="false" role="button">Colors</a></h4>
                             </div>
-                            <div class="widget-boxed-body collapse {{@$_GET['col'] && @$_GET['col'] != '' && @$_GET['col'] != 'undefined' ?'show' :''}}" id="colors" data-parent="#colors">
+                            <div class="widget-boxed-body collapse {{@$_GET['subcate'] && @$_GET['subcate'] != '' && @$_GET['subcate'] != 'undefined' || @$_GET['col'] && @$_GET['col'] != '' && @$_GET['col'] != 'undefined' ?'show' :''}}" id="colors" data-parent="#colors">
                                 <div class="side-list no-border">
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="text-left">
 
-                                                @if (@$_GET['cate'] && @$_GET['cate'] != '' && @$_GET['cate'] != 'undefined')
-
-                                                    {{-- === Idea 1 === --}}
-                                                    {{-- @foreach ($color_all as $sl=>$color)
-                                                        @php
-                                                            $cate_products = App\Models\Product_list::where('cata_id', @$_GET['cate'])->get();
-                                                        @endphp
-
-                                                        @foreach ($cate_products as $key=>$item)
-                                                            @php
-                                                                $color_check = App\Models\Inventory::where('product_id', $item->id)->where('color', $color->id);
-                                                            @endphp
-
-                                                            @if ($color_check->first())
-                                                                {{$sl.'|'.$key}}=>{{$color->id}}
-                                                                <div class="form-check form-option form-check-inline mb-1">
-                                                                    <input {{@$_GET['col'] == $color->id ?'checked' :''}}
-                                                                    class="form-check-input color_box" type="radio" name="color" id="whitea{{$color->id}}" value="{{$color->id}}">
-                                                                    <label class="form-option-label rounded-circle" for="whitea{{$color->id}}" title="{{$color->color_name}}"><span class="form-option-color rounded-circle" style="background: {{$color->color_code}}"></span></label>
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
-                                                    @endforeach --}}
-
-
-
-                                                    {{-- === Idea 2 === --}}
-                                                    {{-- @foreach (App\Models\Product_list::where('cata_id', @$_GET['cate'])->get() as $sl=>$product)
-
-                                                        {{$product->relto_invent->unique('color')}}<br>
-                                                    @endforeach --}}
-
-
-
-                                                    {{-- === Idea 3 === --}}
+                                                @if (@$_GET['subcate'] && @$_GET['subcate'] != '' && @$_GET['subcate'] != 'undefined')
                                                     @php
                                                         $store = '';
                                                     @endphp
 
                                                     @foreach ($color_all as $sl=>$color)
                                                         @php
-                                                            $cate_products = App\Models\Product_list::where('cata_id', @$_GET['cate'])->get();
+                                                            $cate_products = App\Models\Product_list::where('subcata_id', @$_GET['subcate'])->get();
                                                         @endphp
 
                                                         @foreach ($cate_products as $key=>$item)
@@ -231,7 +167,6 @@
                                                                 @php
                                                                     $store = $color->id;
                                                                 @endphp
-
                                                                 {{-- {{$store}} --}}
                                                             @endif
                                                         @endforeach
@@ -255,38 +190,101 @@
                         <!-- Sizes -->
                         <div class="single_search_boxed size_part">
                             <div class="widget-boxed-header">
-                                <h4><a href="#size" data-toggle="collapse" class="{{@$_GET['siz'] && @$_GET['siz'] != '' && @$_GET['siz'] != 'undefined' ?'' :'collapsed'}}" aria-expanded="false" role="button">Size</a></h4>
+                                <h4><a href="#size" data-toggle="collapse" class="{{(@$_GET['subcate'] && @$_GET['subcate'] != '' && @$_GET['subcate'] != 'undefined') || (@$_GET['siz'] && @$_GET['siz'] != '' && @$_GET['siz'] != 'undefined') ?'' :'collapsed'}}" aria-expanded="false" role="button">Size</a></h4>
                             </div>
-                            <div class="widget-boxed-body collapse {{@$_GET['siz'] && @$_GET['siz'] != '' && @$_GET['siz'] != 'undefined' ?'show' :''}}" id="size" data-parent="#size">
+                            <div class="widget-boxed-body collapse {{@$_GET['subcate'] && @$_GET['subcate'] != '' && @$_GET['subcate'] != 'undefined' || @$_GET['siz'] && @$_GET['siz'] != '' && @$_GET['siz'] != 'undefined' ?'show' :''}}" id="size" data-parent="#size">
                                 <div class="side-list no-border">
                                     <div class="single_filter_card">
                                         <div class="card-body pt-0">
                                             <div class="text-left pb-0 pt-2">
-                                                @foreach ($size_type as $type)
-                                                    @if ($type->size_type == 'General')
+
+                                                @if (@$_GET['subcate'] && @$_GET['subcate'] != '' && @$_GET['subcate'] != 'undefined')
+                                                    @php
+                                                        $store = '';
+                                                    @endphp
+
+                                                    @foreach ($size_all as $sl=>$size)
                                                         @php
-                                                            $size_items = App\models\Size::where('size_type', $type->size_type)->get()
-                                                        @endphp
-                                                    @else
-                                                        @php
-                                                            $size_items = App\models\Size::where('size_type', $type->size_type)->orderBy('size')->get()
-                                                        @endphp
-                                                    @endif
-                                                    
-                                                    @foreach ($size_items as  $size)
-                                                        @php
-                                                            $size_avail = App\Models\Inventory::where('size', $size->id)
+                                                            $cate_products = App\Models\Product_list::where('subcata_id', @$_GET['subcate'])->get();
                                                         @endphp
 
-                                                        @if ($size_avail->exists())
-                                                            <div class="form-check form-option form-check-inline mb-2">
-                                                                <input {{@$_GET['siz'] == $size->id ?'checked' :''}}
-                                                                class="form-check-input size_box" type="radio" name="size" id="siz{{$size->id}}" value="{{$size->id}}">
-                                                                <label class="form-option-label" for="siz{{$size->id}}">{{$size->size}}</label>
-                                                            </div>
-                                                        @endif
+                                                        @foreach ($cate_products as $key=>$item)
+                                                            @php
+                                                                $size_check = App\Models\Inventory::where('product_id', $item->id)->where('size', $size->id);
+                                                            @endphp
+
+                                                            @if ($size_check->first() && $store != $size->id)
+                                                                {{-- {{$sl.'|'.$key}}=>{{$color->id}} --}}
+                                                                <div class="form-check form-option form-check-inline mb-2">
+                                                                    <input {{@$_GET['siz'] == $size->id ?'checked' :''}}
+                                                                    class="form-check-input size_box" type="radio" name="size" id="siz{{$size->id}}" value="{{$size->id}}">
+                                                                    <label class="form-option-label" for="siz{{$size->id}}">{{$size->size}}</label>
+                                                                </div>
+
+                                                                @php
+                                                                    $store = $size->id;
+                                                                @endphp
+                                                                {{-- {{$store}} --}}
+                                                            @endif
+                                                        @endforeach
                                                     @endforeach
-                                                @endforeach
+                                                @else
+                                                    @foreach ($size_type as $type)
+                                                        @if ($type->size_type == 'General')
+                                                            @php
+                                                                $size_items = App\models\Size::where('size_type', $type->size_type)->get()
+                                                            @endphp
+                                                        @else
+                                                            @php
+                                                                $size_items = App\models\Size::where('size_type', $type->size_type)->orderBy('size')->get()
+                                                            @endphp
+                                                        @endif
+                                                        
+                                                        @foreach ($size_items as  $size)
+                                                            @php
+                                                                $size_avail = App\Models\Inventory::where('size', $size->id)
+                                                            @endphp
+
+                                                            @if ($size_avail->exists())
+                                                                <div class="form-check form-option form-check-inline mb-2">
+                                                                    <input {{@$_GET['siz'] == $size->id ?'checked' :''}}
+                                                                    class="form-check-input size_box" type="radio" name="size" id="siz{{$size->id}}" value="{{$size->id}}">
+                                                                    <label class="form-option-label" for="siz{{$size->id}}">{{$size->size}}</label>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Brands Option -->
+                        <div class="single_search_boxed">
+                            <div class="widget-boxed-header">
+                                <h4><a href="#brands" data-toggle="collapse" aria-expanded="false" role="button">Brands</a></h4>
+                            </div>
+                            <div class="widget-boxed-body collapse show" id="brands" data-parent="#brands">
+                                <div class="side-list no-border">
+                                    <div class="single_filter_card">
+                                        <div class="card-body pt-0">
+                                            <div class="inner_widget_link">
+                                                <ul class="no-ul-list">
+                                                    @foreach ($brand_all as $brand)
+                                                        @php
+                                                            $brand_products = App\models\Product_list::where('brand', $brand->brand)->count();
+                                                        @endphp
+
+                                                        <li>
+                                                            <input {{@$_GET['brand'] == $brand->brand ?'checked' :''}}
+                                                            id="brand{{$brand->id}}" class="checkbox-custom brand_box" name="brands" type="radio" value="{{$brand->brand}}">
+                                                            <label for="brand{{$brand->id}}" class="checkbox-custom-label">{{$brand->brand}}<span>{{$brand_products}}</span></label>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -464,7 +462,7 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     });
 
@@ -480,7 +478,7 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     });
 
@@ -496,7 +494,7 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     });
 
@@ -508,11 +506,11 @@
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
         var color_id = $('input[name="color"]:checked').val();
-        var size_id = $('input[name="size"]:checked').val();
+        var size_id = '';
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     });
 
@@ -523,12 +521,12 @@
         var brand_id = $('input[name="brands"]:checked').val();
         var min_price = $('.min_price').val();
         var max_price = $('.max_price').val();
-        var color_id = $('input[name="color"]:checked').val();
+        var color_id = '';
         var size_id = $('input[name="size"]:checked').val();
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     });
 
@@ -544,7 +542,7 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     });
 
@@ -560,7 +558,7 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     });
 
@@ -576,8 +574,17 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
+    });
+</script>
+
+{{-- === Scroll while Query string === --}}
+<script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $('#crump').offset().top
+        }, 'fast');
     });
 </script>
 @endsection

@@ -649,7 +649,7 @@
         var sort = $('.sort_box').val();
         var show = $('.show_box').val();
 
-        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show;
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
         window.location.href = search_link;
     	});
 	</script>
