@@ -139,9 +139,10 @@
 								<div class="headd-sty-02 ml-3">
 									<form class="bg-white rounded-md border-bold">
 										<div class="input-group">
-											<input type="text" class="form-control custom-height b-0" placeholder="Search for products..." />
+											<input 
+											type="text" class="form-control custom-height b-0" placeholder="Search for products..." id="master_inp" value="{{@$_GET['inp'] ?$_GET['inp'] :''}}"/>
 											<div class="input-group-append">
-												<div class="input-group-text"><button class="btn bg-white text-danger custom-height rounded px-3" type="button"><i class="fas fa-search"></i></button></div>
+												<div class="input-group-text"><button class="btn bg-white text-danger custom-height rounded px-3" type="button" id="master_search"><i class="fas fa-search"></i></button></div>
 											</div>
 										</div>
 									</form>
@@ -633,6 +634,25 @@
 			document.getElementById("Wishlist").style.display = "block";
 		</script>
 	@endif
+
+	{{-- === Master Search === --}}
+	<script>
+		$('#master_search').click(function(){
+			var master_inp = $('#master_inp').val();
+        var cate_id = $('.cate_box').val();
+        var subcate_id = $('input[name="subcate"]:checked').val();
+        var brand_id = $('input[name="brands"]:checked').val();
+        var min_price = $('.min_price').val();
+        var max_price = $('.max_price').val();
+        var color_id = $('input[name="color"]:checked').val();
+        var size_id = $('input[name="size"]:checked').val();
+        var sort = $('.sort_box').val();
+        var show = $('.show_box').val();
+
+        var search_link = "{{route('shop_page')}}" + "?inp=" + master_inp + "&cate=" + cate_id + "&subcate=" + subcate_id + "&brand=" + brand_id + "&min=" + min_price + "&max=" + max_price + "&col=" + color_id + "&siz=" + size_id + "&sort=" + sort + "&show=" + show + "&chk=" + 'qry';
+        window.location.href = search_link;
+    	});
+	</script>
 
 	{{-- ==== Script HERE ==== --}}
 	@yield('footer_script')

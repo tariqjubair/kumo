@@ -122,7 +122,7 @@
         <div class="row align-items-center rows-products">			
             <!-- Single -->
             @foreach ($product_all as $product)
-                <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                <div class="col-xl-3 col-lg-4 col-md-6 col-12">
                     <div class="product_grid card">
                         @if ($product->discount != 0)
                             <div class="badge bg-success text-white position-absolute ft-regular ab-left text-upper">Sale</div>

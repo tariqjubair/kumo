@@ -8,10 +8,13 @@ use App\Models\Color;
 use App\Models\Inventory;
 use App\Models\OrdereditemsTab;
 use App\Models\Product_list;
+use App\Models\Size;
+use App\Models\Subcategory;
 use App\Models\Thumbnail;
 use App\Models\WishTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Stripe\Product;
 
 class FrontendController extends Controller
 {
@@ -36,10 +39,123 @@ class FrontendController extends Controller
         return view('frontend.about');
     }
 
+
+
+
+
     // === Frontend Shop ===
-    function shop_page(){
-        return view('frontend.shop');
+    function shop_page(Request $request){
+        $cate_all = category::orderBy('cata_name')->get();
+        $subcate_all = Subcategory::orderBy('sub_cata_name')->get();
+        $color_all = Color::all();
+        // $color_inv = Inventory::select('color')->distinct()->get();
+        $brand_all = Product_list::orderBy('brand')->whereNotNull('brand')->get()->unique('brand');
+        $size_type = Size::where('size_type', '!=', 'N/A')->get()->unique('size_type');
+        $size_all = Size::all();
+
+        $data = $request->all();
+		$sorting = 'created_at';
+		$sort_type = 'DESC';
+		$showing = '9';
+
+        if((!empty($data['sort'])) && ($data['sort'] != '') && ($data['sort'] != 'undefined')){
+			if($data['sort'] == 2){
+				$sorting = 'product_name';
+				$sort_type = 'ASC';
+			}
+			else if($data['sort'] == 3){
+				$sorting = 'product_name';
+				$sort_type = 'DESC';
+			}
+			else if($data['sort'] == 4){
+				$sorting = 'after_disc';
+				$sort_type = 'ASC';
+			}
+			else if($data['sort'] == 5){
+				$sorting = 'after_disc';
+				$sort_type = 'DESC';
+			}
+			else {
+				$sorting = 'updated_at';
+				$sort_type = 'DESC';
+			}
+		};
+
+        if((!empty($data['show'])) && ($data['show'] != '') && ($data['show'] != 'undefined')){
+			if($data['show'] == 2){
+				$showing = '20';
+			}
+			else if($data['show'] == 3){
+				$showing = '50';
+			}
+			else {
+				$showing = '9';
+			}
+		};
+
+        $product_all = Product_list::orderBy('updated_at', 'DESC')->paginate($showing);;
+
+        $searched_items = Product_list::where(function($q) use($data){
+
+			if((!empty($data['inp'])) && ($data['inp'] != '') && ($data['inp'] != 'undefined')){
+				$q->where(function($q) use ($data){
+					$q->where('product_name', 'like', '%' . $data['inp'] . '%');
+					$q->orWhere('short_desc', 'like', '%' . $data['inp'] . '%');
+					$q->orWhere('long_desc', 'like', '%' . $data['inp'] . '%');
+				});
+			};
+
+			if((!empty($data['cate'])) && ($data['cate'] != '') && ($data['cate'] != 'undefined')){
+				$q->where('cata_id', $data['cate']);
+			};
+
+			if((!empty($data['subcate'])) && ($data['subcate'] != '') && ($data['subcate'] != 'undefined')){
+				$q->where('subcata_id', $data['subcate']);
+			};
+
+			if((!empty($data['brand'])) && ($data['brand'] != '') && ($data['brand'] != 'undefined')){
+				$q->where('brand', $data['brand']);
+			};
+
+			if(((!empty($data['min'])) && ($data['min'] != '') && ($data['min'] != 'undefined')) || ((!empty($data['max'])) && ($data['max'] != '') && ($data['max'] != 'undefined'))){
+				$q->whereBetween('after_disc', [$data['min'], $data['max']]);
+			};
+
+            if((!empty($data['col'])) && ($data['col'] != '') && ($data['col'] != 'undefined')){
+				$q->whereHas('relto_invent', function($q) use ($data){
+                    $q->where('color', $data['col']);
+				});
+			};
+
+            if((!empty($data['siz'])) && ($data['siz'] != '') && ($data['siz'] != 'undefined')){
+				$q->whereHas('relto_invent', function($q) use ($data){
+                    $q->where('size', $data['siz']);
+				});
+			};
+
+		})->orderBy($sorting, $sort_type)->paginate($showing);
+
+        if ($data){
+			$store_items = $searched_items;
+		}
+		else {
+			$store_items = $product_all;
+		}
+
+        return view('frontend.shop', [
+            'cate_all' => $cate_all,
+            'subcate_all' => $subcate_all,
+            'color_all' => $color_all,
+            'size_all' => $size_all,
+            'brand_all' => $brand_all,
+            'size_type' => $size_type,
+            'store_items' => $store_items,
+        ]);
     }
+
+
+
+
 
     // === Frontend Contact ===
     function contact_page(){

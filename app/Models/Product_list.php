@@ -16,4 +16,8 @@ class Product_list extends Model
     function relto_cata(){
         return $this->belongsTo(category::class, 'cata_id');
     }
+
+    function relto_invent(){
+        return $this->hasMany(Inventory::class, 'product_id');
+    }
 }
