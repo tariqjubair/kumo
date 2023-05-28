@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubcateController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderCont;
+use App\Http\Controllers\RoleCont;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\StripePaymentController;
 
@@ -168,6 +169,13 @@ Route::post('/user/pic/update', [userController::class, 'user_pic_upd'])->name('
 
 Route::get('/user/add_user', [userController::class, 'add_user'])->name('add.user');
 Route::post('/user/insert_user', [userController::class, 'insert_user'])->name('insert.user');
+
+
+
+// ==== Roles ====
+
+Route::get('/permission_list', [RoleCont::class, 'perm_store'])->name('perm.store');
+
 
 
 // === Category ===

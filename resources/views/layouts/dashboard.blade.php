@@ -311,6 +311,14 @@
 							@endif
                         </ul>
                     </li>
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+						<i class="fad fa-project-diagram"></i>
+						<span class="nav-text">Roles</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{{route('perm.store')}}">Assign Permission</a></li>
+						</ul>
+					</li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="fad fa-sitemap"></i>
 							<span class="nav-text">Catagories</span>

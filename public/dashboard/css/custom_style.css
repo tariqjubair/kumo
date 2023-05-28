@@ -28,4 +28,22 @@
 }
 
 
+/* === Permission Table === */
+.timeline {
+    border: 1px solid #f0f1f5;
+    border-radius: 10px;
+    min-height: 190px;
+}
+
+.head-chk{
+    padding: 8px 20px !important;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.sub_chk {
+    padding: 10px 20px;
+}
+
+
 
