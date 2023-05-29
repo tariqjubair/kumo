@@ -313,10 +313,10 @@
                     </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="fad fa-project-diagram"></i>
-						<span class="nav-text">Roles</span>
+						<span class="nav-text">Role Manager</span>
 						</a>
 						<ul aria-expanded="false">
-							<li><a href="{{route('perm.store')}}">Assign Permission</a></li>
+							<li><a href="{{route('perm.store')}}">Assign Roles</a></li>
 						</ul>
 					</li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

@@ -9,4 +9,8 @@ class RoleCont extends Controller
     function perm_store(){
         return view('admin.role.perm_store');
     }
+
+    function perm_edit(){
+        return view('admin.role.edit_perm');
+    }
 }

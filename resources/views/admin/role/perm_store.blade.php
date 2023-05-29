@@ -6,7 +6,7 @@
 <div class="page-titles">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-        <li class="breadcrumb-item active"><a href="javascript:void(0)">Permission List</a></li>
+        <li class="breadcrumb-item active"><a href="javascript:void(0)">Assign Roles</a></li>
     </ol>
 </div>
 
@@ -45,7 +45,18 @@
                                         <div class="sub_chk row">
                                             <div class="col-lg-6">
                                                 <div class="timeline-panel mb-1">
-                                                    <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
+                                                    <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheckBox2" required="">
+                                                        <label class="custom-control-label" for="customCheckBox2"></label>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h5 class="mb-0">Category</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="timeline-panel mb-1">
+                                                    <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
                                                         <input type="checkbox" class="custom-control-input" id="customCheckBox1" required="">
                                                         <label class="custom-control-label" for="customCheckBox1"></label>
                                                     </div>
@@ -56,18 +67,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="timeline-panel mb-1">
-                                                    <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheckBox1" required="">
-                                                        <label class="custom-control-label" for="customCheckBox1"></label>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="mb-0">Category</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="timeline-panel mb-1">
-                                                    <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
+                                                    <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
                                                         <input type="checkbox" class="custom-control-input" id="customCheckBox1" required="">
                                                         <label class="custom-control-label" for="customCheckBox1"></label>
                                                     </div>
@@ -78,7 +78,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="timeline-panel mb-1">
-                                                    <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
+                                                    <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
                                                         <input type="checkbox" class="custom-control-input" id="customCheckBox1" required="">
                                                         <label class="custom-control-label" for="customCheckBox1"></label>
                                                     </div>
@@ -89,7 +89,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="timeline-panel mb-1">
-                                                    <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
+                                                    <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
                                                         <input type="checkbox" class="custom-control-input" id="customCheckBox1" required="">
                                                         <label class="custom-control-label" for="customCheckBox1"></label>
                                                     </div>
