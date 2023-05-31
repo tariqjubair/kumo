@@ -173,9 +173,9 @@ Route::post('/user/insert_user', [userController::class, 'insert_user'])->name('
 
 
 // ==== Roles ====
-
 Route::get('/permission_list', [RoleCont::class, 'perm_store'])->name('perm.store');
 Route::get('/permission/edit', [RoleCont::class, 'perm_edit'])->name('perm.edit');
+Route::get('/manage_roles', [RoleCont::class, 'role_store'])->name('role.store');
 
 
 
@@ -187,6 +187,7 @@ Route::get('/category/restore/{cata_id}', [cataController::class, 'cata_restore'
 Route::get('/category/force_delete/{cata_id}', [cataController::class, 'cata_f_del'])->name('category.force_delete');
 Route::get('/category/edit/{cata_id}', [cataController::class, 'cata_edit'])->name('category.edit');
 Route::post('/category_info.update', [cataController::class, 'cata_info_upd'])->name('category_info.update');
+
 
 
 // === Sub-Category ===

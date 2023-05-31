@@ -6,7 +6,8 @@
 <div class="page-titles">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-        <li class="breadcrumb-item active"><a href="javascript:void(0)">Assign Roles</a></li>
+        <li class="breadcrumb-item"><a href="{{route('role.store')}}">Manage Roles</a></li>
+        <li class="breadcrumb-item active"><a href="javascript:void(0)">Create New Role</a></li>
     </ol>
 </div>
 
@@ -120,7 +121,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <button type="submit" class="btn btn-primary">Assign Role</button>
+                        <button type="submit" class="btn btn-primary">Create Role</button>
                     </div>
                 </div>
             </div>
