@@ -18,6 +18,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubcateController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderCont;
+use App\Http\Controllers\RoleCont;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\StripePaymentController;
 
@@ -170,6 +171,14 @@ Route::get('/user/add_user', [userController::class, 'add_user'])->name('add.use
 Route::post('/user/insert_user', [userController::class, 'insert_user'])->name('insert.user');
 
 
+
+// ==== Roles ====
+Route::get('/permission_list', [RoleCont::class, 'perm_store'])->name('perm.store');
+Route::get('/permission/edit', [RoleCont::class, 'perm_edit'])->name('perm.edit');
+Route::get('/manage_roles', [RoleCont::class, 'role_store'])->name('role.store');
+
+
+
 // === Category ===
 Route::get('/category_list', [cataController::class, 'cata_list'])->name('category_list');
 Route::post('/category_update', [cataController::class, 'cata_upd'])->name('category_update');
@@ -178,6 +187,7 @@ Route::get('/category/restore/{cata_id}', [cataController::class, 'cata_restore'
 Route::get('/category/force_delete/{cata_id}', [cataController::class, 'cata_f_del'])->name('category.force_delete');
 Route::get('/category/edit/{cata_id}', [cataController::class, 'cata_edit'])->name('category.edit');
 Route::post('/category_info.update', [cataController::class, 'cata_info_upd'])->name('category_info.update');
+
 
 
 // === Sub-Category ===
