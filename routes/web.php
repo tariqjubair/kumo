@@ -176,6 +176,7 @@ Route::post('/user/insert_user', [userController::class, 'insert_user'])->name('
 Route::get('/permission_list', [RoleCont::class, 'perm_store'])->name('perm.store');
 Route::get('/permission/edit', [RoleCont::class, 'perm_edit'])->name('perm.edit');
 Route::get('/manage_roles', [RoleCont::class, 'role_store'])->name('role.store');
+Route::post('/permission/insert', [RoleCont::class, 'perm_group_insert'])->name('perm_group.insert');
 
 
 

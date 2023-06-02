@@ -305,7 +305,7 @@
                             <li><a href="{{route('user.profile')}}">Profile</a></li>
                             <li><a href="{{route('user_list')}}" aria-expanded="false">User List</a>
                             </li>
-							@if (Auth::user()->role == 1)
+							@if (Auth::user() && Auth::user()->role == 1)
 								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a>
 								</li>
 							@endif
@@ -480,6 +480,30 @@
 	<script src="//cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	{{-- === Scroll to Error === --}}
+	<script>
+		$('.err').show(function(){
+			$(document).ready(function(){
+				$("html, body").animate({ 
+					scrollTop: $('.err').offset().top -400 
+				}, 1000);
+			});
+		})
+	</script>
+
+	{{-- === Job Update Confirm Session === --}}
+	@if (session('job_upd'))
+	<script>
+		Swal.fire({
+			position: 'center-center',
+			icon: 'success',
+			title: '{{session("job_upd")}}',
+			showConfirmButton: false,
+			timer: 1500
+		})
+	</script>
+	@endif
 
     {{-- ======= Footer Script ====== --}}
     @yield('footer_script')

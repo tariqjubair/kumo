@@ -163,13 +163,13 @@
                     <h3>Add Permit Group:</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('category_update')}}" method="POST">
+                    <form action="{{route('perm_group.insert')}}" method="POST">
                         @csrf
                         <div class="item_div mb-4">
                             <label class="form-lable">New Group Name:</label>
                             <input type="text" name="perm_group" class="form-control">
                             @error('perm_group')
-                                <strong class="text-danger">{{$message}}</strong>
+                                <strong class="text-danger err">{{$message}}</strong>
                             @enderror
                         </div>
                         <button type="submit" class="btn btn-primary">Add Group</button>
@@ -180,3 +180,5 @@
     </div>
 </div>
 @endsection
+
+
