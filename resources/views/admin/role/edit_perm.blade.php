@@ -2,6 +2,19 @@
 
 
 
+@section('header_style')
+<style>
+    .item_div button {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+    }
+</style>
+@endsection
+
+
+
 @section('content')
 <div class="page-titles">
     <ol class="breadcrumb">
@@ -15,54 +28,76 @@
     <div class="row">
         <div class="col-lg-6 m-auto">
             <div class="card">
-                <div class="card-header">
-                    <h3>Update Permissions:</h3>
-                </div>
-                <div class="card-body row">
-                    <div class="col-lg-12">
-                        <div class="item_div mb-4">
-                            <label class="form-lable">Category Name:</label>
-                            <input type="text" name="perm_cate" class="form-control">
-                            @error('perm_cate')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <label class="form-lable">Permission Names:</label>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="item_div mb-4">
-                            <input type="text" name="perm_name" class="form-control">
-                            @error('perm_name')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="item_div mb-4">
-                            <input type="text" name="perm_name" class="form-control">
-                            @error('perm_name')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="item_div mb-4">
-                            <input type="text" name="perm_name" class="form-control">
-                            @error('perm_name')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                    </div>
+                <form action="{{route('perm.update')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="group_id" value="{{$group_info->id}}">
 
+                    <div class="card-header">
+                        <h3>Update Permissions:</h3>
+                    </div>
+                    <div class="card-body row">
+                        <div class="col-lg-12">
+                            <div class="item_div mb-4">
+                                <label class="form-lable">Group Name:</label>
+                                <input type="text" name="perm_group" value="{{$group_info->group_name}}" class="form-control">
+                                @error('perm_group')
+                                    <strong class="text-danger">{{$message}}</strong>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="form-lable">Permission Names:</label>
+                        </div>
+                        @forelse ($group_perms as $sl=>$perm)
+                            <div class="col-lg-6">
+                                <div class="item_div mb-4 position-relative">
+                                    <input type="hidden" name="perm_id[]" value="{{$perm->id}}">
+                                    <input type="text" name="perm_name[]" value="{{$perm->name}}" class="form-control">
+                                    
+                                    <button type="button" value="{{route('perm.delete', $perm->id)}}" class="btn btn-outline-danger btn-xxs perm_del">Delete</button>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="col-lg-6">
+                                <h6 class="mt-2">Oops! No Permissions Added</h6>
+                            </div>
+                        @endforelse
 
-                </div>
-                <div class="card-body">
-                    <button type="submit" class="btn btn-primary">Update List</button>
-                </div>
+                        @error('perm_name')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary">Update List</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+
+
+@section('footer_script')
+
+{{-- === Permission Deleted Confirm Session === --}}
+<script>
+    $('.perm_del').click(function(){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Permission will be removed Permanently!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                var link = $(this).val();
+                window.location.href = link;
+            }
+        })
+    })
+</script>
 @endsection

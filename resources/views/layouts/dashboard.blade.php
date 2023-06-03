@@ -505,6 +505,17 @@
 	</script>
 	@endif
 
+	{{-- === Item Deleted === --}}
+	@if (session('del'))
+		<script>
+			Swal.fire(
+				'Deleted!',
+				'{{session("del")}}',
+				'success'
+			)
+		</script>
+	@endif
+
     {{-- ======= Footer Script ====== --}}
     @yield('footer_script')
 </body>
