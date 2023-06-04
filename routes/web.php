@@ -174,7 +174,6 @@ Route::post('/user/insert_user', [userController::class, 'insert_user'])->name('
 
 // ==== Roles ====
 Route::get('/permission_list', [RoleCont::class, 'perm_store'])->name('perm.store');
-Route::get('/manage_roles', [RoleCont::class, 'role_store'])->name('role.store');
 Route::post('/permission/group_insert', [RoleCont::class, 'perm_group_insert'])->name('perm_group.insert');
 Route::get('/permission/group/delete{group_id}', [RoleCont::class, 'perm_group_delete'])->name('perm_group.delete');
 
@@ -182,6 +181,9 @@ Route::post('/permission/insert', [RoleCont::class, 'perm_insert'])->name('perm.
 Route::get('/permission/edit/{group_id}', [RoleCont::class, 'perm_group_edit'])->name('perm.edit');
 Route::get('/permission/delete/{perm_id}', [RoleCont::class, 'perm_delete'])->name('perm.delete');
 Route::post('/permission/update', [RoleCont::class, 'perm_update'])->name('perm.update');
+
+Route::get('/manage_roles', [RoleCont::class, 'role_store'])->name('role.store');
+Route::post('/roles/insert', [RoleCont::class, 'insert_role'])->name('role.insert');
 
 
 

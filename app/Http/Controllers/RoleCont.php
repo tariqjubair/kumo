@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\PermGroup;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -82,46 +83,85 @@ class RoleCont extends Controller
         return back()->with('del', 'Permission Removed!');
     }
 
+    // === Insert Role ===
+    function insert_role(Request $request){
+        $request->validate([
+            'role_name' => 'required|max:255|unique:roles,name',
+            'perm_id' => 'required',
+        ], [
+            'perm_id.required' => 'No Permissions Selected!' 
+        ]);
+        
+        $role = Role::create([
+            'name' => Str::title($request->role_name),
+        ]);
+        $role->givePermissionTo($request->perm_id);
+        return back()->with('job_upd', 'New Role Added!');
+    }
 
-
+    
+    
+    
 
     // === Permission Update ===
     function perm_update(Request $request){
         $old_group_name = PermGroup::find($request->group_id)->group_name;
         $group_name = $request->perm_group;
-
+        
         if($group_name != $old_group_name){
             $request->validate([
                 'perm_group' => 'required|max:255|unique:perm_groups,group_name',
             ]);
         }
 
-
-
         PermGroup::find($request->group_id)->update([
             'group_name' => Str::ucfirst(Str::lower($request->perm_group)),
         ]);
-
+        
         foreach($request->perm_id as $sl=>$perm_id){
+            $perm_all = Permission::all();
             $old_perm_name = Permission::find($perm_id)->name;
             $perm_name = $request->perm_name[$sl];
-
+            
             if($perm_name != $old_perm_name){
+                if($perm_name == ''){
+                    return back()->with([
+                        'error' => 'Invalid Permission Name!',
+                        'err_id' => $perm_id,
+                        'err_val' => $perm_name,
+                        ])->withInput();
+                    }
 
-                print_r($perm_name);
-                // $request->validate([
-                //     'perm_name.*' => 'required|max:255|unique:permissions,name',
-                // ]);
-            }
+                    if(DB::table('permissions')->where('name', $perm_name)->exists()){
+                    return back()->with([
+                        'error' => 'Permission already exists!',
+                        'err_id' => $perm_id,
+                        'err_val' => $perm_name,
+                        ])->withInput();
+                    }
+                }
 
-            // print_r($perm_name);
-
-            Permission::find($perm_id)->update([
+                Permission::find($perm_id)->update([
                 'name' => $request->perm_name[$sl],
             ]);
         }
-
-        // return $request->all();
-        // return back();
+        
+        return back()->with('job_upd', 'Permissions Updated!');
     }
+
+
+
+
+
+
+    
+
+
+
+    
 }
+
+
+
+
+

@@ -29,6 +29,10 @@
 
 
 /* === Permission Table === */
+.sp_top {
+    margin-bottom: 12px;
+}
+
 .perm_item {
     position: relative;
 }
@@ -49,7 +53,7 @@
     padding: 10px 20px;
 }
 
-.sub_chk h5.sp_chk {
+h5.sp_chk {
     margin: 4px 0 0 8px;
 }
 

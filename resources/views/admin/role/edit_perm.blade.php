@@ -52,7 +52,9 @@
                             <div class="col-lg-6">
                                 <div class="item_div mb-4 position-relative">
                                     <input type="hidden" name="perm_id[]" value="{{$perm->id}}">
-                                    <input type="text" name="perm_name[]" value="{{$perm->name}}" class="form-control">
+                                    <input type="text" name="perm_name[]" class="form-control" 
+                                        value="{{session('error') && $perm->id == session('err_id') ?session('err_val') :$perm->name}}" 
+                                        style="{{session('error') && $perm->id == session('err_id') ?'border: 1px solid red' :''}}">
                                     
                                     <button type="button" value="{{route('perm.delete', $perm->id)}}" class="btn btn-outline-danger btn-xxs perm_del">Delete</button>
                                 </div>
@@ -63,9 +65,11 @@
                             </div>
                         @endforelse
 
-                        @error('perm_name')
-                            <strong class="text-danger">{{$message}}</strong>
-                        @enderror
+                        <div class="col-lg-12">
+                            @if (session('error'))
+                                <strong class="text-danger">{{session('error')}}</strong>
+                            @endif
+                        </div>
                     </div>
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary">Update List</button>
