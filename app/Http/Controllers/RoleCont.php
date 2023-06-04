@@ -27,7 +27,15 @@ class RoleCont extends Controller
     }
 
     function role_store(){
-        return view('admin.role.role_store');
+        $roles_all = Role::all();
+        $perm_group_all = PermGroup::orderBy('group_name')->get();
+        $perm_all = Permission::orderBy('name')->get();
+
+        return view('admin.role.role_store', [
+            'roles_all' => $roles_all,
+            'perm_group_all' => $perm_group_all,
+            'perm_all' => $perm_all,
+        ]);
     }
 
 

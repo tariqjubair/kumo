@@ -24,33 +24,34 @@
                             <tr>
                                 <th>SL:</th>
                                 <th data-priority="1">Roll:</th>
-                                <th data-priority="3">Assigned Permissions:</th>
+                                <th data-priority="3" style="width: 60%">Assigned Permissions:</th>
                                 <th data-priority="2">Action:</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {{-- @foreach ($subcata_trashed as $key=>$sub_cata) --}}
-                            <tr style="background: white">
-                                <td style="text-align: center">1</td>
-                                <td>Roll</td>
-                                <td>
-                                    <h5 class="pl-3">Cata</h5>
-                                    <span class="badge badge-success">Permission</span>
-                                </td>
-                                <td style="text-align: center">
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
-                                            <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item edt_btn" href="">Edit</a>
-                                            <button class="dropdown-item f_del_btn" value="">Delete</button>
+                            @foreach ($roles_all as $key=>$role)
+                                <tr style="background: white">
+                                    <td style="text-align: center">{{$key+1}}</td>
+                                    <td>{{$role->name}}</td>
+                                    <td>
+                                        @foreach ($role->getAllPermissions()->orderBy('name') as $perm)
+                                            <span class="badge badge-success my-1">{{$perm->name}}</span>
+                                        @endforeach
+                                    </td>
+                                    <td style="text-align: center">
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                                <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item edt_btn" href="">Edit</a>
+                                                <button class="dropdown-item f_del_btn" value="">Delete</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            {{-- @endforeach --}}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
