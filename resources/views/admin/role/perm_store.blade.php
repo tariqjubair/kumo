@@ -169,6 +169,11 @@
     
 {{-- === Group Check === --}}
 <script>
+    $('#chk_all').click(function(){
+        var perm_all = $(this).closest('.row').find(':checkbox');
+        perm_all.prop('checked', perm_all.prop('checked'));
+    })
+    
     $('.group_chk').click(function(){
         var group_select = $(this).find('.group');
         group_select.prop('checked', !group_select.prop('checked'));

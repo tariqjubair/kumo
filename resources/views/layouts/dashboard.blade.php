@@ -305,10 +305,8 @@
                             <li><a href="{{route('user.profile')}}">Profile</a></li>
                             <li><a href="{{route('user_list')}}" aria-expanded="false">User List</a>
                             </li>
-							@if (Auth::user() && Auth::user()->role == 1)
-								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a>
-								</li>
-							@endif
+							<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a>
+							</li>
                         </ul>
                     </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -318,6 +316,7 @@
 						<ul aria-expanded="false">
 							<li><a href="{{route('perm.store')}}">Create New Role</a></li>
 							<li><a href="{{route('role.store')}}">Manage Roles</a></li>
+							<li><a href="{{route('role.users')}}">Assigned Users</a></li>
 						</ul>
 					</li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Manage Rolls:</h3>
-                    <h4>Total: </h4>
+                    <h4>Total: {{$roles_all->count()}}</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped stripe sp_col" cellspacing="0" width="100%" id="roll_table">
@@ -35,7 +35,7 @@
                                     <td style="text-align: center">{{$key+1}}</td>
                                     <td>{{$role->name}}</td>
                                     <td>
-                                        @foreach ($role->getAllPermissions()->orderBy('name') as $perm)
+                                        @foreach ($role->getAllPermissions() as $perm)
                                             <span class="badge badge-success my-1">{{$perm->name}}</span>
                                         @endforeach
                                     </td>
@@ -45,8 +45,8 @@
                                                 <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item edt_btn" href="">Edit</a>
-                                                <button class="dropdown-item f_del_btn" value="">Delete</button>
+                                                <a class="dropdown-item edt_btn" href="{{route('role.edit', $role->id)}}">Edit</a>
+                                                <button class="dropdown-item del_role" value="{{route('role.delete', $role->id)}}">Delete</button>
                                             </div>
                                         </div>
                                     </td>
@@ -63,16 +63,16 @@
                     <h3>Assign Role:</h3>
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="{{route('role.assign')}}" method="POST">
                         @csrf
 
                         <div class="item_div mb-4">
                             <label class="form-lable">Select User:</label>
                             <select name="user_id" class="form-control">
                                 <option value="">--Select--</option>
-                                {{-- @foreach ($cata_all as $cata)
-                                    <option value="{{$cata->id}}">{{$cata->cata_name}}</option>
-                                @endforeach --}}
+                                @foreach ($user_all as $user)
+                                    <option {{$user->id == old('user_id') ?'selected' :''}} value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
                             </select>
                             @error('user_id')
                                 <strong class="text-danger">{{$message}}</strong>
@@ -80,13 +80,13 @@
                         </div>
                         <div class="item_div mb-4">
                             <label class="form-lable">Select Roll:</label>
-                            <select name="roll_id" class="form-control">
+                            <select name="role_id" class="form-control">
                                 <option value="">--Select--</option>
-                                {{-- @foreach ($cata_all as $cata)
-                                    <option value="{{$cata->id}}">{{$cata->cata_name}}</option>
-                                @endforeach --}}
+                                @foreach ($roles_all as $role)
+                                    <option {{$role->id == old('role_id') ?'selected' :''}} value="{{$role->id}}">{{$role->name}}</option>
+                                @endforeach
                             </select>
-                            @error('roll_id')
+                            @error('role_id')
                                 <strong class="text-danger">{{$message}}</strong>
                             @enderror
                         </div>
@@ -110,5 +110,25 @@
 			responsive: true,
 		});
 	} );
+</script>
+
+{{-- === Role Deleted Confirm Session === --}}
+<script>
+    $('.del_role').click(function(){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Role will be removed Permanently!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                var link = $(this).val();
+                window.location.href = link;
+            }
+        })
+    })
 </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\PermGroup;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,14 +28,33 @@ class RoleCont extends Controller
     }
 
     function role_store(){
-        $roles_all = Role::all();
+        $roles_all = Role::orderBy('name')->get();
         $perm_group_all = PermGroup::orderBy('group_name')->get();
         $perm_all = Permission::orderBy('name')->get();
+        $user_all = User::orderBy('name')->get();
 
         return view('admin.role.role_store', [
             'roles_all' => $roles_all,
             'perm_group_all' => $perm_group_all,
             'perm_all' => $perm_all,
+            'user_all' => $user_all,
+        ]);
+    }
+
+    function users_role(){
+        $roles_all = Role::orderBy('name')->get();
+        $users_all = User::orderBy('name')->get();
+
+        foreach($users_all as $sl=>$user){
+            if (DB::table('model_has_roles')->where('model_id', $user->id)->exists()){
+                $role_users[] = $user->id;
+            }
+        }
+
+        return view('admin.role.role_users', [
+            'roles_all' => $roles_all,
+            'users_all' => $users_all,
+            'role_users' => $role_users,
         ]);
     }
 
@@ -103,8 +123,42 @@ class RoleCont extends Controller
         $role = Role::create([
             'name' => Str::title($request->role_name),
         ]);
+
         $role->givePermissionTo($request->perm_id);
         return back()->with('job_upd', 'New Role Added!');
+    }
+
+    // === Delete Role ===
+    function delete_role($role_id){
+        Role::find($role_id)->delete();
+        DB::table('role_has_permissions')->where('role_id', $role_id)->delete();
+        DB::table('model_has_roles')->where('role_id', $role_id)->delete();
+        return back()->with('del', 'Role Removed Successfully!');
+    }
+
+    // === Edit Role ===
+    function edit_role($role_id){
+        $role_info = Role::find($role_id);
+        $perm_group_all = PermGroup::orderBy('group_name')->get();
+        $perm_all = Permission::orderBy('name')->get();
+
+        return view('admin.role.edit_role', [
+            'role_info' => $role_info,
+            'perm_group_all' => $perm_group_all,
+            'perm_all' => $perm_all,
+        ]);
+    }
+
+    // === Assign Role ===
+    function role_assign(Request $request){
+        $request->validate([
+            'user_id' => 'required',
+            'role_id' => 'required',
+        ]);
+
+        $user = User::find($request->user_id);
+        $user->syncRoles($request->role_id);
+        return back()->with('job_upd', 'Role assigned to User!');
     }
 
     
@@ -155,6 +209,36 @@ class RoleCont extends Controller
         }
         
         return back()->with('job_upd', 'Permissions Updated!');
+    }
+
+
+
+
+
+    // === Role Update ===
+    function role_update(Request $request){
+        $request->validate([
+            'perm_id' => 'required',
+        ], [
+            'perm_id.required' => 'No Permissions Selected!' 
+        ]);
+
+        $old_role_name = Role::find($request->role_id)->name;
+        $role_name = $request->role_name;
+        
+        if($role_name != $old_role_name){
+            $request->validate([
+                'role_name' => 'required|max:255|unique:roles,name',
+            ]);
+        }
+
+        Role::find($request->role_id)->update([
+            'name' => Str::title($request->role_name),
+        ]);
+
+        $role = Role::find($request->role_id);
+        $role->syncPermissions($request->perm_id);
+        return back()->with('job_upd', 'Role Updated Successfully!');
     }
 
 
