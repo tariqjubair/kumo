@@ -187,8 +187,12 @@ Route::post('/roles/insert', [RoleCont::class, 'insert_role'])->name('role.inser
 Route::get('/roles/delete/{role_id}', [RoleCont::class, 'delete_role'])->name('role.delete');
 Route::get('/roles/edit/{role_id}', [RoleCont::class, 'edit_role'])->name('role.edit');
 Route::post('/role/update', [RoleCont::class, 'role_update'])->name('role.update');
+
 Route::post('/role/assign', [RoleCont::class, 'role_assign'])->name('role.assign');
 Route::get('/roles/users', [RoleCont::class, 'users_role'])->name('role.users');
+Route::get('/roles/users/edit_roles/{user_id}', [RoleCont::class, 'user_role_edit'])->name('user_role.edit');
+Route::post('/roles/users/update_roles', [RoleCont::class, 'user_role_update'])->name('user_role.update');
+Route::get('/roles/users/remove/{user_id}', [RoleCont::class, 'user_role_remove'])->name('user_role.remove');
 
 
 

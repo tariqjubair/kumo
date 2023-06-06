@@ -117,7 +117,7 @@
     $('.del_role').click(function(){
         Swal.fire({
             title: 'Are you sure?',
-            text: "Role will be removed Permanently!",
+            text: "Role will be Deleted Permanently!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

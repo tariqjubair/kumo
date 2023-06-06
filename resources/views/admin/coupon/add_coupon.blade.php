@@ -3,7 +3,9 @@
 @section('header_style')
 <style>
     .select2-container--default .select2-selection--multiple{
-        height: 56px !important;
+        min-height: 56px !important;
+        overflow: hidden !important;
+        height: auto !important;
     }
 
     .select2-container--default .select2-selection--multiple .select2-selection__rendered {
@@ -108,7 +110,7 @@
                                     <select name="subcata[]" class="form-control select2" multiple="multiple">
                                         <option value="">-- Select Subcategory --</option>
                                         @foreach (App\Models\Subcategory::all() as $subcata)
-                                            <option {{$subcata->id == old('subcata') ?'selected' :''}}
+                                            <option {{collect(old('subcata'))->contains($subcata->id) ?'selected' :''}}
                                             value="{{$subcata->id}}">{{$subcata->sub_cata_name}}</option>
                                         @endforeach
                                     </select>

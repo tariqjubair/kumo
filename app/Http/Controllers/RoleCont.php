@@ -45,6 +45,9 @@ class RoleCont extends Controller
         $roles_all = Role::orderBy('name')->get();
         $users_all = User::orderBy('name')->get();
 
+        // === () ===
+        $user_with_roles = User::has('roles')->orderBy('name')->get();
+
         foreach($users_all as $sl=>$user){
             if (DB::table('model_has_roles')->where('model_id', $user->id)->exists()){
                 $role_users[] = $user->id;
@@ -55,6 +58,7 @@ class RoleCont extends Controller
             'roles_all' => $roles_all,
             'users_all' => $users_all,
             'role_users' => $role_users,
+            'user_with_roles' => $user_with_roles,
         ]);
     }
 
@@ -161,6 +165,27 @@ class RoleCont extends Controller
         return back()->with('job_upd', 'Role assigned to User!');
     }
 
+    // === User Role Edit ===
+    function user_role_edit($user_id){
+        $user_info = User::find($user_id);
+        $roles_all = Role::orderBy('name')->get();
+        $perm_all = Permission::orderBy('name')->orderBy('group_id')->get();
+
+        return view('admin.role.user_role_edit', [
+            'user_info' => $user_info,
+            'roles_all' => $roles_all,
+            'perm_all' => $perm_all,
+        ]);
+    }
+
+    // === Remove Role ===
+    function user_role_remove($user_id){
+        $user = User::find($user_id);
+        DB::table('model_has_permissions')->where('model_id', $user_id)->delete();
+        DB::table('model_has_roles')->where('model_id', $user_id)->delete();
+        return back()->with('del', 'Role Removed from User!');
+    }
+
     
     
     
@@ -242,6 +267,17 @@ class RoleCont extends Controller
     }
 
 
+
+
+
+    // === User Role Update ===
+    function user_role_update(Request $request){
+        $user = User::find($request->user_id);
+        $user->syncRoles($request->role_id);
+        $user->syncPermissions($request->perm_id);
+
+        return back()->with('job_upd', 'User Role Updated!');
+    }
 
 
 

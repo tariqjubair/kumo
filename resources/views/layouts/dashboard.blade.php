@@ -244,6 +244,10 @@
 							</li>
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:void(0)" role="button" data-toggle="dropdown">
+									@php
+										$user_role = Auth::user()->getRoleNames()->first();
+									@endphp
+
                                     @auth
 										@if (Auth::user()->image == null)
 											<img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" />
@@ -253,7 +257,8 @@
 										<div class="header-info">
 											<span class="text-black"><strong>{{Auth::user()->name}}</strong></span>
 											<h5 class="fs-12 mb-0">
-												{{Auth::user()->role == 1 ?'Super Admin' :'Admin'}}
+												{{-- {{Auth::user()->role == 1 ?'Super Admin' :'Admin'}} --}}
+												{{$user_role ?$user_role :'User'}}
 											</h5>
 										</div>
 									@endauth
@@ -305,8 +310,9 @@
                             <li><a href="{{route('user.profile')}}">Profile</a></li>
                             <li><a href="{{route('user_list')}}" aria-expanded="false">User List</a>
                             </li>
-							<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a>
-							</li>
+							@can('user_add')
+								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a></li>
+							@endcan
                         </ul>
                     </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
