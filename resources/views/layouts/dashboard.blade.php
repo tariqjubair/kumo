@@ -51,7 +51,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="{{route('home')}}" class="brand-logo">
                 <img class="logo-abbr" src="{{asset('dashboard/images/logo.png')}}" alt="">
                 <img class="logo-compact" src="{{asset('dashboard/images/logo-text.png')}}" alt="">
                 <img class="brand-title" src="{{asset('dashboard/images/logo-text.png')}}" alt="">
@@ -244,6 +244,10 @@
 							</li>
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="javascript:void(0)" role="button" data-toggle="dropdown">
+									@php
+										$user_role = Auth::user()->getRoleNames()->first();
+									@endphp
+
                                     @auth
 										@if (Auth::user()->image == null)
 											<img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" />
@@ -253,7 +257,8 @@
 										<div class="header-info">
 											<span class="text-black"><strong>{{Auth::user()->name}}</strong></span>
 											<h5 class="fs-12 mb-0">
-												{{Auth::user()->role == 1 ?'Super Admin' :'Admin'}}
+												{{-- {{Auth::user()->role == 1 ?'Super Admin' :'Admin'}} --}}
+												{{$user_role ?$user_role :'User'}}
 											</h5>
 										</div>
 									@endauth
@@ -305,10 +310,9 @@
                             <li><a href="{{route('user.profile')}}">Profile</a></li>
                             <li><a href="{{route('user_list')}}" aria-expanded="false">User List</a>
                             </li>
-							@if (Auth::user()->role == 1)
-								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a>
-								</li>
-							@endif
+							@can('user_add')
+								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a></li>
+							@endcan
                         </ul>
                     </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -318,6 +322,7 @@
 						<ul aria-expanded="false">
 							<li><a href="{{route('perm.store')}}">Create New Role</a></li>
 							<li><a href="{{route('role.store')}}">Manage Roles</a></li>
+							<li><a href="{{route('role.users')}}">Assigned Users</a></li>
 						</ul>
 					</li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -480,6 +485,41 @@
 	<script src="//cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	{{-- === Scroll to Error === --}}
+	<script>
+		$('.err').show(function(){
+			$(document).ready(function(){
+				$("html, body").animate({ 
+					scrollTop: $('.err').offset().top -400 
+				}, 1000);
+			});
+		})
+	</script>
+
+	{{-- === Job Update Confirm Session === --}}
+	@if (session('job_upd'))
+	<script>
+		Swal.fire({
+			position: 'center-center',
+			icon: 'success',
+			title: '{{session("job_upd")}}',
+			showConfirmButton: false,
+			timer: 1500
+		})
+	</script>
+	@endif
+
+	{{-- === Item Deleted === --}}
+	@if (session('del'))
+		<script>
+			Swal.fire(
+				'Deleted!',
+				'{{session("del")}}',
+				'success'
+			)
+		</script>
+	@endif
 
     {{-- ======= Footer Script ====== --}}
     @yield('footer_script')

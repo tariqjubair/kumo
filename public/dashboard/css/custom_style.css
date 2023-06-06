@@ -14,6 +14,7 @@
 /* === Custom Form CSS === */
 .form-control {
     line-height: 2.5 !important;
+    color: #6911C4;
 }
 
 /* === Custom DataTable === */
@@ -29,6 +30,14 @@
 
 
 /* === Permission Table === */
+.sp_top {
+    margin-bottom: 12px;
+}
+
+.perm_item {
+    position: relative;
+}
+
 .timeline {
     border: 1px solid #f0f1f5;
     border-radius: 10px;
@@ -36,7 +45,7 @@
 }
 
 .head-chk{
-    padding: 8px 20px !important;
+    padding: 18px 20px !important;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
@@ -44,6 +53,24 @@
 .sub_chk {
     padding: 10px 20px;
 }
+
+h5.sp_chk {
+    margin: 4px 0 0 8px;
+}
+
+.float {
+    position: absolute;
+    top: 13px;
+    right: 20px;
+}
+
+@media(max-width: 767.98px){
+    .sm_flex {
+        flex-direction: column;
+    }
+}
+
+
 
 
 
