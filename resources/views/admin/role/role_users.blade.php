@@ -13,7 +13,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-8 m-auto">
+        <div class="col-xl-12 m-auto">
             <div class="card">
                 <div class="card-header">
                     <h3>Assigned Users:</h3>

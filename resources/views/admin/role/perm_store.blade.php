@@ -13,12 +13,12 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-xl-12">
             <div class="card">
                 <form action="{{route('role.insert')}}" method="POST">
                     @csrf
 
-                    <div class="card-header">
+                    <div class="card-header sm_flex">
                         <h3>Assign Permissions to Role:</h3>
                         <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3 sp_top">
                             <input type="checkbox" class="custom-control-input" id="chk_all" name="perm_id[]" value="">
@@ -31,7 +31,7 @@
                     {{-- === Add Permissions === --}}
                     <div class="card-body row">
                         @foreach ($perm_group_all as $group)
-                            <div class="col-lg-6">
+                            <div class="col-xl-6">
                                 <div id="" class="widget-media dz-scroll mb-4">
                                     <ul class="timeline">
                                         <li>
@@ -47,7 +47,7 @@
                                                 </div>
                                                 <div class="sub_chk row">
                                                     @forelse ($perm_all->where('group_id', $group->id) as $perm)
-                                                        <div class="col-lg-6">
+                                                        <div class="col-xl-6 col-md-6">
                                                             <div class="timeline-panel mb-1">
                                                                 <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
                                                                     <input {{(is_array(old('perm_id')) && in_array($perm->id, old('perm_id'))) ?'checked ' :''}}
@@ -58,7 +58,7 @@
                                                             </div>
                                                         </div>
                                                     @empty
-                                                        <div class="col-lg-6">
+                                                        <div class="col-xl-6">
                                                             <h6 class="mt-2">(Empty)</h6>
                                                         </div>
                                                     @endforelse
@@ -79,7 +79,7 @@
                             </div>
                         @endforeach
 
-                        <div class="col-lg-12">
+                        <div class="col-xl-12">
                             @error('perm_id')
                                 <strong class="text-danger">{{$message}}</strong>
                             @enderror
@@ -88,7 +88,7 @@
 
                     {{-- === Add Role Name === --}}
                     <div class="card-body pt-0">
-                        <div class="col-lg-6">
+                        <div class="col-xl-6">
                             <div class="item_div mb-4">
                                 <label class="form-lable">New Roll Name:</label>
                                 <input type="text" name="role_name" class="form-control">
@@ -97,14 +97,14 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-xl-6">
                             <button type="submit" class="btn btn-primary">Create Role</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-xl-6">
 
             {{-- === Add Permissions to Group === --}}
             <div class="card">
@@ -140,6 +140,28 @@
             </div>
 
             {{-- === Add Group === --}}
+            <div class="card d-xl-none">
+                <div class="card-header">
+                    <h3>Add Permit Group:</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{{route('perm_group.insert')}}" method="POST">
+                        @csrf
+                        <div class="item_div mb-4">
+                            <label class="form-lable">New Group Name:</label>
+                            <input type="text" name="perm_group" class="form-control">
+                            @error('perm_group')
+                                <strong class="text-danger err">{{$message}}</strong>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Group</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- === XL View === --}}
+        <div class="col-xl-6 d-none d-xl-block">
             <div class="card">
                 <div class="card-header">
                     <h3>Add Permit Group:</h3>

@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-xl-12">
             <div class="card">
                 <div class="card-header">
                     <h3>Manage Rolls:</h3>
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-xl-6 m-xl-auto">
             <div class="card">
                 <div class="card-header">
                     <h3>Assign Role:</h3>

@@ -64,6 +64,12 @@ h5.sp_chk {
     right: 20px;
 }
 
+@media(max-width: 767.98px){
+    .sm_flex {
+        flex-direction: column;
+    }
+}
+
 
 
 

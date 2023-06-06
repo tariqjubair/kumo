@@ -278,15 +278,6 @@ class RoleCont extends Controller
 
         return back()->with('job_upd', 'User Role Updated!');
     }
-
-
-
-
-    
-
-
-
-    
 }
 
 

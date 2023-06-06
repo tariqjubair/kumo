@@ -68,9 +68,9 @@
                                             <button type="submit" class="btn bg-white text-primary btn-block">Sign Me In</button>
                                         </div>
                                     </form>
-                                    <div class="new-account mt-3">
+                                    {{-- <div class="new-account mt-3">
                                         <p class="text-white">Don't have an account? <a class="text-white" href="{{route('register')}}">Sign up</a></p>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

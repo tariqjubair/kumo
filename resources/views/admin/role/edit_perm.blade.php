@@ -26,7 +26,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 m-auto">
+        <div class="col-xl-8 m-auto">
             <div class="card">
                 <form action="{{route('perm.update')}}" method="POST">
                     @csrf
@@ -36,7 +36,7 @@
                         <h3>Update Permissions:</h3>
                     </div>
                     <div class="card-body row">
-                        <div class="col-lg-12">
+                        <div class="col-xl-12">
                             <div class="item_div mb-4">
                                 <label class="form-lable">Group Name:</label>
                                 <input type="text" name="perm_group" value="{{$group_info->group_name}}" class="form-control">
@@ -45,11 +45,11 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <div class="col-xl-12">
                             <label class="form-lable">Permission Names:</label>
                         </div>
                         @forelse ($group_perms as $sl=>$perm)
-                            <div class="col-lg-6">
+                            <div class="col-xl-6 col-lg-6">
                                 <div class="item_div mb-4 position-relative">
                                     <input type="hidden" name="perm_id[]" value="{{$perm->id}}">
                                     <input type="text" name="perm_name[]" class="form-control" 
@@ -60,12 +60,12 @@
                                 </div>
                             </div>
                         @empty
-                            <div class="col-lg-6">
+                            <div class="col-xl-6">
                                 <h6 class="mt-2">Oops! No Permissions Added</h6>
                             </div>
                         @endforelse
 
-                        <div class="col-lg-12">
+                        <div class="col-xl-12">
                             @if (session('error'))
                                 <strong class="text-danger">{{session('error')}}</strong>
                             @endif

@@ -13,13 +13,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-9 m-auto">
+        <div class="col-xl-12 m-auto">
             <div class="card">
                 <form action="{{route('role.update')}}" method="POST">
                     @csrf
                     <input type="hidden" name="role_id" value="{{$role_info->id}}">
 
-                    <div class="card-header">
+                    <div class="card-header sm_flex">
                         <h3>Update Role Permissions:</h3>
                         <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3 sp_top">
                             <input type="checkbox" class="custom-control-input" id="chk_all" name="perm_id[]" value="">
@@ -38,7 +38,7 @@
                     <div class="card-body row">
                         @foreach ($perm_group_all as $group)
                             @if (Spatie\Permission\Models\Permission::where('group_id', $group->id)->count() != 0)
-                                <div class="col-lg-6">
+                                <div class="col-xl-6">
                                     <div id="" class="widget-media dz-scroll mb-4">
                                         <ul class="timeline">
                                             <li>
@@ -74,7 +74,7 @@
                                                     {{-- {{$has_perm.'|'.$perm_count}} --}}
                                                     <div class="sub_chk row">
                                                         @foreach ($perm_all->where('group_id', $group->id) as $perm)
-                                                            <div class="col-lg-6">
+                                                            <div class="col-xl-6 col-md-6">
                                                                 <div class="timeline-panel mb-1">
                                                                     <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3">
                                                                         <input {{$role_info->hasPermissionTo($perm->name) ?'checked ' :''}}
@@ -94,7 +94,7 @@
                             @endif
                         @endforeach
 
-                        <div class="col-lg-12">
+                        <div class="col-xl-12">
                             @error('perm_id')
                                 <strong class="text-danger">{{$message}}</strong>
                             @enderror
@@ -103,7 +103,7 @@
 
                     {{-- === Add Role Name === --}}
                     <div class="card-body pt-0">
-                        <div class="col-lg-6">
+                        <div class="col-xl-6">
                             <div class="item_div mb-4">
                                 <label class="form-lable">Roll Name:</label>
                                 <input type="text" name="role_name" value="{{old('role_name') ?old('role_name') :$role_info->name}}" class="form-control">
@@ -112,7 +112,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-xl-6">
                             <button type="submit" class="btn btn-primary">Update Role</button>
                         </div>
                     </div>
