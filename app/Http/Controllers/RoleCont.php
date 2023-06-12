@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\PermGroup;
 use App\Models\User;
+use App\Notifications\RoleAssigned;
+use App\Notifications\RoleNotif;
+use App\Notifications\RoleRemoved;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Notification;
 
 class RoleCont extends Controller
 {
@@ -162,6 +166,9 @@ class RoleCont extends Controller
 
         $user = User::find($request->user_id);
         $user->syncRoles($request->role_id);
+
+        $msg = 'NEW ROLE HAS BEEN ASSIGNED!';
+        Notification::send($user, new RoleAssigned($user, $msg));
         return back()->with('job_upd', 'Role assigned to User!');
     }
 
@@ -183,6 +190,9 @@ class RoleCont extends Controller
         $user = User::find($user_id);
         DB::table('model_has_permissions')->where('model_id', $user_id)->delete();
         DB::table('model_has_roles')->where('model_id', $user_id)->delete();
+
+        $msg = 'Role HAS BEEN REMOVED';
+        Notification::send($user, new RoleRemoved($user, $msg));
         return back()->with('del', 'Role Removed from User!');
     }
 
@@ -276,6 +286,8 @@ class RoleCont extends Controller
         $user->syncRoles($request->role_id);
         $user->syncPermissions($request->perm_id);
 
+        $msg = 'ROLE HAS BEEN UPDATED!';
+        Notification::send($user, new RoleAssigned($user, $msg));
         return back()->with('job_upd', 'User Role Updated!');
     }
 }

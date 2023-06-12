@@ -9,27 +9,25 @@
     </ol>
 </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xl-6 m-auto">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Product Variation: {{$length_info->size}}</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('length.update')}}" method="POST">
-                        @csrf
-                        <input type="hidden" name="length_id" value="{{$length_info->id}}">
-                        <div class="item_div mb-4">
-                            <label class="form-lable">Update Length:</label>
-                            <input type="text" name="length_upd" class="form-control" value="{{$length_info->length}}">
-                            @error('length_upd')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Length</button>
-                    </form>
-                </div>
+<div class="row">
+    <div class="col-xl-6 m-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3>Product Variation: {{$length_info->size}}</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{route('length.update')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="length_id" value="{{$length_info->id}}">
+                    <div class="item_div mb-4">
+                        <label class="form-lable">Update Length:</label>
+                        <input type="text" name="length_upd" class="form-control" value="{{$length_info->length}}">
+                        @error('length_upd')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Length</button>
+                </form>
             </div>
         </div>
     </div>

@@ -125,8 +125,8 @@ Route::get('/order_failed', [CheckoutCont::class, 'order_failed'])->name('order.
 
 // Mail Check ===
 Route::get('/mailable', function () {
-    $order_id = session('order_id_inv');
-    return new App\Mail\InvoiceMail($order_id);
+    $mail_item = session('mail_item');
+    return new App\Mail\InvoiceMail($mail_item);
 });
 
 

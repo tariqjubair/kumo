@@ -33,125 +33,91 @@
     </ol>
 </div>
 
-<div class="container-fluid">
-    <form action="{{route('product.cata_items')}}" method="POST">
-        @csrf
-        <div class="row">
-            <div class="col-xl-5">
-                <div class="item_div mb-4">
-                    <label class="form-lable">Select Category Type:</label>
-                    <select name="cata_id" id="cata_sec" class="form-control">
-                        <option value="">-- Select Category </option>
-                        @foreach ($cata_all as $cata)
-                            <option 
-                            @if (session('cata_id'))
-                                {{$cata->id == session('cata_id') ?'selected': ''}}
-                            @endif
-                            value="{{$cata->id}}">{{$cata->cata_name}}</option>
-                        @endforeach
-                    </select>
-                    @error('cata_id')
-                        <strong class="text-danger">{{$message}}</strong>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-xl-5">
-                <div class="item_div mb-4">
-                    <label class="form-lable">Select Sub-Category Type:</label>
-                    <select name="subcata_id" id="subcata_sec" class="form-control">
-                        @if (session('subcata_name'))
-                            <option value="">{{session('subcata_name')}}</option>
+<form action="{{route('product.cata_items')}}" method="POST">
+    @csrf
+    <div class="row">
+        <div class="col-xl-5">
+            <div class="item_div mb-4">
+                <label class="form-lable">Select Category Type:</label>
+                <select name="cata_id" id="cata_sec" class="form-control">
+                    <option value="">-- Select Category </option>
+                    @foreach ($cata_all as $cata)
+                        <option 
+                        @if (session('cata_id'))
+                            {{$cata->id == session('cata_id') ?'selected': ''}}
                         @endif
-                        <option value="">-- Select Sub-Category</option>
-                    </select>
-                    @error('subcata_id')
-                        <strong class="text-danger">{{$message}}</strong>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-xl-2">
-                <button type="submit" class="btn btn-primary">Get Categorized Products</button>
+                        value="{{$cata->id}}">{{$cata->cata_name}}</option>
+                    @endforeach
+                </select>
+                @error('cata_id')
+                    <strong class="text-danger">{{$message}}</strong>
+                @enderror
             </div>
         </div>
-    </form>
+        <div class="col-xl-5">
+            <div class="item_div mb-4">
+                <label class="form-lable">Select Sub-Category Type:</label>
+                <select name="subcata_id" id="subcata_sec" class="form-control">
+                    @if (session('subcata_name'))
+                        <option value="">{{session('subcata_name')}}</option>
+                    @endif
+                    <option value="">-- Select Sub-Category</option>
+                </select>
+                @error('subcata_id')
+                    <strong class="text-danger">{{$message}}</strong>
+                @enderror
+            </div>
+        </div>
+        <div class="col-xl-2">
+            <button type="submit" class="btn btn-primary">Get Categorized Products</button>
+        </div>
+    </div>
+</form>
 
-    <div class="row">
-        <div class="col-xl-12">
-            
-            {{-- === Current Products === --}}
-            <div class="card">
-                <div class="card-header">
-                    <h3>
-                        @if (session('subcata_id'))
-                            Product List=> [{{session('cata_name')}}: {{session('subcata_name')}}]
-                            <a class="btn btn-link" href="{{route('clear.cata')}}">Reset Selection</a>
-                        @else
-                            Product List=> [ALL]
-                        @endif
-                    </h3>
-                    <h4>Total: 
-                        @if (session('cata_id'))
-                            {{session('cate_product')}}
-                        @else
-                            {{count($product_all)}}
-                        @endif
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('delete.checked')}}" method="POST" id="pro_form">
-                        @csrf
-                        <table class="table stripe sp_col" cellspacing="0" width="100%" id="product_table">
-                            <thead>
-                                <tr>
-                                    <th><input type="checkbox" name="product_id" id="chk_all"></th>
-                                    <th>SL:</th>
-                                    <th data-priority="1">Product Name:</th>
-                                    <th>Price:</th>
-                                    <th>Discount:</th>
-                                    <th data-priority="3">Net Price:</th>
-                                    <th>Brand:</th>
-                                    <th>Preview:</th>
-                                    <th>Thumbnails:</th>
-                                    <th data-priority="2">Action:</th>
-                                </tr>
-                            </thead>
+<div class="row">
+    <div class="col-xl-12">
+        
+        {{-- === Current Products === --}}
+        <div class="card">
+            <div class="card-header">
+                <h3>
+                    @if (session('subcata_id'))
+                        Product List=> [{{session('cata_name')}}: {{session('subcata_name')}}]
+                        <a class="btn btn-link" href="{{route('clear.cata')}}">Reset Selection</a>
+                    @else
+                        Product List=> [ALL]
+                    @endif
+                </h3>
+                <h4>Total: 
+                    @if (session('cata_id'))
+                        {{session('cate_product')}}
+                    @else
+                        {{count($product_all)}}
+                    @endif
+                </h4>
+            </div>
+            <div class="card-body">
+                <form action="{{route('delete.checked')}}" method="POST" id="pro_form">
+                    @csrf
+                    <table class="table stripe sp_col" cellspacing="0" width="100%" id="product_table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="product_id" id="chk_all"></th>
+                                <th>SL:</th>
+                                <th data-priority="1">Product Name:</th>
+                                <th>Price:</th>
+                                <th>Discount:</th>
+                                <th data-priority="3">Net Price:</th>
+                                <th>Brand:</th>
+                                <th>Preview:</th>
+                                <th>Thumbnails:</th>
+                                <th data-priority="2">Action:</th>
+                            </tr>
+                        </thead>
 
-                            <tbody>
-                                @if (session('subcata_id'))
-                                    @foreach (App\Models\Product_list::where('subcata_id', session('subcata_id'))->get() as $key=>$product)
-                                        <tr style="background: white">
-                                            <td><input type="checkbox" name="product_id[]" class="chk_sel" value="{{$product->id}}"></td>
-                                            <td>{{$key+1}}</td>
-                                            <td>{{$product->product_name}}</td>
-                                            <td>{{$product->price}}</td>
-                                            <td>{{$product->discount}}</td>
-                                            <td>{{$product->after_disc}}</td>
-                                            <td>{{$product->brand}}</td>
-                                            <td>
-                                                <img width="80" src="{{asset('uploads/product/preview/')}}/{{$product->preview}}" alt="Product Photo">
-                                            </td>
-                                            <td>
-                                                @foreach (App\Models\Thumbnail::where('product_id', $product->id)->get() as $thumb)
-                                                    <img width="50" src="{{asset('uploads/product/thumbnails/')}}/{{$thumb->thumbnail}}" alt="Product Thumbnails">
-                                                @endforeach
-                                            </td>
-                                            <td style="text-align: center">
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
-                                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item edt_btn" href="{{route('product.edit', $product->id)}}">Edit</a>
-                                                        <a class="dropdown-item" href="{{route('product.inventory', $product->id)}}">Inventory</a>
-                                                        <button type="button" class="dropdown-item product_del" value="{{route('product.delete', $product->id)}}">Delete</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-
-                                @else 
-                                    @foreach ($product_all as $key=>$product)
+                        <tbody>
+                            @if (session('subcata_id'))
+                                @foreach (App\Models\Product_list::where('subcata_id', session('subcata_id'))->get() as $key=>$product)
                                     <tr style="background: white">
                                         <td><input type="checkbox" name="product_id[]" class="chk_sel" value="{{$product->id}}"></td>
                                         <td>{{$key+1}}</td>
@@ -181,45 +147,12 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                                @endforeach
 
-                        <button type="button" class="btn btn-warning d-none product_chk_del" id="chk_del">Delete All-Checked</button>
-                    </form>
-
-                </div>
-            </div>
-
-            {{-- === Trashed Products === --}}
-            <div class="card">
-                <div class="card-header">
-                    <h3>Trashed Products</h3>
-                    <h4>Total: {{count($product_trashed)}}</h4>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('fdel.checked')}}" method="POST" id="pro_tr_form">
-                        @csrf
-                        <table class="table table-striped stripe sp_col" cellspacing="0" width="100%" id="product_trash_table">
-                            <thead>
-                                <tr>
-                                    <th><input type="checkbox" name="product_id" id="chk_tr_all"></th>
-                                    <th>SL:</th>
-                                    <th data-priority="1">Product Name:</th>
-                                    <th>Price:</th>
-                                    <th>Discount:</th>
-                                    <th data-priority="3">After Discount:</th>
-                                    <th>Brand:</th>
-                                    <th>Preview:</th>
-                                    <th>Thumbnails:</th>
-                                    <th data-priority="2">Action:</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($product_trashed as $key=>$product)
+                            @else 
+                                @foreach ($product_all as $key=>$product)
                                 <tr style="background: white">
-                                    <td><input type="checkbox" name="product_id[]" class="chk_tr_sel" value="{{$product->id}}"></td>
+                                    <td><input type="checkbox" name="product_id[]" class="chk_sel" value="{{$product->id}}"></td>
                                     <td>{{$key+1}}</td>
                                     <td>{{$product->product_name}}</td>
                                     <td>{{$product->price}}</td>
@@ -240,20 +173,85 @@
                                                 <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item edt_btn" href="{{route('product.restore', $product->id)}}">Restore</a>
-                                                <button type="button" class="dropdown-item product_force_del" value="{{route('product.force_delete', $product->id)}}">Force Delete</button>
+                                                <a class="dropdown-item edt_btn" href="{{route('product.edit', $product->id)}}">Edit</a>
+                                                <a class="dropdown-item" href="{{route('product.inventory', $product->id)}}">Inventory</a>
+                                                <button type="button" class="dropdown-item product_del" value="{{route('product.delete', $product->id)}}">Delete</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                            @endif
+                        </tbody>
+                    </table>
 
-                        <button class="btn btn-success d-none chk_tr_btn" formaction="{{route('restore.checked')}}">Restore Checked</button>
-                        <button type="button" class="btn btn-danger d-none chk_tr_btn product_chk_tr_del">Force Delete Checked</button>
-                    </form>
-                </div>
+                    <button type="button" class="btn btn-warning d-none product_chk_del" id="chk_del">Delete All-Checked</button>
+                </form>
+
+            </div>
+        </div>
+
+        {{-- === Trashed Products === --}}
+        <div class="card">
+            <div class="card-header">
+                <h3>Trashed Products</h3>
+                <h4>Total: {{count($product_trashed)}}</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{route('fdel.checked')}}" method="POST" id="pro_tr_form">
+                    @csrf
+                    <table class="table table-striped stripe sp_col" cellspacing="0" width="100%" id="product_trash_table">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" name="product_id" id="chk_tr_all"></th>
+                                <th>SL:</th>
+                                <th data-priority="1">Product Name:</th>
+                                <th>Price:</th>
+                                <th>Discount:</th>
+                                <th data-priority="3">After Discount:</th>
+                                <th>Brand:</th>
+                                <th>Preview:</th>
+                                <th>Thumbnails:</th>
+                                <th data-priority="2">Action:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($product_trashed as $key=>$product)
+                            <tr style="background: white">
+                                <td><input type="checkbox" name="product_id[]" class="chk_tr_sel" value="{{$product->id}}"></td>
+                                <td>{{$key+1}}</td>
+                                <td>{{$product->product_name}}</td>
+                                <td>{{$product->price}}</td>
+                                <td>{{$product->discount}}</td>
+                                <td>{{$product->after_disc}}</td>
+                                <td>{{$product->brand}}</td>
+                                <td>
+                                    <img width="80" src="{{asset('uploads/product/preview/')}}/{{$product->preview}}" alt="Product Photo">
+                                </td>
+                                <td>
+                                    @foreach (App\Models\Thumbnail::where('product_id', $product->id)->get() as $thumb)
+                                        <img width="50" src="{{asset('uploads/product/thumbnails/')}}/{{$thumb->thumbnail}}" alt="Product Thumbnails">
+                                    @endforeach
+                                </td>
+                                <td style="text-align: center">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                            <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item edt_btn" href="{{route('product.restore', $product->id)}}">Restore</a>
+                                            <button type="button" class="dropdown-item product_force_del" value="{{route('product.force_delete', $product->id)}}">Force Delete</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <button class="btn btn-success d-none chk_tr_btn" formaction="{{route('restore.checked')}}">Restore Checked</button>
+                    <button type="button" class="btn btn-danger d-none chk_tr_btn product_chk_tr_del">Force Delete Checked</button>
+                </form>
             </div>
         </div>
     </div>

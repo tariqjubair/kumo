@@ -24,99 +24,97 @@
         <li class="breadcrumb-item active"><a href="javascript:void(0)">Profile</a></li>
     </ol>
 </div>
-<div class="container-fluid">
-    <div class="row">
+<div class="row">
 
-        {{-- === Update User Info === --}}
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3>User Info:</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('user.info.update')}}" method="POST">
-                        @csrf
-                        <div class="item_div mb-4">
-                            <label class="form-lable">Name:</label>
-                            <input type="text" name="name" class="form-control" value="{{Auth::user()->name}}">
-                            @error('name')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <div class="item_div mb-4">
-                            <label class="form-lable">Email:</label>
-                            <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}">
-                            @error('email')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Info</button>
-                    </form>
-                </div>
+    {{-- === Update User Info === --}}
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>User Info:</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{route('user.info.update')}}" method="POST">
+                    @csrf
+                    <div class="item_div mb-4">
+                        <label class="form-lable">Name:</label>
+                        <input type="text" name="name" class="form-control" value="{{Auth::user()->name}}">
+                        @error('name')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <div class="item_div mb-4">
+                        <label class="form-lable">Email:</label>
+                        <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}">
+                        @error('email')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Info</button>
+                </form>
             </div>
         </div>
+    </div>
 
-        {{-- === Update User Pass === --}}
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Password:</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('user.pass.update')}}" method="POST">
-                        @csrf
-                        <div class="item_div mb-4" style="position: relative">
-                            <i class="fad fa-eye" id="old_pass"></i>
-                            <label class="form-lable">Old Password:</label>
-                            <input type="password" name="old_password" class="form-control" id="inp1" autocomplete="new-password">
-                            @error('old_password')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                            @if (session('old_pass_err'))
-                                <strong class="text-danger">{{session('old_pass_err')}}</strong>
-                            @endif
-                        </div>
-                        <div class="item_div mb-4" style="position: relative">
-                            <i class="fad fa-eye" id="pass"></i>
-                            <label class="form-lable">New Password:</label>
-                            <input type="password" name="password" class="form-control" id="inp2" autocomplete="new-password">
-                            @error('password')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <div class="item_div mb-4" style="position: relative">
-                            <i class="fad fa-eye" id="cpass"></i>
-                            <label class="form-lable">Confirm Password:</label>
-                            <input type="password" name="password_confirmation" class="form-control" id="inp3" autocomplete="new-password">
-                            @error('password_confirmation')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Password</button>
-                    </form>
-                </div>
+    {{-- === Update User Pass === --}}
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>Password:</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{route('user.pass.update')}}" method="POST">
+                    @csrf
+                    <div class="item_div mb-4" style="position: relative">
+                        <i class="fad fa-eye" id="old_pass"></i>
+                        <label class="form-lable">Old Password:</label>
+                        <input type="password" name="old_password" class="form-control" id="inp1" autocomplete="new-password">
+                        @error('old_password')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                        @if (session('old_pass_err'))
+                            <strong class="text-danger">{{session('old_pass_err')}}</strong>
+                        @endif
+                    </div>
+                    <div class="item_div mb-4" style="position: relative">
+                        <i class="fad fa-eye" id="pass"></i>
+                        <label class="form-lable">New Password:</label>
+                        <input type="password" name="password" class="form-control" id="inp2" autocomplete="new-password">
+                        @error('password')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <div class="item_div mb-4" style="position: relative">
+                        <i class="fad fa-eye" id="cpass"></i>
+                        <label class="form-lable">Confirm Password:</label>
+                        <input type="password" name="password_confirmation" class="form-control" id="inp3" autocomplete="new-password">
+                        @error('password_confirmation')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Password</button>
+                </form>
             </div>
         </div>
+    </div>
 
-        {{-- === Update User Pic === --}}
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Profile Picture:</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('user.pic.update')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="item_div mb-4">
-                            <label class="form-lable">Image:</label>
-                            <input type="file" name="image" class="form-control">
-                            @error('image')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Picture</button>
-                    </form>
-                </div>
+    {{-- === Update User Pic === --}}
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>Profile Picture:</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{route('user.pic.update')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="item_div mb-4">
+                        <label class="form-lable">Image:</label>
+                        <input type="file" name="image" class="form-control">
+                        @error('image')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Picture</button>
+                </form>
             </div>
         </div>
     </div>

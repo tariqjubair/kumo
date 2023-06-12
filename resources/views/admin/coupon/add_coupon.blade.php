@@ -34,179 +34,177 @@
         <li class="breadcrumb-item active"><a href="javascript:void(0)">Add Coupon</a></li>
     </ol>
 </div>
-<div class="container-fluid">
-    <div class="row">
+<div class="row">
 
-        {{-- === Add Coupon === --}}
-        <div class="col-xl-8">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Add New Coupon:</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('coupon.store')}}" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="item_div mb-4">
-                                    <label class="form-lable">* Coupon Name:</label>
-                                    <input type="text" name="coupon_name" class="form-control" value="{{old('coupon_name')}}">
-                                    @error('coupon_name')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
-                                <div class="item_div mb-4">
-                                    <label class="form-lable">* Coupon Type:</label>
-                                    <select name="coupon_type" class="form-control">
-                                        <option value="">-- Select Type</option>
-                                        @foreach ($coup_type_all as $coup_type)
-                                            <option {{$coup_type->id == old('coupon_type') ?'selected' :''}}
-                                            value="{{$coup_type->id}}">{{$coup_type->coupon_type}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('coupon_type')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
-                                <div class="item_div mb-4">
-                                    <label class="form-lable">* Validity:</label>
-                                    <input type="date" name="validity" class="form-control" value="{{old('validity')}}">
-                                    @error('validity')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
-                                <div class="item-div mb-4">
-                                    <label for="" class="form-lable">* Coupon Discount:</label>
-                                    <input type="number" name="disc" class="form-control" value="{{old('disc')}}">
-                                    @error('disc')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
+    {{-- === Add Coupon === --}}
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="card-header">
+                <h3>Add New Coupon:</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{route('coupon.store')}}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="item_div mb-4">
+                                <label class="form-lable">* Coupon Name:</label>
+                                <input type="text" name="coupon_name" class="form-control" value="{{old('coupon_name')}}">
+                                @error('coupon_name')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
                             </div>
-                            <div class="col-xl-6">
-                                <div class="item-div mb-4">
-                                    <label for="" class="form-lable">Min. Purchase:</label>
-                                    <input type="number" name="min_total" class="form-control" value="{{old('min_total') != null ?old('min_total') :''}}">
-                                    @error('min_total')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
-                                <div class="item-div mb-4">
-                                    <label for="" class="form-lable">Least Discounted Amount: (Perc. use)</label>
-                                    <input type="number" name="least_disc" class="form-control" value="{{old('least_disc')}}">
-                                    @error('least_disc')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
-                                <div class="item-div mb-4">
-                                    <label for="" class="form-lable">Most Discounted Amount: (Perc. use)</label>
-                                    <input type="number" name="most_disc" class="form-control" value="{{old('most_disc')}}">
-                                    @error('most_disc')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
-                                <div class="item-div mb-4">
-                                    <label for="" class="form-lable">Sub Category: (Cate. use only)</label>
-                                    <select name="subcata[]" class="form-control select2" multiple="multiple">
-                                        <option value="">-- Select Subcategory --</option>
-                                        @foreach (App\Models\Subcategory::all() as $subcata)
-                                            <option {{collect(old('subcata'))->contains($subcata->id) ?'selected' :''}}
-                                            value="{{$subcata->id}}">{{$subcata->sub_cata_name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('subcata')
-                                        <strong class="text-danger err">{{$message}}</strong>
-                                    @enderror
-                                </div>
+                            <div class="item_div mb-4">
+                                <label class="form-lable">* Coupon Type:</label>
+                                <select name="coupon_type" class="form-control">
+                                    <option value="">-- Select Type</option>
+                                    @foreach ($coup_type_all as $coup_type)
+                                        <option {{$coup_type->id == old('coupon_type') ?'selected' :''}}
+                                        value="{{$coup_type->id}}">{{$coup_type->coupon_type}}</option>
+                                    @endforeach
+                                </select>
+                                @error('coupon_type')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
                             </div>
-                            <div class="col-xl-5 m-auto">
-                                <div class="item_div mt-2 mb-4">
-                                    <button type="submit" class="btn btn-primary w-100">Add Coupon</button>
-                                </div>
+                            <div class="item_div mb-4">
+                                <label class="form-lable">* Validity:</label>
+                                <input type="date" name="validity" class="form-control" value="{{old('validity')}}">
+                                @error('validity')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
+                            </div>
+                            <div class="item-div mb-4">
+                                <label for="" class="form-lable">* Coupon Discount:</label>
+                                <input type="number" name="disc" class="form-control" value="{{old('disc')}}">
+                                @error('disc')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-xl-6">
+                            <div class="item-div mb-4">
+                                <label for="" class="form-lable">Min. Purchase:</label>
+                                <input type="number" name="min_total" class="form-control" value="{{old('min_total') != null ?old('min_total') :''}}">
+                                @error('min_total')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
+                            </div>
+                            <div class="item-div mb-4">
+                                <label for="" class="form-lable">Least Discounted Amount: (Perc. use)</label>
+                                <input type="number" name="least_disc" class="form-control" value="{{old('least_disc')}}">
+                                @error('least_disc')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
+                            </div>
+                            <div class="item-div mb-4">
+                                <label for="" class="form-lable">Most Discounted Amount: (Perc. use)</label>
+                                <input type="number" name="most_disc" class="form-control" value="{{old('most_disc')}}">
+                                @error('most_disc')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
+                            </div>
+                            <div class="item-div mb-4">
+                                <label for="" class="form-lable">Sub Category: (Cate. use only)</label>
+                                <select name="subcata[]" class="form-control select2" multiple="multiple">
+                                    <option value="">-- Select Subcategory --</option>
+                                    @foreach (App\Models\Subcategory::all() as $subcata)
+                                        <option {{collect(old('subcata'))->contains($subcata->id) ?'selected' :''}}
+                                        value="{{$subcata->id}}">{{$subcata->sub_cata_name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('subcata')
+                                    <strong class="text-danger err">{{$message}}</strong>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-xl-5 m-auto">
+                            <div class="item_div mt-2 mb-4">
+                                <button type="submit" class="btn btn-primary w-100">Add Coupon</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-
-        {{-- === Coupon Type === --}}
-        <div class="col-xl-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Add New Coupon-Type:</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('add.coupon_type')}}" method="POST">
-                        @csrf
-                        <div class="item-div mb-4">
-                            <label for="" class="form-lable">Coupon Type:</label>
-                            <input type="text" name="add_coupon_type" class="form-control" value="{{old('add_coupon_type')}}">
-                            @error('add_coupon_type')
-                                <strong class="text-danger err">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <div class="item-div mb-4">
-                            <label for="" class="form-lable">Color: (Optional)</label>
-                            <select name="coupon_col" class="form-control">
-                                <option value=""> -- Select Color-Class</option>
-                                <option value="primary">Primary</option>
-                                <option value="secondary">Secondary</option>
-                                <option value="success">Success</option>
-                                <option value="danger">Danger</option>
-                                <option value="warning">Warning</option>
-                                <option value="info">Info</option>
-                                <option value="light">Light</option>
-                                <option value="dark">Dark</option>
-                            </select>
-                            @error('add_coupon_type')
-                                <strong class="text-danger err">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <div class="item_div mt-2 mb-4">
-                            <button type="submit" class="btn btn-primary">Add Type</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h3>Current Coupon Types:</h3>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Sr:</th>
-                                <th>Type Name:</th>
-                                <th>Action:</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($coup_type_all as $sl=>$coup_type)
-                            <tr>
-                                <td>{{$sl+1}}</td>
-                                <td>{{$coup_type->coupon_type}}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
-                                            <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="{{route('ctype.edit', $coup_type->id)}}">Edit Type</a>
-                                            <button class="dropdown-item del_ctype" value="{{route('ctype.delete', $coup_type->id)}}">Delete</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
     </div>
+
+    {{-- === Coupon Type === --}}
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-header">
+                <h3>Add New Coupon-Type:</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{route('add.coupon_type')}}" method="POST">
+                    @csrf
+                    <div class="item-div mb-4">
+                        <label for="" class="form-lable">Coupon Type:</label>
+                        <input type="text" name="add_coupon_type" class="form-control" value="{{old('add_coupon_type')}}">
+                        @error('add_coupon_type')
+                            <strong class="text-danger err">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <div class="item-div mb-4">
+                        <label for="" class="form-lable">Color: (Optional)</label>
+                        <select name="coupon_col" class="form-control">
+                            <option value=""> -- Select Color-Class</option>
+                            <option value="primary">Primary</option>
+                            <option value="secondary">Secondary</option>
+                            <option value="success">Success</option>
+                            <option value="danger">Danger</option>
+                            <option value="warning">Warning</option>
+                            <option value="info">Info</option>
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                        @error('add_coupon_type')
+                            <strong class="text-danger err">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <div class="item_div mt-2 mb-4">
+                        <button type="submit" class="btn btn-primary">Add Type</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Current Coupon Types:</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Sr:</th>
+                            <th>Type Name:</th>
+                            <th>Action:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($coup_type_all as $sl=>$coup_type)
+                        <tr>
+                            <td>{{$sl+1}}</td>
+                            <td>{{$coup_type->coupon_type}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="{{route('ctype.edit', $coup_type->id)}}">Edit Type</a>
+                                        <button class="dropdown-item del_ctype" value="{{route('ctype.delete', $coup_type->id)}}">Delete</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
 </div>
 @endsection
 
