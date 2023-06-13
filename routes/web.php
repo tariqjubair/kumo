@@ -195,6 +195,8 @@ Route::get('/roles/users/edit_roles/{user_id}', [RoleCont::class, 'user_role_edi
 Route::post('/roles/users/update_roles', [RoleCont::class, 'user_role_update'])->name('user_role.update');
 Route::get('/roles/users/remove/{user_id}', [RoleCont::class, 'user_role_remove'])->name('user_role.remove');
 
+Route::post('/get_user_status', [RoleCont::class, 'user_status_pulse']);
+
 
 
 // === Category ===

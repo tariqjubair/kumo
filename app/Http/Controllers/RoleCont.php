@@ -10,6 +10,7 @@ use App\Notifications\RoleNotif;
 use App\Notifications\RoleRemoved;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -167,7 +168,7 @@ class RoleCont extends Controller
         $user = User::find($request->user_id);
         $user->syncRoles($request->role_id);
         $user->update([
-            'status' => 1,
+            'status' => 2,
         ]);
 
         $msg = 'NEW ROLE HAS BEEN ASSIGNED!';
@@ -194,9 +195,23 @@ class RoleCont extends Controller
         DB::table('model_has_permissions')->where('model_id', $user_id)->delete();
         DB::table('model_has_roles')->where('model_id', $user_id)->delete();
 
+        $user->update([
+            'status' => 0,
+        ]);
+
         $msg = 'Role HAS BEEN REMOVED';
         Notification::send($user, new RoleRemoved($user, $msg));
         return back()->with('del', 'Role Removed from User!');
+    }
+
+    // === User Status Pulse ===
+    function user_status_pulse(Request $request){
+        $user = User::find(Auth::id());
+        if($user->status == 2){
+            $user->update([
+                'status' => 1,
+            ]);
+        }
     }
 
     
@@ -289,7 +304,7 @@ class RoleCont extends Controller
         $user->syncRoles($request->role_id);
         $user->syncPermissions($request->perm_id);
         $user->update([
-            'status' => 1,
+            'status' => 2,
         ]);
 
         $msg = 'ROLE HAS BEEN UPDATED!';

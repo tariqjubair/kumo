@@ -105,7 +105,7 @@
 										$user_role = Auth::user()->getRoleNames()->first();
 									@endphp
 
-									@if ($user_info->status == 1)
+									@if ($user_info->status == 2)
 										<div class="pulse-css"></div>
 									@endif
                                 </a>
@@ -113,8 +113,8 @@
                                     <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 height380">
 										<ul class="timeline" style="border: none">
 											<li>
-												@if ($user_info->status == 1)
-													<a href="{{route('user.role')}}">
+												@if ($user_info->status != 0)
+													<a href="{{route('user.role')}}" class="notif_link">
 														<div class="timeline-panel">
 															<div class="media mr-2">
 																<img alt="image" width="50" src="{{asset('dashboard/images/role.png')}}">
@@ -496,6 +496,7 @@
 	{{-- === Notification Pulse === --}}
 	<script>
 		$('.ai-icon').click(function(){
+			$(this).find('.pulse-css').addClass('d-none');
 
 			$.ajaxSetup({
 				headers: {
@@ -504,16 +505,9 @@
 			});
 			
 			$.ajax ({
-			url: '/get_subcata',
-			type: 'POST',
-			data: {'cata_id': cata_id},
-			
-			//Data Receive from controller
-			success: function(data){
-				// alert(data);
-				$('#subcata_sec').html(data);
-			}
-		})
+				url: '/get_user_status',
+				type: 'POST',
+			})
 		})
 	</script>
 
