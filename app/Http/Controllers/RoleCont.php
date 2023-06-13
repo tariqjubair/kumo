@@ -166,6 +166,9 @@ class RoleCont extends Controller
 
         $user = User::find($request->user_id);
         $user->syncRoles($request->role_id);
+        $user->update([
+            'status' => 1,
+        ]);
 
         $msg = 'NEW ROLE HAS BEEN ASSIGNED!';
         Notification::send($user, new RoleAssigned($user, $msg));
@@ -285,6 +288,9 @@ class RoleCont extends Controller
         $user = User::find($request->user_id);
         $user->syncRoles($request->role_id);
         $user->syncPermissions($request->perm_id);
+        $user->update([
+            'status' => 1,
+        ]);
 
         $msg = 'ROLE HAS BEEN UPDATED!';
         Notification::send($user, new RoleAssigned($user, $msg));

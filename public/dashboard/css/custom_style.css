@@ -2,6 +2,17 @@
 /* ===== Custom CSS Dashboard ========= */
 /* ====================================== */
 
+/* === Dash Loader === */
+#dash_loader{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #FFFFFF url("/dashboard/images/loading_gears.gif") no-repeat center;
+    background-size: 200px;
+    z-index: 9999;
+    display: none;
+}
+
 
 /* === Custom Dashboard === */
 .container-fluid {

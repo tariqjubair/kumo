@@ -163,6 +163,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/user_list', [userController::class, 'user_list'])->name('user_list');
 Route::get('/user/delete/{user_id}', [userController::class, 'user_del'])->name('user_del');
 Route::get('/user/profile', [userController::class, 'profile'])->name('user.profile');
+Route::get('/user/role', [userController::class, 'user_role'])->name('user.role');
 Route::post('/user/info/update', [userController::class, 'user_info_upd'])->name('user.info.update');
 Route::post('/user/pass/update', [userController::class, 'user_pass_upd'])->name('user.pass.update');
 Route::post('/user/pic/update', [userController::class, 'user_pic_upd'])->name('user.pic.update');

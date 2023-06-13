@@ -92,7 +92,7 @@
                                 <strong class="text-danger">{{$message}}</strong>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary">Update User Role</button>
+                        <button type="submit" id="upd_user_role_btn" class="btn btn-primary">Update User Role</button>
                     </form>
                 </div>
             </div>
@@ -111,6 +111,15 @@
         $('.select2').select2();
         $('b[role="presentation"]').hide();
         $('.select2-selection__arrow').append('<i class="fad fa-sort-up"></i>');
+    });
+</script>
+
+{{-- === Dash preloader on Submit === --}}
+<script>
+    $(document).ready(function () {
+        $("#upd_user_role_btn").click(function () {
+            $("#dash_loader").show();
+        });
     });
 </script>
 @endsection

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 use Intervention\Image\Facades\Image;
-
+use Spatie\Permission\Models\Role;
 
 class userController extends Controller
 {
@@ -34,6 +34,19 @@ class userController extends Controller
     // === User Profile Page ===
     function profile(){
         return view('admin.user.profile');
+    }
+
+
+    // === User Role-Permission Page ===
+    function user_role(){
+        $user_info = User::find(Auth::user()->id);
+        $user_info->update([
+            'status' => 0,
+        ]);
+
+        return view('admin.user.role', [
+            'user_info' => $user_info,
+        ]);
     }
 
     // === Add User ===
@@ -107,14 +120,21 @@ class userController extends Controller
 
     // === User Pic Update ===
     function user_pic_upd(Request $request){
+        $user_info = User::find(Auth::id());
+
         $request->validate([
             'image' => 'required|mimes:png,jpg|max:1024',
         ]);
 
+        if($user_info->image){
+            $del_old_image = public_path('uploads/user/'.$user_info->image);
+            unlink($del_old_image);
+        }
+
         $uploaded_file = $request->image;
         $ext = $uploaded_file->getClientOriginalExtension();
         $file_name = Auth::id().'.'.$ext;
-        Image::make($uploaded_file)->resize(300, 200)->save(public_path('uploads/user/'. $file_name));
+        Image::make($uploaded_file)->resize(200, 200)->save(public_path('uploads/user/'. $file_name));
 
         User::find(Auth::id())->update([
             'image' => $file_name,

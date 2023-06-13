@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xl-12">
+    <div class="col-xl-9">
         <div class="card">
             <div class="card-header">
                 <h3>Manage Rolls:</h3>
@@ -56,7 +56,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-6 m-xl-auto">
+    <div class="col-xl-3">
         <div class="card">
             <div class="card-header">
                 <h3>Assign Role:</h3>
@@ -89,7 +89,7 @@
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Assign Role</button>
+                    <button class="btn btn-primary" id="assign_role_btn">Assign Role</button>
                 </form>
             </div>
         </div>
@@ -128,5 +128,14 @@
             }
         })
     })
+</script>
+
+{{-- === Dash preloader on Submit === --}}
+<script>
+    $(document).ready(function () {
+        $("#assign_role_btn").click(function () {
+            $("#dash_loader").show();
+        });
+    });
 </script>
 @endsection

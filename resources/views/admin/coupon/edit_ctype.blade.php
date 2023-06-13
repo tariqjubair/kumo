@@ -30,7 +30,7 @@
                     <div class="item-div mb-4">
                         <label for="" class="form-lable">Color: (Optional)</label>
                         <select name="coupon_col" class="form-control">
-                            <option value="{{$ctype_info->id}}">{{$ctype_info->color}}</option>
+                            <option value="{{$ctype_info->color}}">{{$ctype_info->color}}</option>
                             <option value="">N/A</option>
                             <option value="primary">Primary</option>
                             <option value="secondary">Secondary</option>

@@ -93,9 +93,11 @@
             }).then((result) => {
             if (result.isConfirmed) {
                 var link = $(this).val();
+                $("#dash_loader").show();
                 window.location.href = link;
             }
         })
     })
 </script>
+
 @endsection
