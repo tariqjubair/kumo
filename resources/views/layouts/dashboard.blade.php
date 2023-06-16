@@ -102,7 +102,7 @@
 									</svg>
 									@php
 										$user_info = App\Models\User::where('id', Auth::user()->id)->first();
-										$user_notif = App\Models\UserNotif::where('email', Auth::user()->email)->where('status', 1)->get();
+										$user_notif = App\Models\UserNotif::where('email', Auth::user()->email)->where('status', 1)->latest('id')->get();
 										$user_role = Auth::user()->getRoleNames()->first();
 									@endphp
 

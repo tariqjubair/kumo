@@ -163,6 +163,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/user_list', [userController::class, 'user_list'])->name('user_list');
 Route::get('/user/delete/{user_id}', [userController::class, 'user_del'])->name('user_del');
 Route::get('/user/profile', [userController::class, 'profile'])->name('user.profile');
+Route::get('/user/profile/{user_id}', [userController::class, 'other_users_profile'])->name('other_users.profile');
 Route::get('/user/role', [userController::class, 'user_role'])->name('user.role');
 Route::get('/user/notifications', [userController::class, 'user_notifications'])->name('user.notif');
 Route::post('/user/info/update', [userController::class, 'user_info_upd'])->name('user.info.update');
@@ -171,9 +172,13 @@ Route::post('/user/pic/update', [userController::class, 'user_pic_upd'])->name('
 
 Route::get('/user/add_user', [userController::class, 'add_user'])->name('add.user');
 Route::post('/user/insert_user', [userController::class, 'insert_user'])->name('insert.user');
+
 Route::get('/user/notification_route/{ext_info}', [userController::class, 'notif_route'])->name('notif.route');
 Route::get('/user/notification_delete/{notif_id}', [userController::class, 'notif_delete'])->name('notif.delete');
 
+Route::post('/other_user/info/update', [userController::class, 'other_user_info_upd'])->name('other_user.info.update');
+Route::post('/other_user/pass/update', [userController::class, 'other_user_pass_upd'])->name('other_user.pass.update');
+Route::post('/other_user/pic/update', [userController::class, 'other_user_pic_upd'])->name('other_user.pic.update');
 
 
 // ==== Roles ====

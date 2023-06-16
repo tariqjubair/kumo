@@ -23,7 +23,8 @@
                             <th>SL:</th>
                             <th>Profile Pic:</th>
                             <th data-priority="1">Name of User:</th>
-                            <th data-priority="3">Email:</th>
+                            <th data-priority="3">Role:</th>
+                            <th data-priority="4">Email:</th>
                             <th>Created At:</th>
                             <th data-priority="2">Action:</th>
                         </tr>   
@@ -42,9 +43,20 @@
                                 @endauth
                             </td>
                             <td>{{$user->name}}</td>
+                            <td>{{$user->getRoleNames()->first()}}</td>
                             <td>{{$user->email}}</td>
-                            <td>{{$user->created_at}}</td>
-                            <td style="text-align: center"><button class="btn btn-danger del_btn" value="{{route('user_del', $user->id)}}" {{Auth::user()->role == 1 ?'' :'disabled'}}>Delete User</button></td>
+                            <td>{{$user->created_at->format('d-M-y')}}</td>
+                            <td style="text-align: center">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item edt_btn" href="{{route('other_users.profile', $user->id)}}">View</a>
+                                        <button class="dropdown-item del_btn" value="{{route('user_del', $user->id)}}">Delete</button>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

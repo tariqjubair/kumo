@@ -23,7 +23,6 @@
                         <h4 class="text-center mt-4 mb-4 text-white">Add New User:</h4>
                         <form action="{{route('insert.user')}}" method="POST">
                             @csrf
-                            <input type="hidden" name="creator" value="{{Auth::id()}}">
 
                             <div class="form-group">
                                 <label class="mb-1 text-white"><strong>Username</strong></label>

@@ -43,7 +43,7 @@
                                 <div class="item my-2">{{$user_info->name}}</div>
                             </td>
                             <td>
-                                <span class="badge badge-secondary my-1">{{$user_role ?$user_role :'User'}}</span>
+                                <span class="badge badge-secondary my-1">{{$user_role ?$user_role :'Visitor'}}</span>
                             </td>
                             <td>
                                 @foreach ($user_info->getPermissionsViaRoles() as $perm)

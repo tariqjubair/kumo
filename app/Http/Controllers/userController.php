@@ -30,25 +30,51 @@ class userController extends Controller
 
     // === Delete User ===
     function user_del($user_id){
+        $user = User::find($user_id);
+
+        UserNotif::insert([
+            'fname' => explode(' ', trim($user->name))[0],
+            'email' => $user->email,
+            'image' => 'user_del.png',
+            'heading' => 'User Deleted',
+            'route' => 'profile',
+            'status' => 1,
+            'creator' => Auth::id(),
+            'created_at' => Carbon::now(),
+        ]);
+
         User::find($user_id)-> delete();
         return back()->with('del_success', 'User Deleted Successfully!');
     }
 
     // === User Profile Page ===
     function profile(){
-        $user_notif = UserNotif::where('email', Auth::user()->email)->where('route', 'profile')->first();
-        $user_notif->update([
-            'status' => 0,
-        ]);
+        $user_notif = UserNotif::where('email', Auth::user()->email)->where('route', 'profile');
+
+        if($user_notif->exists()){
+            $user_notif->first()->update([
+                'status' => 0,
+            ]);
+        }
 
         return view('admin.user.profile');
+    }
+
+
+    // === Other Users Profile ===
+    function other_users_profile($user_id){
+        $user_info = User::find($user_id);
+
+        return view('admin.user.other_users_profile', [
+            'user_info' => $user_info,
+        ]);
     }
 
 
     // === User Role-Permission Page ===
     function user_role(){
         $user_info = User::find(Auth::user()->id);
-        $user_notif = UserNotif::where('email', Auth::user()->email)->where('route', 'role')->get();
+        $user_notif = UserNotif::where('email', Auth::user()->email)->where('route', 'role')->orWhere('route', 'role_upd')->orWhere('route', 'role_del')->get();
         
         foreach($user_notif as $role){
             $role->update([
@@ -66,7 +92,7 @@ class userController extends Controller
     function user_notifications(){
         $user_notif = UserNotif::where('email', Auth::user()->email);
         $notif_count = $user_notif->count();
-        $notif_all = $user_notif->get();
+        $notif_all = $user_notif->latest('id')->get();
 
         return view('admin.user.notif', [
             'notif_count' => $notif_count,
@@ -101,10 +127,22 @@ class userController extends Controller
                 'msg' => 'Welcome to Kumo Dashboard! Please update your Profile.'
             ]);
         }
-        if($ext_info == 'role'){
+        else if($ext_info == 'role'){
             return redirect()->route('user.role')->with([
                 'user_name' => $user_name,
                 'msg' => 'Congratulations on your New Role! Please review permissions assigned to you.'
+            ]);
+        }
+        else if($ext_info == 'role_upd'){
+            return redirect()->route('user.role')->with([
+                'user_name' => $user_name,
+                'msg' => 'Permission List is Updated! Please review permissions assigned to you.'
+            ]);
+        }
+        else if($ext_info == 'role_del'){
+            return redirect()->route('user.role')->with([
+                'user_name' => $user_name,
+                'msg' => 'Sorry to inform that Role is Removed. All assigned permissions are revoked.'
             ]);
         }
     }
@@ -139,7 +177,7 @@ class userController extends Controller
             'heading' => 'Welcome! User Created',
             'route' => 'profile',
             'status' => 1,
-            'creator' => explode(' ', trim($request->creator))[0],
+            'creator' => Auth::id(),
             'created_at' => Carbon::now(),
         ]);
 
@@ -173,6 +211,18 @@ class userController extends Controller
         return back()->with('info_upd','Your Information Updated!');
     }
 
+    function other_user_info_upd(Request $request){
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        User::find($request->user_id)-> update([
+            'name' => $request->name,
+        ]);
+
+        return back()->with('info_upd','User Information Updated!');
+    }
+
     // === User Pass Update ===
     function user_pass_upd(Request $request){
         $request->validate([
@@ -190,6 +240,18 @@ class userController extends Controller
         else {
             return back()->with('old_pass_err', 'Password does not Match!');
         }
+    }
+
+    function other_user_pass_upd(Request $request){
+        $request->validate([
+            'password'=> ['required', Password::min(8)->letters()->mixedCase()->numbers()->symbols(), 'confirmed'],
+		    'password_confirmation'=> 'required',
+        ]);
+
+        User::find($request->user_id)->update([
+            'password' => bcrypt($request->password),
+        ]);
+        return back()->with('pass_upd', 'Password Updated!');
     }
 
     // === User Pic Update ===
@@ -211,6 +273,29 @@ class userController extends Controller
         Image::make($uploaded_file)->resize(200, 200)->save(public_path('uploads/user/'. $file_name));
 
         User::find(Auth::id())->update([
+            'image' => $file_name,
+        ]);
+        return back()->with('img_upd', 'Profile Pic Updated!');
+    }
+
+    function other_user_pic_upd(Request $request){
+        $user_info = User::find($request->user_id);
+
+        $request->validate([
+            'image' => 'required|mimes:png,jpg|max:1024',
+        ]);
+
+        if($user_info->image){
+            $del_old_image = public_path('uploads/user/'.$user_info->image);
+            unlink($del_old_image);
+        }
+
+        $uploaded_file = $request->image;
+        $ext = $uploaded_file->getClientOriginalExtension();
+        $file_name = $request->user_id.'.'.$ext;
+        Image::make($uploaded_file)->resize(200, 200)->save(public_path('uploads/user/'. $file_name));
+
+        User::find($request->user_id)->update([
             'image' => $file_name,
         ]);
         return back()->with('img_upd', 'Profile Pic Updated!');

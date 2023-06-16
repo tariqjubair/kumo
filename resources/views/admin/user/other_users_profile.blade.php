@@ -21,7 +21,7 @@
 <div class="page-titles">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-        <li class="breadcrumb-item active"><a href="javascript:void(0)">Profile</a></li>
+        <li class="breadcrumb-item active"><a href="javascript:void(0)">User Profile: <span class="text-danger">{{$user_info->name}}</span></a></li>
     </ol>
 </div>
 <div class="row">
@@ -33,18 +33,19 @@
                 <h3>User Info:</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('user.info.update')}}" method="POST">
+                <form action="{{route('other_user.info.update')}}" method="POST">
                     @csrf
+                    <input type="hidden" name="user_id" value="{{$user_info->id}}">
                     <div class="item_div mb-4">
                         <label class="form-lable">Name:</label>
-                        <input type="text" name="name" class="form-control" value="{{Auth::user()->name}}">
+                        <input type="text" name="name" class="form-control" value="{{$user_info->name}}">
                         @error('name')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Email:</label>
-                        <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}" readonly>
+                        <input type="text" name="email" class="form-control" value="{{$user_info->email}}" readonly>
                         @error('email')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
@@ -62,19 +63,9 @@
                 <h3>Password:</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('user.pass.update')}}" method="POST">
+                <form action="{{route('other_user.pass.update')}}" method="POST">
                     @csrf
-                    <div class="item_div mb-4" style="position: relative">
-                        <i class="fad fa-eye" id="old_pass"></i>
-                        <label class="form-lable">Old Password:</label>
-                        <input type="password" name="old_password" class="form-control" id="inp1" autocomplete="new-password">
-                        @error('old_password')
-                            <strong class="text-danger">{{$message}}</strong>
-                        @enderror
-                        @if (session('old_pass_err'))
-                            <strong class="text-danger">{{session('old_pass_err')}}</strong>
-                        @endif
-                    </div>
+                    <input type="hidden" name="user_id" value="{{$user_info->id}}">
                     <div class="item_div mb-4" style="position: relative">
                         <i class="fad fa-eye" id="pass"></i>
                         <label class="form-lable">New Password:</label>
@@ -104,8 +95,9 @@
                 <h3>Profile Picture:</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('user.pic.update')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('other_user.pic.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="user_id" value="{{$user_info->id}}">
                     <div class="item_div mb-4">
                         <label class="form-lable">Image:</label>
                         <input type="file" name="image" class="form-control" onchange="document.getElementById('balah').src=window.URL.createObjectURL(this.files[0])">
@@ -114,10 +106,10 @@
                         @enderror
 
                         <div class="item_div m-4">
-                            @if (Auth::user()->image != null)
-                                <img width="80" height="80" id="balah" src="{{asset('uploads/user')}}/{{Auth::user()->image}}" alt="Profile Image">
+                            @if ($user_info->image != null)
+                                <img width="80" height="80" id="balah" src="{{asset('uploads/user')}}/{{$user_info->image}}" alt="Profile Image">
                             @else
-                                <img width="80" id="balah" src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" />
+                                <img width="80" id="balah" src="{{ Avatar::create($user_info->name)->toBase64() }}" />
                             @endif
                         </div>
                     </div>

@@ -178,10 +178,11 @@ class RoleCont extends Controller
             'heading' => 'New Role Assigned',
             'route' => 'role',
             'status' => 1,
+            'creator' => Auth::id(),
             'created_at' => Carbon::now(),
         ]);
 
-        $msg = 'NEW ROLE HAS BEEN ASSIGNED!';
+        $msg = 'NEW ROLE ASSIGNED!';
         Notification::send($user, new RoleAssigned($user, $msg));
         return back()->with('job_upd', 'Role assigned to User!');
     }
@@ -204,12 +205,22 @@ class RoleCont extends Controller
         $user = User::find($user_id);
         DB::table('model_has_permissions')->where('model_id', $user_id)->delete();
         DB::table('model_has_roles')->where('model_id', $user_id)->delete();
-
         $user->update([
-            'status' => 0,
+            'status' => 2,
         ]);
 
-        $msg = 'Role HAS BEEN REMOVED';
+        UserNotif::insert([
+            'fname' => explode(' ', trim($user->name))[0],
+            'email' => $user->email,
+            'image' => 'role_del.png',
+            'heading' => 'Role Removed',
+            'route' => 'role_del',
+            'status' => 1,
+            'creator' => Auth::id(),
+            'created_at' => Carbon::now(),
+        ]);
+
+        $msg = 'ROLE REMOVED';
         Notification::send($user, new RoleRemoved($user, $msg));
         return back()->with('del', 'Role Removed from User!');
     }
@@ -320,14 +331,15 @@ class RoleCont extends Controller
         UserNotif::insert([
             'fname' => explode(' ', trim($user->name))[0],
             'email' => $user->email,
-            'image' => 'role.png',
-            'heading' => 'New Role Assigned',
-            'route' => 'role',
+            'image' => 'role_upd.png',
+            'heading' => 'Permissions Updated!',
+            'route' => 'role_upd',
             'status' => 1,
+            'creator' => Auth::id(),
             'created_at' => Carbon::now(),
         ]);
 
-        $msg = 'ROLE HAS BEEN UPDATED!';
+        $msg = 'ROLE UPDATED!';
         Notification::send($user, new RoleAssigned($user, $msg));
         return back()->with('job_upd', 'User Role Updated!');
     }
