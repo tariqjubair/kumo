@@ -23,6 +23,8 @@
                         <h4 class="text-center mt-4 mb-4 text-white">Add New User:</h4>
                         <form action="{{route('insert.user')}}" method="POST">
                             @csrf
+                            <input type="hidden" name="creator" value="{{Auth::id()}}">
+
                             <div class="form-group">
                                 <label class="mb-1 text-white"><strong>Username</strong></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="username" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -58,7 +60,7 @@
                                 <input type="password" class="form-control" name="password_confirmation">
                             </div>
                             <div class="text-center mt-4">
-                                <button type="submit" class="btn bg-white text-primary">Add User</button>
+                                <button type="submit" class="btn bg-white text-primary" id="user_created">Add User</button>
                             </div>
                         </form>
                     </div>
@@ -85,4 +87,13 @@
     )
 </script>
 @endif
+
+{{-- === Dash preloader on Submit === --}}
+<script>
+    $(document).ready(function () {
+        $("#user_created").click(function () {
+            $("#dash_loader").show();
+        });
+    });
+</script>
 @endsection

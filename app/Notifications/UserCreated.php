@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class RoleNotif extends Notification
+class UserCreated extends Notification
 {
     use Queueable;
 
@@ -18,10 +18,10 @@ class RoleNotif extends Notification
      */
     public $data;
     public $data2;
-    public function __construct($user, $msg)
+    public function __construct($new_user, $temp_pass)
     {
-        $this->data = $user;
-        $this->data2 = $msg;
+        $this->data = $new_user;
+        $this->data2 = $temp_pass;
     }
 
     /**
@@ -43,9 +43,9 @@ class RoleNotif extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->view('notification.role_assign', [
-            'user' => $this->data,
-            'msg' => $this->data2,
+        return (new MailMessage)->view('notification.user_created', [
+            'new_user' => $this->data,
+            'temp_pass' => $this->data2,
         ]);
     }
 

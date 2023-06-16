@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserNotif;
+use App\Notifications\UserCreated;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Notification;
 
 use Intervention\Image\Facades\Image;
 use Spatie\Permission\Models\Role;
@@ -33,6 +36,11 @@ class userController extends Controller
 
     // === User Profile Page ===
     function profile(){
+        $user_notif = UserNotif::where('email', Auth::user()->email)->where('route', 'profile')->first();
+        $user_notif->update([
+            'status' => 0,
+        ]);
+
         return view('admin.user.profile');
     }
 
@@ -40,18 +48,65 @@ class userController extends Controller
     // === User Role-Permission Page ===
     function user_role(){
         $user_info = User::find(Auth::user()->id);
-        $user_info->update([
-            'status' => 0,
-        ]);
+        $user_notif = UserNotif::where('email', Auth::user()->email)->where('route', 'role')->get();
+        
+        foreach($user_notif as $role){
+            $role->update([
+                'status' => 0,
+            ]);
+        }
 
         return view('admin.user.role', [
             'user_info' => $user_info,
         ]);
     }
 
+
+    // === User Notifications Page ===
+    function user_notifications(){
+        $user_notif = UserNotif::where('email', Auth::user()->email);
+        $notif_count = $user_notif->count();
+        $notif_all = $user_notif->get();
+
+        return view('admin.user.notif', [
+            'notif_count' => $notif_count,
+            'notif_all' => $notif_all,
+        ]);
+    }
+
+
+    // === Notification Delete ===
+    function notif_delete($notif_id){
+        UserNotif::find($notif_id)->delete();
+
+        return back()->with([
+            'del' => 'Notification Deleted!',
+        ]);
+    }
+
+
     // === Add User ===
     function add_user(){
         return view('admin.user.add_user');
+    }
+
+
+
+    function notif_route($ext_info){
+        $user_name = Auth::user()->name;
+
+        if($ext_info == 'profile'){
+            return redirect()->route('user.profile')->with([
+                'user_name' => $user_name,
+                'msg' => 'Welcome to Kumo Dashboard! Please update your Profile.'
+            ]);
+        }
+        if($ext_info == 'role'){
+            return redirect()->route('user.role')->with([
+                'user_name' => $user_name,
+                'msg' => 'Congratulations on your New Role! Please review permissions assigned to you.'
+            ]);
+        }
     }
 
 
@@ -72,6 +127,25 @@ class userController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
+        $new_user = User::where('email', $request->email)->first();
+        $new_user->update([
+            'status' => 2,
+        ]);
+
+        UserNotif::insert([
+            'fname' => explode(' ', trim($request->name))[0],
+            'email' => $request->email,
+            'image' => 'user.png',
+            'heading' => 'Welcome! User Created',
+            'route' => 'profile',
+            'status' => 1,
+            'creator' => explode(' ', trim($request->creator))[0],
+            'created_at' => Carbon::now(),
+        ]);
+
+        $temp_pass = $request->password;
+        Notification::send($new_user, new UserCreated($new_user, $temp_pass));
+
         return back()->with([
             'name' => $request->name,
             'msg' => 'User Added!',
@@ -86,15 +160,15 @@ class userController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        if($request->email != Auth::user()->email){
-            $request->validate([
-                'email' => 'required|unique:users',
-            ]);
-        }
+        // if($request->email != Auth::user()->email){
+        //     $request->validate([
+        //         'email' => 'required|unique:users',
+        //     ]);
+        // }
 
         User::find(Auth::id())-> update([
             'name' => $request->name,
-            'email' => $request->email,
+            // 'email' => $request->email,
         ]);
         return back()->with('info_upd','Your Information Updated!');
     }

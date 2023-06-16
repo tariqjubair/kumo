@@ -102,6 +102,7 @@
 									</svg>
 									@php
 										$user_info = App\Models\User::where('id', Auth::user()->id)->first();
+										$user_notif = App\Models\UserNotif::where('email', Auth::user()->email)->where('status', 1)->get();
 										$user_role = Auth::user()->getRoleNames()->first();
 									@endphp
 
@@ -112,28 +113,28 @@
                                 <div class="dropdown-menu rounded dropdown-menu-right">
                                     <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 height380">
 										<ul class="timeline" style="border: none">
-											<li>
-												@if ($user_info->status != 0)
-													<a href="{{route('user.role')}}" class="notif_link">
+											@forelse ($user_notif as $item)
+												<li>
+													<a href="{{route('notif.route', $item->route)}}" class="notif_link">
 														<div class="timeline-panel">
 															<div class="media mr-2">
-																<img alt="image" width="50" src="{{asset('dashboard/images/role.png')}}">
+																<img alt="image" width="50" src="{{asset('dashboard/images')}}/{{$item->image}}">
 															</div>
 															<div class="media-body">
-																<h6 class="mb-1">New Role Assigned</h6>
-																<small class="d-block">{{$user_info->updated_at->format('d-M-y h:i A')}}</small>
+																<h6 class="mb-1">{{$item->heading}}</h6>
+																<small class="d-block">{{$item->created_at->format('d-M-y h:i A')}}</small>
 															</div>
 														</div>
 													</a>
-												@else
-													<div class="time py-2 d-flex justify-content-center">
-														<h6>No New Nofifications</h6>
-													</div>
-												@endif
-											</li>
+												</li>
+											@empty
+												<div class="time py-2 d-flex justify-content-center">
+													<h6>No New Nofifications</h6>
+												</div>
+											@endforelse
 										</ul>
 									</div>
-                                    {{-- <a class="all-notification" href="javascript:void(0)">See all notifications <i class="ti-arrow-right"></i></a> --}}
+                                    <a class="all-notification" href="{{route('user.notif')}}">See all notifications <i class="ti-arrow-right"></i></a>
                                 </div>
                             </li>
 							<li class="nav-item dropdown notification_dropdown">
@@ -273,6 +274,7 @@
                         <ul aria-expanded="false">
                             <li><a href="{{route('user.profile')}}">Profile</a></li>
                             <li><a href="{{route('user.role')}}">Role & Permissions</a></li>
+                            <li><a href="{{route('user.notif')}}">Notifications</a></li>
                             <li><a href="{{route('user_list')}}" aria-expanded="false">User List</a>
                             </li>
 							@can('user_add')

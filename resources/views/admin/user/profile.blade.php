@@ -44,7 +44,7 @@
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Email:</label>
-                        <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}">
+                        <input type="text" name="email" class="form-control" value="{{Auth::user()->email}}" readonly>
                         @error('email')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
@@ -190,6 +190,17 @@
         showConfirmButton: false,
         timer: 1500
     })
+</script>
+@endif
+
+{{-- === User Notification Alert === --}}
+@if (session('user_name'))
+<script>
+    Swal.fire(
+        'Hi! {{session('user_name')}}',
+        '{{session('msg')}}',
+        'success'
+    )
 </script>
 @endif
 @endsection

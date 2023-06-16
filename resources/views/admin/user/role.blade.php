@@ -75,4 +75,15 @@
 		});
 	} );
 </script>
+
+{{-- === User Notification Alert === --}}
+@if (session('user_name'))
+<script>
+    Swal.fire(
+        'Hi! {{session('user_name')}}',
+        '{{session('msg')}}',
+        'success'
+    )
+</script>
+@endif
 @endsection

@@ -23,20 +23,16 @@
 }
 
 /* === Dashboard Notification === */
-a.notif_link > div{
-    border-radius: 20px;
-}
-.timeline-panel {
-    transition: .1s;
+.timeline-panel h6 {
+    transition: .2s;
+    letter-spacing: 0px;
 }
 .timeline-panel .media {
     transition: .1s;
 }
-a.notif_link:hover .timeline-panel {
-    background: rgba(8, 31, 115, 0.1);
-    -webkit-box-shadow: 0px 0px 3px 0px rgba(8,32,115,1);
-    -moz-box-shadow: 0px 0px 3px 0px rgba(8,32,115,1);
-    box-shadow: 0px 0px 3px 0px rgba(8,32,115,1);
+a.notif_link:hover .timeline-panel h6 {
+    color: #F94687;
+    letter-spacing: 0.5px;
 }
 a.notif_link:hover .timeline-panel .media {
     transform: scale(1.08);

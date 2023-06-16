@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\PermGroup;
 use App\Models\User;
+use App\Models\UserNotif;
 use App\Notifications\RoleAssigned;
-use App\Notifications\RoleNotif;
 use App\Notifications\RoleRemoved;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -171,6 +171,16 @@ class RoleCont extends Controller
             'status' => 2,
         ]);
 
+        UserNotif::insert([
+            'fname' => explode(' ', trim($user->name))[0],
+            'email' => $user->email,
+            'image' => 'role.png',
+            'heading' => 'New Role Assigned',
+            'route' => 'role',
+            'status' => 1,
+            'created_at' => Carbon::now(),
+        ]);
+
         $msg = 'NEW ROLE HAS BEEN ASSIGNED!';
         Notification::send($user, new RoleAssigned($user, $msg));
         return back()->with('job_upd', 'Role assigned to User!');
@@ -305,6 +315,16 @@ class RoleCont extends Controller
         $user->syncPermissions($request->perm_id);
         $user->update([
             'status' => 2,
+        ]);
+
+        UserNotif::insert([
+            'fname' => explode(' ', trim($user->name))[0],
+            'email' => $user->email,
+            'image' => 'role.png',
+            'heading' => 'New Role Assigned',
+            'route' => 'role',
+            'status' => 1,
+            'created_at' => Carbon::now(),
         ]);
 
         $msg = 'ROLE HAS BEEN UPDATED!';
