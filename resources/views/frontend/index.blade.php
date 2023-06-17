@@ -181,7 +181,7 @@
                                         @for ($i = 1; $i <= $avg_star; $i ++)
                                             <i class="fas fa-star filled"></i>
 
-                                            @if ($avg_star - $i < 1)
+                                            @if ($avg_star - $i < 1 && $avg_star - $i > 0)
                                                 <i class="fad fa-star-half" style="--fa-secondary-opacity: 1.0; --fa-primary-color: #FF9800; --fa-secondary-color: #D6DDE6;"></i>
                                             @endif
                                         @endfor
@@ -427,53 +427,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Single Item -->
-                    <div class="product_grid row">
-                        <div class="col-xl-4 col-lg-5 col-md-5 col-4">
-                            <div class="shop_thumb position-relative">
-                                <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img class="card-img-top" src="assets/img/shop/2.png" alt="..."></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
-                            <div class="text-left mfliud">
-                                <div class="elso_titl"><span class="small">TV/LED</span></div>
-                                <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="shop-single-v1.html">32 Inch Smart LED</a></h5>
-                                <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="elis_rty"><span class="ft-bold text-dark fs-sm">$799 - $1200</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Single Item -->
-                    <div class="product_grid row">
-                        <div class="col-xl-4 col-lg-5 col-md-5 col-4">
-                            <div class="shop_thumb position-relative">
-                                <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img class="card-img-top" src="assets/img/shop/10.png" alt="..."></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
-                            <div class="text-left mfliud">
-                                <div class="elso_titl"><span class="small">Headphone</span></div>
-                                <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="shop-single-v1.html">Ziomi Headphone</a></h5>
-                                <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="elis_rty"><span class="ft-bold text-dark fs-sm">$49 - $110</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    
                 </div>
             </div>
             

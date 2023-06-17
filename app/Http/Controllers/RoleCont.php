@@ -164,12 +164,19 @@ class RoleCont extends Controller
             'user_id' => 'required',
             'role_id' => 'required',
         ]);
-
+        
         $user = User::find($request->user_id);
         $user->syncRoles($request->role_id);
         $user->update([
             'status' => 2,
         ]);
+        
+        $adm_users = User::role(['Admin', 'Super Admin'])->get();
+        foreach($adm_users as $adm){
+            $adm->update([
+                'status' => 2,
+            ]);
+        }
 
         UserNotif::insert([
             'fname' => explode(' ', trim($user->name))[0],
@@ -208,6 +215,13 @@ class RoleCont extends Controller
         $user->update([
             'status' => 2,
         ]);
+
+        $adm_users = User::role(['Admin', 'Super Admin'])->get();
+        foreach($adm_users as $adm){
+            $adm->update([
+                'status' => 2,
+            ]);
+        }
 
         UserNotif::insert([
             'fname' => explode(' ', trim($user->name))[0],
@@ -254,32 +268,34 @@ class RoleCont extends Controller
             'group_name' => Str::ucfirst(Str::lower($request->perm_group)),
         ]);
         
-        foreach($request->perm_id as $sl=>$perm_id){
-            $perm_all = Permission::all();
-            $old_perm_name = Permission::find($perm_id)->name;
-            $perm_name = $request->perm_name[$sl];
-            
-            if($perm_name != $old_perm_name){
-                if($perm_name == ''){
-                    return back()->with([
-                        'error' => 'Invalid Permission Name!',
-                        'err_id' => $perm_id,
-                        'err_val' => $perm_name,
-                        ])->withInput();
+        if($request->perm_id){
+            foreach($request->perm_id as $sl=>$perm_id){
+                $perm_all = Permission::all();
+                $old_perm_name = Permission::find($perm_id)->name;
+                $perm_name = $request->perm_name[$sl];
+                
+                if($perm_name != $old_perm_name){
+                    if($perm_name == ''){
+                        return back()->with([
+                            'error' => 'Invalid Permission Name!',
+                            'err_id' => $perm_id,
+                            'err_val' => $perm_name,
+                            ])->withInput();
+                        }
+
+                        if(DB::table('permissions')->where('name', $perm_name)->exists()){
+                        return back()->with([
+                            'error' => 'Permission already exists!',
+                            'err_id' => $perm_id,
+                            'err_val' => $perm_name,
+                            ])->withInput();
+                        }
                     }
 
-                    if(DB::table('permissions')->where('name', $perm_name)->exists()){
-                    return back()->with([
-                        'error' => 'Permission already exists!',
-                        'err_id' => $perm_id,
-                        'err_val' => $perm_name,
-                        ])->withInput();
-                    }
-                }
-
-                Permission::find($perm_id)->update([
-                'name' => $request->perm_name[$sl],
-            ]);
+                    Permission::find($perm_id)->update([
+                    'name' => $request->perm_name[$sl],
+                ]);
+            }
         }
         
         return back()->with('job_upd', 'Permissions Updated!');
@@ -327,6 +343,13 @@ class RoleCont extends Controller
         $user->update([
             'status' => 2,
         ]);
+
+        $adm_users = User::role(['Admin', 'Super Admin'])->get();
+        foreach($adm_users as $adm){
+            $adm->update([
+                'status' => 2,
+            ]);
+        }
 
         UserNotif::insert([
             'fname' => explode(' ', trim($user->name))[0],

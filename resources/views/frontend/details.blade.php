@@ -86,7 +86,7 @@
                                 @for ($i = 1; $i <= $avg_star; $i ++)
                                     <i class="fas fa-star filled"></i>
 
-                                    @if ($avg_star - $i < 1)
+                                    @if ($avg_star - $i < 1 && $avg_star - $i > 0)
                                         <i class="fad fa-star-half" style="--fa-secondary-opacity: 1.0; --fa-primary-color: #FF9800; --fa-secondary-color: #D6DDE6;"></i>
                                     @endif
                                 @endfor

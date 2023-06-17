@@ -52,8 +52,10 @@
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item edt_btn" href="{{route('other_users.profile', $user->id)}}">View</a>
+                                        <a class="dropdown-item edt_btn" href="{{route('other_users.profile', $user->id)}}">Edit Profile</a>
+                                        @can('user_delete')
                                         <button class="dropdown-item del_btn" value="{{route('user_del', $user->id)}}">Delete</button>
+                                        @endcan
                                     </div>
                                 </div>
                             </td>

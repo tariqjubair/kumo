@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\OrdereditemsTab;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -116,7 +117,6 @@ class CheckoutCont extends Controller
             $order_id = session('order_id');
             
             $cart_info = cartMod::where('customer_id', Auth::guard('CustLogin')->id())->get();
-
 
             // === Order Table ===
             OrderTab::insert([

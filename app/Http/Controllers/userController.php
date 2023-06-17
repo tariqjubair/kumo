@@ -32,6 +32,13 @@ class userController extends Controller
     function user_del($user_id){
         $user = User::find($user_id);
 
+        $adm_users = User::role(['Admin', 'Super Admin'])->get();
+        foreach($adm_users as $adm){
+            $adm->update([
+                'status' => 2,
+            ]);
+        }
+
         UserNotif::insert([
             'fname' => explode(' ', trim($user->name))[0],
             'email' => $user->email,
@@ -90,13 +97,29 @@ class userController extends Controller
 
     // === User Notifications Page ===
     function user_notifications(){
-        $user_notif = UserNotif::where('email', Auth::user()->email);
-        $notif_count = $user_notif->count();
-        $notif_all = $user_notif->latest('id')->get();
+        $sp_user_notif = UserNotif::where('email', Auth::user()->email);
+        $sp_notif_count = $sp_user_notif->count();
+        $sp_notif_all = $sp_user_notif->latest('id')->get();
+
+        $notif_count = UserNotif::all()->count();
+        $notif_all = UserNotif::orderBy('id','DESC')->get();
+
+        $user = User::find(Auth::id());
+        $user->update([
+            'status' => 0,
+        ]);
 
         return view('admin.user.notif', [
             'notif_count' => $notif_count,
             'notif_all' => $notif_all,
+            'sp_notif_count' => $sp_notif_count,
+            'sp_notif_all' => $sp_notif_all,
+        ]);
+    }
+
+    function adm_notifications(){
+        return redirect()->route('user.notif')->with([
+            'adm_scroll' => 'hello',
         ]);
     }
 
@@ -169,6 +192,13 @@ class userController extends Controller
         $new_user->update([
             'status' => 2,
         ]);
+
+        $adm_users = User::role(['Admin', 'Super Admin'])->get();
+        foreach($adm_users as $adm){
+            $adm->update([
+                'status' => 2,
+            ]);
+        }
 
         UserNotif::insert([
             'fname' => explode(' ', trim($request->name))[0],

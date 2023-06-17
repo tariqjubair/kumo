@@ -21,6 +21,7 @@
 <div class="page-titles">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{route('user_list')}}">User List</a></li>
         <li class="breadcrumb-item active"><a href="javascript:void(0)">User Profile: <span class="text-danger">{{$user_info->name}}</span></a></li>
     </ol>
 </div>

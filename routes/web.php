@@ -166,6 +166,7 @@ Route::get('/user/profile', [userController::class, 'profile'])->name('user.prof
 Route::get('/user/profile/{user_id}', [userController::class, 'other_users_profile'])->name('other_users.profile');
 Route::get('/user/role', [userController::class, 'user_role'])->name('user.role');
 Route::get('/user/notifications', [userController::class, 'user_notifications'])->name('user.notif');
+Route::get('/user/adm_notifications', [userController::class, 'adm_notifications'])->name('adm.notif');
 Route::post('/user/info/update', [userController::class, 'user_info_upd'])->name('user.info.update');
 Route::post('/user/pass/update', [userController::class, 'user_pass_upd'])->name('user.pass.update');
 Route::post('/user/pic/update', [userController::class, 'user_pic_upd'])->name('user.pic.update');
@@ -303,5 +304,6 @@ Route::post('/product/update_charges', [ChargesCont::class, 'charges_update'])->
 // === Order ===
 Route::get('/order_list', [OrderCont::class, 'order_list'])->name('order_list');
 Route::post('/order_list/order_status_update', [OrderCont::class, 'order_status_update'])->name('order_status.update');
+Route::get('/new_order/{order_id}', [OrderCont::class, 'order_info'])->name('order.info');
 
 

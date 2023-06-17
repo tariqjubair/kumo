@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'image',
         'status',
+        'notif_chk',
     ];
 
     /**
