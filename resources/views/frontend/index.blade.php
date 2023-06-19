@@ -406,27 +406,47 @@
                 <div class="ftr-content">
                 
                     <!-- Single Item -->
-                    <div class="product_grid row">
-                        <div class="col-xl-4 col-lg-5 col-md-5 col-4">
-                            <div class="shop_thumb position-relative">
-                                <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img class="card-img-top" src="assets/img/shop/1.png" alt="..."></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
-                            <div class="text-left mfliud">
-                                <div class="elso_titl"><span class="small">Mobiles</span></div>
-                                <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="shop-single-v1.html">Zoomio iPhones</a></h5>
-                                <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
+                    @foreach ($top_seller as $product)
+                        {{-- {{'Sum:'.$product->sum.'|'}}{{$product->product_id}} --}}
+                        <div class="product_grid row">
+                            <div class="col-xl-4 col-lg-5 col-md-5 col-4">
+                                <div class="shop_thumb position-relative" style="border: 1px solid rgba(128, 134, 134, 0.527)">
+                                    <a class="card-img-top d-block overflow-hidden" href="{{route('product.details', $product->relto_product->slug)}}"><img class="card-img-top" src="{{asset('uploads/product/preview')}}/{{$product->relto_product->preview}}" alt="Product Preview"></a>
                                 </div>
-                                <div class="elis_rty"><span class="ft-bold text-dark fs-sm">$99 - $129</span></div>
+                            </div>
+                            <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
+                                <div class="text-left mfliud">
+                                    <div class="elso_titl"><span class="small">{{$product->relto_product->relto_cata->cata_name}}</span></div>
+                                    <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="{{route('product.details', $product->relto_product->slug)}}">{{$product->relto_product->product_name}}</a></h5>
+                                    <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
+                                        @php
+                                            $avg_star = App\Models\OrdereditemsTab::where('product_id', $product->product_id)->avg('star');
+                                        @endphp
+
+                                        @for ($i = 1; $i <= $avg_star; $i ++)
+                                            <i class="fas fa-star filled"></i>
+
+                                            @if ($avg_star - $i < 1 && $avg_star - $i > 0)
+                                                <i class="fad fa-star-half" style="--fa-secondary-opacity: 1.0; --fa-primary-color: #FF9800; --fa-secondary-color: #D6DDE6;"></i>
+                                            @endif
+                                        @endfor
+
+                                        @for ($i = 1; $i <= 5-$avg_star; $i ++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+
+                                        <span class="small">({{App\Models\OrdereditemsTab::where('product_id', $product->product_id)->whereNotNull('star')->count()}})</span>
+                                    </div>
+                                        @if ($product->relto_product->discount != 0)
+                                            <span class="ft-medium text-muted line-through fs-sm mr-2">{{$product->relto_product->price}}</span>
+                                            <span class="ft-bold theme-cl fs-sm mr-2">{{number_format($product->relto_product->after_disc)}}&#2547;</span>
+                                        @else
+                                            <span class="ft-bold theme-cl fs-sm mr-2">{{number_format($product->relto_product->price)}}&#2547;</span>
+                                        @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             
@@ -434,74 +454,49 @@
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                 <div class="ftr-title"><h4 class="ft-medium">Featured Products</h4></div>
                 <div class="ftr-content">
+
                     <!-- Single Item -->
-                    <div class="product_grid row">
-                        <div class="col-xl-4 col-lg-5 col-md-5 col-4">
-                            <div class="shop_thumb position-relative">
-                                <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img class="card-img-top" src="assets/img/shop/4.png" alt="..."></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
-                            <div class="text-left mfliud">
-                                <div class="elso_titl"><span class="small">iPhones</span></div>
-                                <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="shop-single-v1.html">iPhone Smart 13</a></h5>
-                                <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
+                    @foreach ($featured as $product)
+                        {{-- {{'Sum:'.$product->sum.'|'}}{{$product->product_id}} --}}
+                        <div class="product_grid row">
+                            <div class="col-xl-4 col-lg-5 col-md-5 col-4">
+                                <div class="shop_thumb position-relative" style="border: 1px solid rgba(128, 134, 134, 0.527)">
+                                    <a class="card-img-top d-block overflow-hidden" href="{{route('product.details', $product->relto_product->slug)}}"><img class="card-img-top" src="{{asset('uploads/product/preview')}}/{{$product->relto_product->preview}}" alt="Product Preview"></a>
                                 </div>
-                                <div class="elis_rty"><span class="ft-bold text-dark fs-sm">$990 - $1100</span></div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Single Item -->
-                    <div class="product_grid row">
-                        <div class="col-xl-4 col-lg-5 col-md-5 col-4">
-                            <div class="shop_thumb position-relative">
-                                <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img class="card-img-top" src="assets/img/shop/5.png" alt="..."></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
-                            <div class="text-left mfliud">
-                                <div class="elso_titl"><span class="small">Camera</span></div>
-                                <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="shop-single-v1.html">Hero Video Camera</a></h5>
-                                <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
+                            <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
+                                <div class="text-left mfliud">
+                                    <div class="elso_titl"><span class="small">{{$product->relto_product->relto_cata->cata_name}}</span></div>
+                                    <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="{{route('product.details', $product->relto_product->slug)}}">{{$product->relto_product->product_name}}</a></h5>
+                                    <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
+                                        @php
+                                            $avg_star = App\Models\OrdereditemsTab::where('product_id', $product->product_id)->avg('star');
+                                        @endphp
+
+                                        @for ($i = 1; $i <= $avg_star; $i ++)
+                                            <i class="fas fa-star filled"></i>
+
+                                            @if ($avg_star - $i < 1 && $avg_star - $i > 0)
+                                                <i class="fad fa-star-half" style="--fa-secondary-opacity: 1.0; --fa-primary-color: #FF9800; --fa-secondary-color: #D6DDE6;"></i>
+                                            @endif
+                                        @endfor
+
+                                        @for ($i = 1; $i <= 5-$avg_star; $i ++)
+                                            <i class="fas fa-star"></i>
+                                        @endfor
+
+                                        <span class="small">({{App\Models\OrdereditemsTab::where('product_id', $product->product_id)->whereNotNull('star')->count()}})</span>
+                                    </div>
+                                        @if ($product->relto_product->discount != 0)
+                                            <span class="ft-medium text-muted line-through fs-sm mr-2">{{$product->relto_product->price}}</span>
+                                            <span class="ft-bold theme-cl fs-sm mr-2">{{number_format($product->relto_product->after_disc)}}&#2547;</span>
+                                        @else
+                                            <span class="ft-bold theme-cl fs-sm mr-2">{{number_format($product->relto_product->price)}}&#2547;</span>
+                                        @endif
                                 </div>
-                                <div class="elis_rty"><span class="ft-bold text-dark fs-sm">$600 - $929</span></div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Single Item -->
-                    <div class="product_grid row">
-                        <div class="col-xl-4 col-lg-5 col-md-5 col-4">
-                            <div class="shop_thumb position-relative">
-                                <a class="card-img-top d-block overflow-hidden" href="shop-single-v1.html"><img class="card-img-top" src="assets/img/shop/6.png" alt="..."></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-8 col-lg-7 col-md-7 col-8 pl-0">
-                            <div class="text-left mfliud">
-                                <div class="elso_titl"><span class="small">Headphone</span></div>
-                                <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="shop-single-v1.html">V1 Jumpsuit Headphone</a></h5>
-                                <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="elis_rty"><span class="ft-bold text-dark fs-sm">$99 - $219</span></div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             
@@ -509,6 +504,7 @@
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                 <div class="ftr-title"><h4 class="ft-medium">Recent Products</h4></div>
                 <div class="ftr-content">
+
                     <!-- Single Item -->
                     @foreach ($product_recent as $product)
                     <div class="product_grid row">
@@ -522,14 +518,26 @@
                                 <div class="elso_titl"><span class="small">{{$product->relto_cata->cata_name}}</span></div>
                                 <h5 class="fs-md mb-0 lh-1 mb-1 ft-medium"><a href="{{route('product.details', $product->slug)}}">{{$product->product_name}}</a></h5>
                                 <div class="star-rating align-items-center d-flex justify-content-left mb-2 p-0">
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star filled"></i>
-                                    <i class="fas fa-star"></i>
+                                    @php
+                                        $avg_star = App\Models\OrdereditemsTab::where('product_id', $product->id)->avg('star');
+                                    @endphp
+
+                                    @for ($i = 1; $i <= $avg_star; $i ++)
+                                        <i class="fas fa-star filled"></i>
+
+                                        @if ($avg_star - $i < 1 && $avg_star - $i > 0)
+                                            <i class="fad fa-star-half" style="--fa-secondary-opacity: 1.0; --fa-primary-color: #FF9800; --fa-secondary-color: #D6DDE6;"></i>
+                                        @endif
+                                    @endfor
+
+                                    @for ($i = 1; $i <= 5-$avg_star; $i ++)
+                                        <i class="fas fa-star"></i>
+                                    @endfor
+
+                                    <span class="small">({{App\Models\OrdereditemsTab::where('product_id', $product->id)->whereNotNull('review')->count()}})</span>
                                 </div>
                                     @if ($product->discount != 0)
-                                        <span class="ft-medium text-muted line-through fs-md mr-2">{{$product->price}}</span>
+                                        <span class="ft-medium text-muted line-through fs-sm mr-2">{{$product->price}}</span>
                                         <span class="ft-bold theme-cl fs-sm mr-2">{{number_format($product->after_disc)}}&#2547;</span>
                                     @else
                                         <span class="ft-bold theme-cl fs-sm mr-2">{{number_format($product->price)}}&#2547;</span>

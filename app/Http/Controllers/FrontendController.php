@@ -14,6 +14,7 @@ use App\Models\Thumbnail;
 use App\Models\WishTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Stripe\Product;
 
 class FrontendController extends Controller
@@ -26,11 +27,27 @@ class FrontendController extends Controller
         $product_all = Product_list::all();
         $product_recent = Product_list::orderBy('updated_at','desc')->take(3)->get();
 
+        $top_seller = OrdereditemsTab::groupBy('product_id')
+        ->selectRaw('sum(quantity) as sum, product_id')
+        ->orderBy('sum', 'DESC')
+        ->take(3)
+        ->get();
+
+        $featured = OrdereditemsTab::whereNotNull('star')
+        ->groupBy('product_id')
+        ->selectRaw('sum(star) as sum, product_id')
+        ->orderBy('sum', 'DESC')
+        ->take(3)
+        ->get();
+
+
         return view('frontend.index', [
             'cata_all' => $cata_all,
             'cata_all_in' => $cata_all_in,
             'product_all' => $product_all,
             'product_recent' => $product_recent,
+            'top_seller' => $top_seller,
+            'featured' => $featured,
         ]);
     }
 
