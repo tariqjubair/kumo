@@ -39,6 +39,20 @@ Route::get('/login', function () {
 
 Auth::routes();
 
+// === Custom 404 ===
+Route::fallback(function () {
+    if(Auth::check()){
+        return view('errors.adm404');
+    }
+    else if(Auth::guard('CustLogin')->check()){
+        return view('errors.404');
+    }
+    else {
+        return view('errors.404');
+    }
+});
+
+
 
 // === Frontend ===
 Route::get('/', [FrontendController::class, 'home_page'])->name('home_page');

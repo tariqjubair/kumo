@@ -36,7 +36,7 @@
                 <!-- Text -->
                 <p class="ft-regular fs-md mb-5">Sorry, we couldn't find the page you where looking for. We suggest that you return to home page.</p>
                 <!-- Button -->
-                <a class="btn btn-dark" href="index.html">Go To Home Page</a>
+                <a class="btn btn-dark" href="{{route('home_page')}}">Go To Home Page</a>
             </div>
         </div>
         
