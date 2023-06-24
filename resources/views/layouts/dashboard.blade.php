@@ -146,7 +146,7 @@
 
 											@can('admin_notification_view')
 											@if ($user_info->status != 0)
-												@foreach ($notif_all as $item)
+												@foreach ($notif_all->take(1) as $item)
 													<li>
 														<a href="{{route('adm.notif')}}" class="notif_link">
 															<div class="timeline-panel">

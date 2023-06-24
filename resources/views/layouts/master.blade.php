@@ -78,7 +78,7 @@
 		<!-- Top header  -->
 		<!-- ============================================================== -->
 		<!-- Top Header -->
-		<div class="py-2 br-bottom">
+		<div class="py-2 br-bottom header_one">
 			<div class="container">
 				<div class="row">
 					
@@ -198,12 +198,12 @@
 								</li>
 								<li>
 									<a href="#" onclick="openWishlist()">
-										<i class="lni lni-heart"></i><span class="dn-counter">2</span>
+										<i class="lni lni-heart"></i><span class="dn-counter">{{App\Models\WishTable::where('customer_id', Auth::guard('CustLogin')->id())->count()}}</span>
 									</a>
 								</li>
 								<li>
 									<a href="#" onclick="openCart()">
-										<i class="lni lni-shopping-basket"></i><span class="dn-counter">0</span>
+										<i class="lni lni-shopping-basket"></i><span class="dn-counter">{{App\Models\cartMod::where('customer_id', Auth::guard('CustLogin')->id())->count()}}</span>
 									</a>
 								</li>
 								</ul>
@@ -605,6 +605,21 @@
 			document.getElementById("Search").style.display = "none";
 		}
 	</script>	
+
+	{{-- === Fixed Header === --}}
+	{{-- <script>
+		$(function (){
+			$(window).on("scroll", function() {
+				if($(window).scrollTop() > 50) {
+					$(".header_one").addClass("ext_hd");
+				} 
+				else {
+					$(".header_one").removeClass("ext_hd");
+
+				}
+			});
+		});
+	</script> --}}
 
 	{{-- === Stop Loader on Page Load === --}}
 	<script>

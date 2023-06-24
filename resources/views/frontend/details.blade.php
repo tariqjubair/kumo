@@ -34,7 +34,33 @@
         right: 55px;
     }
 
+    @media(min-width: 992px){
     
+        .all_rev {
+            width: 700px !important;
+            padding: 30px 25px 30px 30px !important;
+        }
+            
+    }
+
+    @media(max-width: 767px){
+        
+        .single_rev_thumb {
+            width: 45px;
+        }
+        .single_rev_thumb img {
+            width: 100%;
+        }
+            
+    }
+
+    @media(max-width: 991px){
+
+        .prd_details {
+            margin-top: 20px !important;
+        }
+            
+    }
 </style>
 @endsection
 

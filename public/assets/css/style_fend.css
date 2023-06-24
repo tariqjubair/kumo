@@ -41,6 +41,46 @@
     color: red;
 }
 
+.header.header-fixed{
+    box-shadow: 0 5px 30px rgba(0, 22, 84, 0.1);
+    -webkit-box-shadow: 0 5px 30px rgba(0, 22, 84, 0.1);
+    background: #ffffff;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    top: 0;
+    -webkit-transition: 0.2s ease-in;
+    -o-transition: 0.2s ease-in;
+    transition: 0.2s ease-in;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-name: slideInDown;
+    animation-name: slideInDown;
+}
+
+#back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    background:#333c56;
+    color: #ffffff;
+}
+#back2Top:hover {
+    background-color:#ffffff;
+    color:#333c56;
+    border: 1px solid #333c56;
+}
+
 
 
 
@@ -230,93 +270,3 @@
 
 
 
-
-
-/* === Details Page === */
-@media(min-width: 992px){
-    
-    .all_rev {
-        width: 700px !important;
-        padding: 30px 25px 30px 30px !important;
-    }
-        
-}
-
-@media(max-width: 767px){
-    
-    .single_rev_thumb {
-        width: 45px;
-    }
-    .single_rev_thumb img {
-        width: 100%;
-    }
-        
-}
-
-@media(max-width: 991px){
-
-    .prd_details {
-        margin-top: 20px !important;
-    }
-        
-}
-
-
-
-
-
-/* === Customer Profile === */
-@media(max-width: 767.98px){
-    
-    .cust_form {
-        margin-top: 15px;
-    }
-        
-}
-
-@media(min-width: 768px) and (max-width: 991.98px){
-    
-    .cust_form {
-        margin-top: 25px;
-    }
-        
-}
-
-
-
-
-/* === Shop Page === */
-.size_part .form-option-label {
-    height: auto;
-}
-
-.clear_box {
-    justify-content: end;
-}
-
-.filter_wraps {
-    justify-content: end;
-}
-
-.filter_wraps a {
-    height: 37px !important;
-    width: 100px;
-}
-
-@media(min-width: 768px) and (max-width: 991.98px){
-    
-    .filter_wraps {
-        justify-content: start;
-    }
-        
-}
-
-@media (max-width: 1199.98px){
-    
-    .clear_box {
-        justify-content: start;
-        margin-top: 5px;
-        margin-bottom: 5px !important;
-    }
-        
-}

@@ -1,5 +1,31 @@
 @extends('layouts.master')
 
+
+@section('header_css')
+
+<style>
+    @media (max-width: 576.98px){
+    
+        .sm_dis_cart {
+            margin: 0;
+        }
+        .sm_dis_total {
+            margin-top: 80px;
+        }
+            
+    }
+
+    @media (max-width: 991.98px){
+    
+        .sm_dis_total {
+            margin-top: 30px;
+        }
+            
+    }
+</style>
+@endsection
+
+
 @section('content')
 <!-- ======================= Top Breadcrubms ======================== -->
 <div class="gray py-3">
@@ -54,7 +80,7 @@
 
                             @if ($cart->relto_product()->exists())
                                 <li class="list-group-item">
-                                    <div class="row align-items-center">
+                                    <div class="row align-items-center sm_dis_cart">
                                         <div class="col-3 p-0" style="border: 1px solid rgba(128, 134, 134, 0.527);">
                                             <!-- Image -->
                                             <a href="{{route('product.details', $cart->relto_product->slug)}}"><img src="{{asset('uploads/product/preview')}}/{{$cart->relto_product->preview}}" alt="Product Preview" class="img-fluid"></a>
@@ -113,8 +139,8 @@
                 @endphp
             @endif
             
-            <div class="col-12 col-md-12 col-lg-4">
-                <div class="card mb-4 gray mfliud">
+            <div class="col-12 col-md-12 col-lg-4 sm_dis_total">
+                <div class="card mb-4 gray mfliud scr_amount">
                     <div class="card-body">
                         @if (session('cart_upd'))
                         <span class="err_msg err_msg_cart_page" style="visibility:visible">
@@ -238,5 +264,13 @@
         });
     });
 </script>
+
+@if ($btn == 'click')
+<script>
+    $('html, body').animate({
+        scrollTop: $('.scr_amount').offset().top -200
+    }, 'slow');
+</script>
+@endif
 @endsection
 

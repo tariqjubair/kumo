@@ -2,6 +2,47 @@
 
 
 
+@section('header_css')
+<style>
+    .size_part .form-option-label {
+    height: auto;
+    }
+
+    .clear_box {
+        justify-content: end;
+    }
+
+    .filter_wraps {
+        justify-content: end;
+    }
+
+    .filter_wraps a {
+        height: 37px !important;
+        width: 100px;
+    }
+
+    @media(min-width: 768px) and (max-width: 991.98px){
+        
+        .filter_wraps {
+            justify-content: start;
+        }
+            
+    }
+
+    @media (max-width: 1199.98px){
+        
+        .clear_box {
+            justify-content: start;
+            margin-top: 5px;
+            margin-bottom: 5px !important;
+        }
+            
+    }
+</style>
+@endsection
+
+
+
 @section('content')
 <!-- ======================= Shop Style 1 ======================== -->
 <section class="bg-cover" style="background:url({{asset('assets/img/banner-2.png')}}) no-repeat;">
