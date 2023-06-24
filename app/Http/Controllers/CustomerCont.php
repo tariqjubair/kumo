@@ -8,11 +8,14 @@ use App\Models\Country;
 use App\Models\CustInfo;
 use App\Models\OrdereditemsTab;
 use App\Models\OrderTab;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Validation\Rules\Password;
+use PDF;
+
 
 class CustomerCont extends Controller
 {
@@ -66,6 +69,15 @@ class CustomerCont extends Controller
         $sel_code = Country::find($request->country_id)->phonecode;
         $str = "<option value='$sel_code'>$sel_code</option>";
         echo $str;
+    }
+
+    function order_invoice($order_id){
+        $order = '#'.$order_id;
+        $pdf = FacadePdf::loadView('invoice.inv_pdf', [
+            'order_id' => $order,
+        ]);
+    
+        return $pdf->stream('invoice.pdf');
     }
 
 

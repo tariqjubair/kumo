@@ -78,8 +78,9 @@ Route::get('/customer/profile', [CustomerCont::class, 'customer_profile'])->name
 Route::post('/customer/profile/update', [CustomerCont::class, 'cust_profile_update'])->name('cust_profile.update');
 Route::post('/prof_get_city', [CustomerCont::class, 'prof_get_city']);
 Route::post('/prof_get_code', [CustomerCont::class, 'prof_get_code']);
-Route::get('/customer/order', [CustomerCont::class, 'customer_order'])->name('customer.order');
 Route::get('/customer/wishlist', [CustomerCont::class, 'customer_wishlist'])->name('customer.wishlist');
+Route::get('/customer/order', [CustomerCont::class, 'customer_order'])->name('customer.order');
+Route::get('/customer/order/invoice/{invoice_id}', [CustomerCont::class, 'order_invoice'])->name('order.inv');
 
 
 

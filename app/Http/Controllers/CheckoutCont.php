@@ -165,9 +165,9 @@ class CheckoutCont extends Controller
             // === Delete Cart ===
             // cartMod::where('customer_id', Auth::guard('CustLogin')->id())->delete();
 
-            // === Order Invoice View (Temp) ===
+            // === Order Invoice View (/mailable) ===
             Session([
-                'order_id_inv' => $order_id,
+                'mail_item' => $order_id,
             ]);
             
             // === Send Mail ===
@@ -202,7 +202,9 @@ class CheckoutCont extends Controller
             session::pull('gtotal');
             session::pull('mobile');
             session::pull('order_id');
-            session::pull('order_id_inv');
+
+            // === Order Invoice Session Pull ===
+            // session::pull('mail_item');
 
             return view('frontend.order_complete');
         }

@@ -10,12 +10,21 @@
         position: relative;
     }
     .order_head:hover {
-        background: rgba(0, 0, 255, 0.08);
-        border: 1px solid blue;
+        /* background: rgba(0, 0, 255, 0.08); */
+        /* border: 1px solid blue; */
+        /* cursor: pointer; */
+    }
+    .order_lead:hover {
         cursor: pointer;
     }
-    .order_head:hover .arrow i{
-        color: blue
+    .order_lead h6 {
+        transition: .3s;
+    }
+    .order_lead:hover h6{
+        color: blue;
+    }
+    .order_lead:hover .arrow i{
+        color: blue;
     }
     .order_head .arrow {
         position: absolute;
@@ -37,6 +46,16 @@
     }
     .first_loop .no_arw {
         display: none;
+    }
+    .cust_order_inv {
+    display: flex;
+    align-items: center;
+    }
+    .inv_link a img{
+        transition: .2s;
+    }
+    .inv_link a:hover img{
+        transform: scale(1.2);
     }
 </style>
 @endsection
@@ -117,32 +136,37 @@
                 @forelse ($order_all as $order)
                     <div class="ord_list_wrap border mb-4 {{$loop->first ?'first_loop' :''}}">
                         <div class="ord_list_head gray d-flex align-items-center justify-content-between px-3 py-3 order_head">
-                            <div class="olh_flex">
+                            <div class="olh_flex order_lead">
                                 <p class="m-0 p-0"><span class="text-muted">Order Number</span></p>
                                 <h6 class="mb-0 ft-medium">{{$order->order_id}}</h6>
+                                <div class="arrow {{$loop->first ?'d-none' :''}}">
+                                    <i class="fad fa-angle-double-down"></i>
+                                </div>		
+                                <div class="arrow {{$loop->first ?'' :'d-none'}}">
+                                    <i class="fad fa-angle-double-up"></i>
+                                </div>		
                             </div>		
-                            <div class="arrow {{$loop->first ?'d-none' :''}}">
-                                <i class="fad fa-angle-double-down"></i>
-                            </div>		
-                            <div class="arrow {{$loop->first ?'' :'d-none'}}">
-                                <i class="fad fa-angle-double-up"></i>
-                            </div>		
-                            <div class="olh_flex">
-                                <p class="mb-1 p-0"><span class="text-muted">Status</span></p>
-                                <div class="delv_status">
-                                    @if ($order->order_status == 1)
-                                        <span class="ft-medium small text-info bg-light-info rounded px-3 py-1">Order Placed</span>
-                                    @elseif ($order->order_status == 2)
-                                        <span class="ft-medium small text-success bg-light-success rounded px-3 py-1">Order Confirmed</span>
-                                    @elseif ($order->order_status == 3)
-                                        <span class="ft-medium small text-warning bg-light-warning rounded px-3 py-1">Processing</span>
-                                    @elseif ($order->order_status == 4)
-                                        <span class="ft-medium small rounded px-3 py-1" style="color: #A02CFA; background: #eedcfc">Ready to Deliver</span>
-                                    @elseif ($order->order_status == 5)
-                                        <span class="ft-medium small text-white rounded px-3 py-1" style="background: blue">Delivered</span>
-                                    @elseif ($order->order_status == 6)
-                                        <span class="ft-medium small text-white bg-primary rounded px-3 py-1">Canceled</span>
-                                    @endif
+                            <div class="olh_flex cust_order_inv">
+                                <div class="item">
+                                    <p class="mb-1 p-0"><span class="text-muted">Status</span></p>
+                                    <div class="delv_status">
+                                        @if ($order->order_status == 1)
+                                            <span class="ft-medium small text-info bg-light-info rounded px-3 py-1">Order Placed</span>
+                                        @elseif ($order->order_status == 2)
+                                            <span class="ft-medium small text-success bg-light-success rounded px-3 py-1">Order Confirmed</span>
+                                        @elseif ($order->order_status == 3)
+                                            <span class="ft-medium small text-warning bg-light-warning rounded px-3 py-1">Processing</span>
+                                        @elseif ($order->order_status == 4)
+                                            <span class="ft-medium small rounded px-3 py-1" style="color: #A02CFA; background: #eedcfc">Ready to Deliver</span>
+                                        @elseif ($order->order_status == 5)
+                                            <span class="ft-medium small text-white rounded px-3 py-1" style="background: blue">Delivered</span>
+                                        @elseif ($order->order_status == 6)
+                                            <span class="ft-medium small text-white bg-primary rounded px-3 py-1">Canceled</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="inv_link ml-4">
+                                    <a href="{{route('order.inv', substr($order->order_id, 1))}}" title="View Invoice" target="_blank"><img width="45px" src="{{asset('assets/img/invoice.png')}}" alt=""></a>
                                 </div>
                             </div>
                         </div>
@@ -198,8 +222,8 @@
 
 {{-- === Toggle Ordered Items List === --}}
 <script>
-    $('.order_head').click(function(){
-        $(this).nextAll('.order_list').slideToggle();
+    $('.order_lead').click(function(){
+        $(this).parent().nextAll('.order_list').slideToggle();
         $(this).find('.arrow').toggleClass('d-none');
 
         $('.first_loop').toggleClass('d-block');

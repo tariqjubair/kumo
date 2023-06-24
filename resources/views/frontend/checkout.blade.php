@@ -68,7 +68,7 @@
 
                 {{-- === Billing Form === --}}
                 <div class="col-12 col-lg-7 col-md-12">
-                    <h5 class="mb-4 ft-medium">Billing Details</h5>
+                    <h5 class="mb-4 ft-medium">Delivery Details</h5>
                     <div class="row mb-2">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="form-group">
