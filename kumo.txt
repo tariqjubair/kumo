@@ -1,0 +1,63 @@
+
+======================================
+=====	 Kumo Store	 =======
+======================================
+
+
+
+========= SSL Commerz: Sandbox Account ============
+
+Website: www.kumo.com
+Company Name: Kumo
+Company Address: Dhaka
+Name: Kumo Admin
+Email: tariq.wpdev@gmail.com
+Phone Number: +8801711317300
+Username: kumo
+Password: Kumo@123
+
+
+Store ID: kumo63e3e9d547dea
+Store Password (API/Secret Key): kumo63e3e9d547dea@ssl
+Store name: testkumox7tx
+
+
+Dasboard: https://sandbox.sslcommerz.com/manage/?request=c2VjdXJpdHllbmNyaXB0ZGFzaGJvYXJkOnZpZXdzZWN1cml0eWVuY3JpcHQ%3D&id=c2VjdXJpdHllbmNyaXB0MXNlY3VyaXR5ZW5jcmlwdA==
+
+
+
+
+============= Stripe =============
+
+Email: tariq.wpdev@gmail.com
+Name: Tariq WPDev
+Country: Canada
+Password: Kumo@123#20
+
+API Key (publishable key): pk_test_51MaiEGAmT26OJ1aXiWlV4R5onfNvWE7urZetkYiqfq7ZGAr2B2VfRdyibPJPDgrvj9Sk3zXcxngdb9EIqJjh45fl007HmYw1hS
+
+Secret key: sk_test_51MaiEGAmT26OJ1aXoDCNodCBNiA7S8wTAdivQ78yiNPHBvBhqI7ZF8brBEemRcoJzgnOBoTWfmtJzU6jmR6vry6W00564510d6
+
+
+
+
+============ Tawk.to ===============
+
+Shop: Kumo Store
+Admin: Tariq
+Email: tariq.wpdev@gmail.com
+Password: Iamrock@123
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/649b389594cf5d49dc603068/1h3v5a2no';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
