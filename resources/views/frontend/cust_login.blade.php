@@ -1,5 +1,40 @@
 @extends('layouts.master')
 
+
+
+@section('header_css')
+<style>
+	.form-group a.add_login i {
+		font-size: 20px;
+		margin-right: 7px;
+	}
+	.sp_media {
+		display: flex;
+		margin-bottom: 0;
+	}
+
+	@media (max-width: 575.98px){
+		.sp_media {
+			display: block;
+		}
+		.sp_media a {
+			margin-bottom: 5px;
+		}
+	}
+
+	@media (min-width: 992px) and (max-width: 1199.98px){
+		.sp_media {
+			display: block;
+		}
+		.sp_media a {
+			margin-bottom: 5px;
+		}
+	}
+</style>
+@endsection
+
+
+
 @section('content')
 <!-- ======================= Top Breadcrubms ======================== -->
 <div class="gray py-3">
@@ -89,7 +124,16 @@
 					</div>
 					
 					<div class="form-group">
-						<button type="submit" class="btn btn-md full-width bg-dark text-light fs-md ft-medium" id="login_btn">Login</button>
+						<button type="submit" class="btn btn-md full-width bg-dark text-light fs-md ft-medium" id="login_btn">Direct Login</button>
+					</div>
+
+
+					{{-- === Social Login === --}}
+					<label>Or, Login with</label>
+					<div class="form-group sp_media">
+						<a href="{{route('github.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #7441C7"><i class="fab fa-github"></i>GitHub</a>
+						<a href="{{route('google.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #EA4335"><i class="fab fa-google"></i>Google</a>
+						<a href="" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #1877F2"><i class="fab fa-facebook"></i>Facebook</a>
 					</div>
 				</form>
 			</div>

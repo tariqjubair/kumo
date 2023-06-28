@@ -61,3 +61,20 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
+
+
+
+
+============= Scialite ==============
+
+GitHub =>
+Email: tariq.wpdev@gmail
+Name: Tariq
+client_id = 1bd5f590a420a06eb885
+secret = 2e51baecdfc50114893503ce3966101d44f22fe0
+
+Google =>
+Email: tariq.wpdev@gmail
+Name: Tariq WPDev
+client_id = 286238559658-52j2c0btuq20bvqiocttpl714jjr0dgd.apps.googleusercontent.com
+secret = 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

@@ -19,6 +19,7 @@ use App\Http\Controllers\SubcateController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderCont;
 use App\Http\Controllers\RoleCont;
+use App\Http\Controllers\SocialLoginCont;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\StripePaymentController;
 
@@ -84,6 +85,15 @@ Route::post('/customer/email_verify', [CustLoginCont::class, 'email_verify'])->n
 
 Route::get('/customer/new_password/{token}', [CustLoginCont::class, 'new_password'])->name('new.pass');
 Route::post('/customer/reset_password', [CustLoginCont::class, 'reset_password'])->name('reset.pass');
+
+
+
+// === Social Login ===
+Route::get('/github/redirect', [SocialLoginCont::class, 'github_redirect'])->name('github.redirect');
+Route::get('/github/callback', [SocialLoginCont::class, 'github_callback'])->name('github.callback');
+
+Route::get('/google/redirect', [SocialLoginCont::class, 'google_redirect'])->name('google.redirect');
+Route::get('/google/callback', [SocialLoginCont::class, 'google_callback'])->name('google.callback');
 
 
 
