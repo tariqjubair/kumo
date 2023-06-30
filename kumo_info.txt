@@ -5,6 +5,16 @@
 
 
 
+
+============ tariq.com Hosting ===========
+
+DB_DATABASE=tariqjub_kumo
+DB_USERNAME='tariqjub_kumo'
+DB_PASSWORD='eTJUC+FO+Px&'
+
+
+
+
 ========= SSL Commerz: Sandbox Account ============
 
 Website: www.kumo.com

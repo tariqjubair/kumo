@@ -8,6 +8,7 @@ use App\Models\CustPassReset;
 use App\Notifications\PassReset;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Notification;
 
@@ -18,15 +19,21 @@ class CustLoginCont extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
+        
+        $verify = '';
+        if(DB::table('cust_infos')->where('email', $request->username)->exists()){
+            $verify = CustInfo::where('email', $request->username)->first()->email_verified_at;
+        }
+        else if(DB::table('cust_infos')->where('mobile', $request->username)->exists()){
+            $verify = CustInfo::where('mobile', $request->username)->first()->email_verified_at;
+        }
+        if (!$verify){
+            return back()->with([
+                'need_verify' => 'Email not Verified Yet!!'
+            ]);
+        }
 
         if(Auth::guard('CustLogin')->attempt(['email' => $request->username, 'password' => $request->password])){
-            $verify_email = CustInfo::where('email', $request->username)->first()->email_verified_at;
-            if (!$verify_email){
-                return back()->with([
-                    'need_verify' => 'Email not Verified Yet!!'
-                ]);
-            }
-
             $full_name = CustInfo::where('email', $request->username)->get()->first()->name;
             $name = explode(' ', $full_name)[0];
 
@@ -36,13 +43,6 @@ class CustLoginCont extends Controller
             ]);
         }
         else if(Auth::guard('CustLogin')->attempt(['mobile' => $request->username, 'password' => $request->password])){
-            $verify_email = CustInfo::where('mobile', $request->username)->first()->email_verified_at;
-            if (!$verify_email){
-                return back()->with([
-                    'need_verify' => 'Email not Verified!'
-                ]);
-            }
-
             $full_name = CustInfo::where('mobile', $request->username)->get()->first()->name;
             $name = explode(' ', $full_name)[0];
 
