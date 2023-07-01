@@ -68,6 +68,10 @@ Route::get('/about_us', [FrontendController::class, 'about_page'])->name('about_
 Route::get('/shop', [FrontendController::class, 'shop_page'])->name('shop_page');
 Route::get('/contact', [FrontendController::class, 'contact_page'])->name('contact_page');
 
+Route::get('/language/english', [FrontendController::class, 'lang_eng'])->name('lang.eng');
+Route::get('/language/french', [FrontendController::class, 'lang_fra'])->name('lang.fra');
+Route::get('/language/bengali', [FrontendController::class, 'lang_ben'])->name('lang.ben');
+
 
 
 // === Customer Register ===

@@ -1,5 +1,14 @@
 @extends('layouts.master')
 
+
+
+@section('meta')
+    <meta property="og:title" content="{{ $meta['title'] }}">
+    <meta property="og:description" content="{{ $meta['desc'] }}">
+@endsection
+
+
+
 @section('header_css')
 <style>
     .quick_view_slide .slick-dots {

@@ -6,6 +6,8 @@
 	<meta name="author" content="Themezhub" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+
+	@yield('meta')
 	
 	<title>Kumo</title>
 	<link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/site_logo.png')}}">
@@ -38,9 +40,15 @@
 	@yield('header_css')
 
 	<style>
-		
-    /* === Loader === */
-    
+		@media(max-width: 575px){
+
+			#back2Top {
+				bottom: 30px;
+    			right: unset;
+    			left: 30px;
+			}
+			
+		}
 	</style>
 	
 
@@ -96,7 +104,16 @@
 				<div class="row">
 					
 					<div class="col-xl-7 col-lg-6 col-md-6 col-sm-12 hide-ipad">
-						<div class="top_second"><p class="medium text-muted m-0 p-0"><i class="lni lni-phone fs-sm"></i></i> Hotline <a href="#" class="medium text-dark text-underline">0(800) 123-456</a></p></div>
+						<div class="top_second"><p class="medium text-muted m-0 p-0"><i class="fal fa-at"></i> 
+							@if (session('lang_fra'))
+								Adresse postale:
+							@elseif (session('lang_ben'))
+								মেইল:
+							@else
+								Email: 
+							@endif
+							<a href="mailto:tariq.wpdev@gmail.com" class="medium text-dark text-underline">tariq.wpdev@gmail.com</a></p>
+						</div>
 					</div>
 					
 					<!-- Right Menu -->
@@ -105,12 +122,23 @@
 						<div class="language-selector-wrapper dropdown js-dropdown float-right mr-3">
 							<a class="popup-title" href="javascript:void(0)" data-toggle="dropdown" title="Language" aria-label="Language dropdown">
 								<span class="hidden-xl-down medium text-muted">Language:</span>
-								<span class="iso_code medium text-muted">English</span>
+								@if (session('lang_fra'))
+									<img src="{{asset('assets/img/2.jpg')}}" alt="fr" width="16" height="11" />
+									<span class="iso_code medium text-muted">{{'Français'}}</span>
+								@elseif (session('lang_ben'))
+									<img src="{{asset('assets/img/555.jpg')}}" alt="bn" width="16" height="11"/>
+									<span class="iso_code medium text-muted">{{'Bengali'}}</span>
+								@else
+									<img src="{{asset('assets/img/1.jpg')}}" alt="en" width="16" height="11" />
+									<span class="iso_code medium text-muted">{{'English'}}</span>
+								@endif
+								
 								<i class="fa fa-angle-down medium text-muted"></i>
 							</a>
 							<ul class="dropdown-menu popup-content link">
-								<li class="current"><a href="javascript:void(0);" class="dropdown-item medium text-muted"><img src="assets/img/1.jpg" alt="en" width="16" height="11" /><span>English</span></a></li>
-								<li><a href="javascript:void(0);" class="dropdown-item medium text-muted"><img src="assets/img/2.jpg" alt="fr" width="16" height="11" /><span>Français</span></a></li>
+								<li class="current"><a href="{{route('lang.eng')}}" class="dropdown-item medium text-muted"><img src="{{asset('assets/img/1.jpg')}}" alt="en" width="16" height="11" /><span>English</span></a></li>
+								<li><a href="{{route('lang.fra')}}" class="dropdown-item medium text-muted"><img src="{{asset('assets/img/2.jpg')}}" alt="fr" width="16" height="11" /><span>Français</span></a></li>
+								<li><a href="{{route('lang.ben')}}" class="dropdown-item medium text-muted"><img src="{{asset('assets/img/555.jpg')}}" alt="bn" width="16" height="11" /><span>Bengali</span></a></li>
 							</ul>
 						</div>
 
@@ -125,11 +153,35 @@
 								</a>
 								<ul class="dropdown-menu popup-content link">
 									<li><a class="dropdown-item" href="{{route('customer.profile')}}">
-										<i class="fas fa-user-circle mr-2"></i>Profile</a></li>
-									<li><a class="dropdown-item" href="{{route('customer.logout')}}"><i class="far fa-sign-out mr-2"></i>Logout</a></li>
+										<i class="fas fa-user-circle mr-2"></i>
+										@if (session('lang_fra'))
+											profil
+										@elseif (session('lang_ben'))
+											প্রোফাইল
+										@else
+											Profile
+										@endif
+									</a></li>
+									<li><a class="dropdown-item" href="{{route('customer.logout')}}"><i class="far fa-sign-out mr-2"></i>
+										@if (session('lang_fra'))
+											Se déconnecter
+										@elseif (session('lang_ben'))
+											প্রস্থান
+										@else
+											Logout
+										@endif
+									</a></li>
 								</ul>
 							@else
-								<a href="{{route('customer_login')}}" class="text-muted medium"><i class="fad fa-users mr-2"></i>Sign In / Register</a>
+								<a href="{{route('customer_login')}}" class="text-muted medium"><i class="fad fa-users mr-2"></i>
+									@if (session('lang_fra'))
+										S'identifier / enregistrer
+									@elseif (session('lang_ben'))
+										সাইন ইন / নিবন্ধন
+									@else
+										Sign In / Register
+									@endif
+								</a>
 							@endauth
 						</div>
 					</div>
@@ -166,7 +218,16 @@
 									<li>
 										<div class="call d-flex align-items-center text-left">
 											<i class="lni lni-phone fs-xl"></i>
-											<span class="text-muted small ml-3">Call Us Now:<strong class="d-block text-dark fs-md">0(800) 123-456</strong></span>
+											<span class="text-muted small ml-3">
+												@if (session('lang_fra'))
+													appelez-nous maintenant
+												@elseif (session('lang_ben'))
+													আমাদের কল করুন:
+												@else
+													Call Us Now:
+												@endif
+												<strong class="d-block text-dark fs-md">0(800) 123-456</strong>
+											</span>
 										</div>
 									</li>
 

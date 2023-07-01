@@ -18,6 +18,7 @@ use Jorenvh\Share\ShareFacade;
 use App\Models\OrdereditemsTab;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class FrontendController extends Controller
 {
@@ -192,6 +193,11 @@ class FrontendController extends Controller
 
         $size_info = Inventory::where('product_id', $product_info->id)->orderBy('size')->groupBy('size')->selectRaw('sum(size) as sum, size')->get('sum', 'size');
 
+        $meta = [
+            'title' => $product_info->product_name,
+            'desc' => $product_info->short_desc,
+        ];
+        
         $shareComponent = ShareFacade::currentPage()
         ->facebook()
         ->twitter()
@@ -207,6 +213,7 @@ class FrontendController extends Controller
             'color_info' => $color_info,
             'size_info' => $size_info,
             'shareComponent' => $shareComponent,
+            'meta' => $meta,
         ]);
     }
 
@@ -265,5 +272,30 @@ class FrontendController extends Controller
                 'rev_done' => 'rev_done',
             ]);
         }
+    }
+
+
+
+    // === Language Select ===
+    function lang_eng(){
+        session::pull('lang_fra');
+        session::pull('lang_ben');
+        return back();
+    }
+
+    function lang_fra(){
+        session::pull('lang_ben');
+        Session([
+            'lang_fra' => 'fr',
+        ]);
+        return back();
+    }
+
+    function lang_ben(){
+        session::pull('lang_fra');
+        Session([
+            'lang_ben' => 'bn',
+        ]);
+        return back();
     }
 }
