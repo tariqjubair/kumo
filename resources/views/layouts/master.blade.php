@@ -587,6 +587,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	<script src="{{asset('assets/js/jQuery.style.switcher.js')}}"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="{{ asset('js/share.js') }}"></script>
 	<script src="{{asset('assets/js/custom.js')}}"></script>
 	<!-- ============================================================== -->
 	<!-- This page plugins -->

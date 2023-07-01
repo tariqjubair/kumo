@@ -95,6 +95,9 @@ Route::get('/github/callback', [SocialLoginCont::class, 'github_callback'])->nam
 Route::get('/google/redirect', [SocialLoginCont::class, 'google_redirect'])->name('google.redirect');
 Route::get('/google/callback', [SocialLoginCont::class, 'google_callback'])->name('google.callback');
 
+Route::get('/facebook/redirect', [SocialLoginCont::class, 'facebook_redirect'])->name('facebook.redirect');
+Route::get('/facebook/callback', [SocialLoginCont::class, 'facebook_callback'])->name('facebook.callback');
+
 
 
 // === Customer ===

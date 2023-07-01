@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Share;
 use Carbon\Carbon;
-use App\Models\category;
-use App\Models\Color;
-use App\Models\Inventory;
-use App\Models\OrdereditemsTab;
-use App\Models\Product_list;
+use Stripe\Product;
 use App\Models\Size;
-use App\Models\Subcategory;
+use App\Models\Color;
+use App\Models\category;
+use App\Models\Inventory;
 use App\Models\Thumbnail;
 use App\Models\WishTable;
+use App\Models\Subcategory;
+use App\Models\Product_list;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Jorenvh\Share\ShareFacade;
+use App\Models\OrdereditemsTab;
 use Illuminate\Support\Facades\DB;
-use Stripe\Product;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -190,12 +192,21 @@ class FrontendController extends Controller
 
         $size_info = Inventory::where('product_id', $product_info->id)->orderBy('size')->groupBy('size')->selectRaw('sum(size) as sum, size')->get('sum', 'size');
 
+        $shareComponent = ShareFacade::currentPage()
+        ->facebook()
+        ->twitter()
+        ->linkedin()
+        ->telegram()
+        ->whatsapp()        
+        ->reddit();
+
         return view('frontend.details', [
             'product_info' => $product_info,
             'thumbnail' => $thumbnail,
             'rel_products' => $rel_products,
             'color_info' => $color_info,
             'size_info' => $size_info,
+            'shareComponent' => $shareComponent,
         ]);
     }
 
