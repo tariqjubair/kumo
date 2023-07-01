@@ -8,7 +8,15 @@
         
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
                 <div class="killore-new-block-link border mb-3 mt-3">
-                    <div class="px-3 py-3 ft-medium fs-md text-dark gray">Top Categories</div>
+                    <div class="px-3 py-3 ft-medium fs-md text-dark gray">
+                        @if (session('lang_fra'))
+                            Principales Catégories
+                        @elseif (session('lang_ben'))
+                            শীর্ষ বিভাগ:
+                        @else
+                            Top Categories
+                        @endif
+                    </div>
                     
                     <div class="killore--block-link-content">
                         <ul>
@@ -114,7 +122,15 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="sec_title position-relative text-center">
                     <h2 class="off_title">Trendy Products</h2>
-                    <h3 class="ft-bold pt-3">Our Trending Products</h3>
+                    <h3 class="ft-bold pt-3">
+                        @if (session('lang_fra'))
+                            Notre Produit Tendance
+                        @elseif (session('lang_ben'))
+                            আমাদের ট্রেন্ডিং পণ্য
+                        @else
+                            Our Trending Products
+                        @endif
+                    </h3>
                 </div>
             </div>
         </div>

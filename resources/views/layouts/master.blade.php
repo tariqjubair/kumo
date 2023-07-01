@@ -220,7 +220,7 @@
 											<i class="lni lni-phone fs-xl"></i>
 											<span class="text-muted small ml-3">
 												@if (session('lang_fra'))
-													appelez-nous maintenant
+													Appelez-nous Maintenant:
 												@elseif (session('lang_ben'))
 													আমাদের কল করুন:
 												@else
