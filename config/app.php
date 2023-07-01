@@ -184,6 +184,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -215,6 +216,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Share' => Jorenvh\Share\ShareFacade::class,
     ])->toArray(),
 
 ];

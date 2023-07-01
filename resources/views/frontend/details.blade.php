@@ -34,6 +34,27 @@
         right: 55px;
     }
 
+    div#social-links {
+        margin: 0;
+        max-width: 500px;
+        display: inline-block;
+    }
+    div#social-links ul {
+        padding: 0;
+    }
+    div#social-links ul li {
+        display: inline-block;
+    }          
+    div#social-links ul li a {
+        padding: 6px 12px;
+        /* border: 1px solid #ccc; */
+        border-radius: 5px;
+        margin: 5px;
+        font-size: 18px;
+        color: #636872;
+        background-color: #f4f5f7;
+    }
+
     @media(min-width: 992px){
     
         .all_rev {
@@ -278,17 +299,9 @@
                     </form>
                     
                     <div class="prt_06">
-                        <p class="mb-0 d-flex align-items-center">
+                        <p class="mb-0 d-inline-block">
                           <span class="mr-4">Share:</span>
-                          <a class="d-inline-flex align-items-center justify-content-center p-3 gray circle fs-sm text-muted mr-2" href="#!">
-                            <i class="fab fa-twitter position-absolute"></i>
-                          </a>
-                          <a class="d-inline-flex align-items-center justify-content-center p-3 gray circle fs-sm text-muted mr-2" href="#!">
-                            <i class="fab fa-facebook-f position-absolute"></i>
-                          </a>
-                          <a class="d-inline-flex align-items-center justify-content-center p-3 gray circle fs-sm text-muted" href="#!">
-                            <i class="fab fa-pinterest-p position-absolute"></i>
-                          </a>
+                          {!! $shareComponent !!}
                         </p>
                     </div>
 
