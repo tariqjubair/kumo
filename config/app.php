@@ -186,6 +186,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Jorenvh\Share\Providers\ShareServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class, 
+        Spatie\Backup\BackupServiceProvider::class,
 
         /*
          * Package Service Providers...
