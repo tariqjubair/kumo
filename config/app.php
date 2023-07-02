@@ -185,6 +185,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Jorenvh\Share\Providers\ShareServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class, 
+        Spatie\Backup\BackupServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -217,6 +219,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class, 
     ])->toArray(),
 
 ];

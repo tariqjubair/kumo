@@ -13,6 +13,7 @@ use App\Http\Controllers\CheckoutCont;
 use App\Http\Controllers\CustLoginCont;
 use App\Http\Controllers\cataController;
 use App\Http\Controllers\CustomerCont;
+use App\Http\Controllers\ExcelCont;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubcateController;
@@ -67,6 +68,10 @@ Route::post('/get_quantity', [FrontendController::class, 'get_quantity']);
 Route::get('/about_us', [FrontendController::class, 'about_page'])->name('about_page');
 Route::get('/shop', [FrontendController::class, 'shop_page'])->name('shop_page');
 Route::get('/contact', [FrontendController::class, 'contact_page'])->name('contact_page');
+
+Route::get('/language/english', [FrontendController::class, 'lang_eng'])->name('lang.eng');
+Route::get('/language/french', [FrontendController::class, 'lang_fra'])->name('lang.fra');
+Route::get('/language/bengali', [FrontendController::class, 'lang_ben'])->name('lang.ben');
 
 
 
@@ -333,5 +338,7 @@ Route::post('/product/update_charges', [ChargesCont::class, 'charges_update'])->
 Route::get('/order_list', [OrderCont::class, 'order_list'])->name('order_list');
 Route::post('/order_list/order_status_update', [OrderCont::class, 'order_status_update'])->name('order_status.update');
 Route::get('/new_order/{order_id}', [OrderCont::class, 'order_info'])->name('order.info');
+
+Route::get('/export/orders',[ExcelCont::class, 'export_orders'])->name('export.order');
 
 

@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3>Order List:</h3>
+                <h3>Order List: <a href="{{route('export.order')}}" class="btn btn-success btn-xxs shadow ml-3">Download</a></h3>
                 <h4>Total: {{$order_count}}</h4>
             </div>
             <div class="card-body">

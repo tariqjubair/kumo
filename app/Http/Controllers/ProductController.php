@@ -294,7 +294,7 @@ class ProductController extends Controller
             'subcata_id' => $request->subcata_id,
             'product_name' => $request->product_name,
 
-            'slug' => Str::lower(str_replace(' ', '-', $request->product_name)).'-'.rand(100000, 999999),
+            // 'slug' => Str::lower(str_replace(' ', '-', $request->product_name)).'-'.rand(100000, 999999),
             
             'price' => $request->price_upd,
             'discount' => $request->disc_upd,
