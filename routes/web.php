@@ -159,7 +159,7 @@ Route::get('/order_failed', [CheckoutCont::class, 'order_failed'])->name('order.
 // Mail Check ===
 Route::get('/mailable', function () {
     $mail_item = session('mail_item');
-    return new App\Mail\InvoiceMail($mail_item);
+    return new App\Mail\OrderPlaced($mail_item);
 });
 
 

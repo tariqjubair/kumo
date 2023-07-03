@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderCancelled;
+use App\Mail\OrderConfirmed as MailOrderConfirmed;
 use App\Models\BillingTab;
+use App\Models\CustInfo;
 use App\Models\OrdereditemsTab;
 use App\Models\OrderTab;
 use App\Models\User;
+use App\Notifications\OrderConfirmed;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderCont extends Controller
 {
@@ -27,10 +33,40 @@ class OrderCont extends Controller
 
     function order_status_update(Request $request){
         $order_id = $request->order_id;
+        $billing_info = BillingTab::where('order_id', $order_id)->first();
+        $billing_email = $billing_info->email;
+        $cust_id = BillingTab::where('order_id', $order_id)->first()->customer_id;
+        $cust_email = CustInfo::find($cust_id)->email;
 
         OrderTab::where('order_id', $order_id)->update([
             'order_status' => $request->status,
         ]);
+
+        if($request->status == 2){
+            if($billing_email == $cust_email){
+                Mail::to($billing_email)->send(new MailOrderConfirmed($billing_info));
+            }
+            else {
+                Mail::to($billing_email)
+                ->cc($cust_email)
+                ->send(new MailOrderConfirmed($billing_info));
+            }
+        }
+
+        if($request->status == 6){
+            if($billing_email == $cust_email){
+                Mail::to($billing_email)->send(new OrderCancelled($billing_info));
+            }
+            else {
+                Mail::to($billing_email)
+                ->cc($cust_email)
+                ->send(new OrderCancelled($billing_info));
+            }
+
+            // === Subtract Inventory ===
+            // Inventory::where('product_id', $cart->product_id)->where('color', $cart->color_id)->where('size', $cart->size_id)->decrement('quantity', $cart->quantity);
+        }
+
         return back()->with([
             'job_upd' => 'Order-Status Updated!'
         ]);

@@ -231,8 +231,8 @@ $ord_product = App\Models\OrdereditemsTab::where('order_id', $order_id)->first()
             <div id="client">
                 <div class="item" style="margin-bottom: 8px">
                     <div class="to">INVOICE TO:</div>
-                    <h2 class="name">{{Auth::guard('CustLogin')->user()->name}}</h2>
-                    <div class="email"><a href="mailto:{{Auth::guard('CustLogin')->user()->email}}">{{Auth::guard('CustLogin')->user()->email}}</a></div>
+                    <h2 class="name">{{$billing_info->relto_cust->name}}</h2>
+                    <div class="email"><a href="mailto:{{$billing_info->relto_cust->email}}">{{$billing_info->relto_cust->email}}</a></div>
                 </div>
 
                 <div class="item">

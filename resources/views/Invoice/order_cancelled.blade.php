@@ -1,12 +1,12 @@
 
-{{-- === Role Assigned === --}}
+{{-- === Order Cancelled === --}}
 
 <!doctype html>
 <html lang="en-US">
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Role Assigned Email Template</title>
+    <title>Order Cancelled Email Template</title>
     <meta name="description" content="Reset Password Email Template.">
     <style type="text/css">
         a:hover {text-decoration: underline !important;}
@@ -43,20 +43,13 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">{{$msg}}</h1>
+                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">ORDER CANCELLED</h1>
                                         <span
                                             style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                             
-                                        <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            Hi <span style="font-weight: 600">{{$user->name}}</span>, your current role is <span style="color: blue; font-weight:600">{{$user->getRoleNames()->first()}}</span>.<br> Here is the list of permissions provided to you:
+                                        <p style="color:#455056; font-size:15px;line-height:24px; margin:0 auto; max-width: 300px;">
+                                            Hi, your Order <span style="color: red; font-weight:600">{{$billing_info->order_id}}</span> is cancelled due to unforeseen circumstances.<br> You can call us for further query. Sorry for the inconvenience.
                                         </p>
-                                        <p>
-                                            @foreach ($user->getAllPermissions() as $sl=>$perm) 
-                                            {{$sl+1}}. {{$perm->name}};{{' '}}
-                                            @endforeach
-                                        </p>
-                                            <a href="{{route('home')}}" target="_blank"
-                                            style="background:#1A82E2;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Login to Dashboard</a>
                                     </td>
                                 </tr>
                                 <tr>

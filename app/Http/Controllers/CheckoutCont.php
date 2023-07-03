@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\OrdereditemsTab;
 use App\Http\Controllers\Controller;
+use App\Mail\OrderPlaced;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -171,7 +172,16 @@ class CheckoutCont extends Controller
             ]);
             
             // === Send Mail ===
-            Mail::to($order_info['email'])->send(new InvoiceMail($order_id));
+            if($order_info['email'] == Auth::guard('CustLogin')->user()->email){
+                Mail::to($order_info['email'])->send(new OrderPlaced($order_id));
+            }
+            else {
+                Mail::to($order_info['email'])
+                ->cc(Auth::guard('CustLogin')->user()->email)
+                ->send(new OrderPlaced($order_id));
+            }
+            
+
 
             // === SMS API ===
             // $url = "http://bulksmsbd.net/api/smsapi";

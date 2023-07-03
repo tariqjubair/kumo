@@ -3,7 +3,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title> Order confirmation </title>
+    <title> Challan </title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/site_logo.png')}}">
     <meta name="robots" content="noindex,nofollow" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0;" />
     <style type="text/css">
@@ -203,7 +204,7 @@
                                                     <tr>
                                                         <td
                                                             style="font-size: 21px; color: #ff0000; letter-spacing: -1px; font-family: 'Open Sans', sans-serif; line-height: 1; vertical-align: top; text-align: right;">
-                                                            Invoice
+                                                            Challan
                                                         </td>
                                                     </tr>
                                                     <tr>

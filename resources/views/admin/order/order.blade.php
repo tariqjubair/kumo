@@ -31,7 +31,16 @@
     <div class="col-xl-8">
         <div class="card">
             <div class="card-header">
-                <h3>Order ID: {{$order_id}}</h3>
+                <h3>Order ID: {{$order_id}} ({{$ordered_items->count()}})</h3>
+
+                @if ($order_tab->order_status == 1)
+                    <form action="{{route('order_status.update')}}" method="POST" id="status_form">
+                        @csrf
+                        <input type="hidden" name="order_id" value="{{$order_id}}">
+                        <button class="btn btn-outline-success btn-xs mr-2 status_btn" name="status" value="2">Confirm</button>
+                        <button class="btn btn-outline-danger btn-xs status_btn" name="status" value="6">Cancel</button>
+                    </form>
+                @endif
                 <h4>Total: {{$ordered_items->count()}}</h4>
             </div>
             <div class="card-body">
@@ -61,7 +70,7 @@
                                 Color: {{$item->relto_color->color_name}}<br>
                                 Price: {{number_format($item->price)}} &#2547;
                             </td>
-                            <td style="text-align: center"><span style="font-size: 24px">x{{$item->quantity}}</span></td>
+                            <td style="text-align: left"><span style="font-size: 24px">x {{$item->quantity}}</span></td>
                             <td>
                                 Total:<br> {{number_format($item->price * $item->quantity)}} &#2547;
                             </td>
@@ -120,13 +129,7 @@
                 </h5>
                 <br>
 
-                <form action="{{route('order_status.update')}}" method="POST">
-                    @csrf
-
-                    <input type="hidden" name="order_id" value="{{$order_id}}">
-                    <button class="btn btn-outline-primary btn-md mr-2" name="status" value="2">Confirm</button>
-                    <button class="btn btn-outline-danger btn-md" name="status" value="6">Cancel</button>
-                </form>
+                
             </div>
         </div>
     </div>

@@ -1,12 +1,12 @@
 
-{{-- === Role Assigned === --}}
+{{-- === Order Confirmed === --}}
 
 <!doctype html>
 <html lang="en-US">
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Role Assigned Email Template</title>
+    <title>Order Confirmed Email Template</title>
     <meta name="description" content="Reset Password Email Template.">
     <style type="text/css">
         a:hover {text-decoration: underline !important;}
@@ -43,20 +43,26 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">{{$msg}}</h1>
+                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">ORDER CONFIRMED</h1>
                                         <span
                                             style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                             
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            Hi <span style="font-weight: 600">{{$user->name}}</span>, your current role is <span style="color: blue; font-weight:600">{{$user->getRoleNames()->first()}}</span>.<br> Here is the list of permissions provided to you:
+                                            Hi, your Order <span style="color: blue; font-weight:600">{{$billing_info->order_id}}</span> is confirmed.<br> Product(s) will be delivered soon. Thanks for visiting Kumo Store.
                                         </p>
                                         <p>
-                                            @foreach ($user->getAllPermissions() as $sl=>$perm) 
-                                            {{$sl+1}}. {{$perm->name}};{{' '}}
-                                            @endforeach
+                                            <b><u>Delivery Address:</u></b><br>
+                                            {{$billing_info->name}}<br>
+                                            Email: {{$billing_info->email}}<br>
+                                            Phone: {{$billing_info->mobile}}<br>
+                                            Company: {{$billing_info->company}}<br>
+                                            Address: {{$billing_info->address}}<br>
+                                            {{$billing_info->relto_city->name}},
+                                            {{$billing_info->relto_country->name}} -
+                                            {{$billing_info->zip}}.
                                         </p>
-                                            <a href="{{route('home')}}" target="_blank"
-                                            style="background:#1A82E2;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Login to Dashboard</a>
+                                        <a href="{{route('order.inv', substr($billing_info->order_id, 1))}}" target="_blank"
+                                        style="background:#1A82E2;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">View Invoice</a>
                                     </td>
                                 </tr>
                                 <tr>
