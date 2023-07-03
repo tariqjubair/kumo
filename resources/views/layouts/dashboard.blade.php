@@ -287,6 +287,14 @@
 							@endcan
                         </ul>
                     </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="fad fa-users-class"></i>
+							<span class="nav-text">Customers</span>
+						</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('cust_list')}}" aria-expanded="false">Customer List</a></li>
+                        </ul>
+                    </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="fad fa-project-diagram"></i>
 						<span class="nav-text">Roles</span>

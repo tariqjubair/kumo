@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BackendCust;
 use Psy\Util\Str;
 use App\Models\City;
 use App\Models\Length;
@@ -238,6 +239,16 @@ Route::post('/roles/users/update_roles', [RoleCont::class, 'user_role_update'])-
 Route::get('/roles/users/remove/{user_id}', [RoleCont::class, 'user_role_remove'])->name('user_role.remove');
 
 Route::post('/get_user_status', [RoleCont::class, 'user_status_pulse']);
+
+
+
+// === Backend Customers ===
+Route::get('/customer_list', [BackendCust::class, 'cust_list'])->name('cust_list');
+Route::get('/customer/block/{cust_id}', [BackendCust::class, 'customer_block'])->name('cust.block');
+Route::get('/customer/unblock/{cust_id}', [BackendCust::class, 'customer_unblock'])->name('cust.unblock');
+Route::get('/customer/orders/{cust_id}', [BackendCust::class, 'customer_orders'])->name('backend_cust.order');
+
+Route::get('/export/customer_orders/{cust_id}',[ExcelCont::class, 'export_cust_orders'])->name('export.cust_order');
 
 
 

@@ -300,7 +300,15 @@ $ord_product = App\Models\OrdereditemsTab::where('order_id', $order_id)->first()
         </table>
         <div id="thanks">Thank you!</div>
         <div id="notices">
-            <div>NOTICE:</div>
+            <div>Payment: 
+                @if ($order_info->payment_method == 1)
+                    {{'Cash on Delivery'}}
+                @elseif ($order_info->payment_method == 2)
+                    {{'Paid with SSLCommerz'}}
+                @elseif ($order_info->payment_method == 3)
+                    {{'Paid with Stripe'}}
+                @endif
+            </div>
             <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
         </div>
     </main>

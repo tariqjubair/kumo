@@ -31,14 +31,14 @@
     <div class="col-xl-8">
         <div class="card">
             <div class="card-header">
-                <h3>Order ID: {{$order_id}} ({{$ordered_items->count()}})</h3>
+                <h3>Order ID: {{$order_id}}</h3>
 
                 @if ($order_tab->order_status == 1)
                     <form action="{{route('order_status.update')}}" method="POST" id="status_form">
                         @csrf
                         <input type="hidden" name="order_id" value="{{$order_id}}">
-                        <button class="btn btn-outline-success btn-xs mr-2 status_btn" name="status" value="2">Confirm</button>
-                        <button class="btn btn-outline-danger btn-xs status_btn" name="status" value="6">Cancel</button>
+                        <button class="btn btn-outline-success btn-xs mr-2 status_btn" name="status" value="2" id="conf_btn">Confirm</button>
+                        <button class="btn btn-outline-danger btn-xs status_btn" name="status" value="6" id="canc_btn">Cancel</button>
                     </form>
                 @endif
                 <h4>Total: {{$ordered_items->count()}}</h4>
@@ -61,7 +61,7 @@
                             <td>{{$key+1}}</td>
                             <td>
                                 <div class="item_div d-inline-block border">
-                                    <a href="{{route('product.details', $item->relto_product->slug)}}"><img src="{{asset('uploads/product/preview')}}/{{$item->relto_product->preview}}" width="100" class="img-fluid" alt=""></a>
+                                    <a href="{{route('product.inventory', $item->product_id)}}"><img src="{{asset('uploads/product/preview')}}/{{$item->relto_product->preview}}" width="100" class="img-fluid" alt=""></a>
                                 </div>
                             </td>
                             <td>
@@ -148,5 +148,17 @@
             responsive: true,
         });
 	} );
+</script>
+
+{{-- === Dash preloader on Submit === --}}
+<script>
+    $(document).ready(function () {
+        $("#conf_btn").click(function () {
+            $("#dash_loader").show();
+        });
+        $("#canc_btn").click(function () {
+            $("#dash_loader").show();
+        });
+    });
 </script>
 @endsection

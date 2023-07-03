@@ -165,9 +165,11 @@
                                         @endif
                                     </div>
                                 </div>
+                                @if ($order->order_status != 1 && $order->order_status != 6)
                                 <div class="inv_link ml-4">
                                     <a href="{{route('order.inv', substr($order->order_id, 1))}}" title="View Invoice" target="_blank"><img width="45px" src="{{asset('assets/img/invoice.png')}}" alt=""></a>
                                 </div>
+                                @endif
                             </div>
                         </div>
 

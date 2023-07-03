@@ -6,6 +6,7 @@ use App\Mail\OrderCancelled;
 use App\Mail\OrderConfirmed as MailOrderConfirmed;
 use App\Models\BillingTab;
 use App\Models\CustInfo;
+use App\Models\Inventory;
 use App\Models\OrdereditemsTab;
 use App\Models\OrderTab;
 use App\Models\User;
@@ -37,6 +38,7 @@ class OrderCont extends Controller
         $billing_email = $billing_info->email;
         $cust_id = BillingTab::where('order_id', $order_id)->first()->customer_id;
         $cust_email = CustInfo::find($cust_id)->email;
+        $item_info = OrdereditemsTab::where('order_id', $order_id)->get();
 
         OrderTab::where('order_id', $order_id)->update([
             'order_status' => $request->status,
@@ -64,7 +66,9 @@ class OrderCont extends Controller
             }
 
             // === Subtract Inventory ===
-            // Inventory::where('product_id', $cart->product_id)->where('color', $cart->color_id)->where('size', $cart->size_id)->decrement('quantity', $cart->quantity);
+            // foreach ($item_info as $item){
+            //     Inventory::where('product_id', $item->product_id)->where('color', $item->color_id)->where('size', $item->size_id)->increment('quantity', $item->quantity);
+            // }
         }
 
         return back()->with([
