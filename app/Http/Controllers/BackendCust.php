@@ -143,24 +143,13 @@ class BackendCust extends Controller
 
 
     function newsletter_send(Request $request){
-        $news_head = newsletter::find($request->news_id)->head;
-        if($news_head == $request->head){
-            $request->validate([
-                'promo' => 'required',
-            ], [
-                'promo.required' => 'Must add Promotion!',
-            ]);
-        }
-        else {
-            $request->validate([
-                'head' => 'required|unique:newsletters,head',
-                'promo' => 'required',
-            ], [
-                'head.required' => 'Must insert Header',
-                'head.unique' => 'Header already Exists, change Name!',
-                'promo.required' => 'Must add Promotion!',
-            ]);
-        }
+        $request->validate([
+            'head' => 'required',
+            'promo' => 'required',
+        ], [
+            'head.required' => 'Must insert Header!',
+            'promo.required' => 'Must add Promotion!',
+        ]);
 
         $header = $request->head;
         $promo = $request->promo;
@@ -171,11 +160,11 @@ class BackendCust extends Controller
             'header' => $header,
             'promo' => $promo,
         ]);
-        Mail::to('cust.test00@gmail.com')->send(new PromoMail($header, $promo));
+        // Mail::to('tariq.wpdev@gmail.com')->send(new PromoMail($header, $promo));
 
-        // foreach ($cust_all as $cust){
-        //     Mail::to($cust->email)->send(new PromoMail($header, $promo));
-        // }
+        foreach ($cust_all as $cust){
+            Mail::to($cust->email)->send(new PromoMail($header, $promo));
+        }
 
         return back()->with('job_upd', 'Mail Sent to All Customers!');
     }

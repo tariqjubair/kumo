@@ -9,6 +9,8 @@ use App\Models\CustInfo;
 use App\Models\Inventory;
 use App\Models\OrdereditemsTab;
 use App\Models\OrderTab;
+use App\Models\SslOrder;
+use App\Models\StripeOrder;
 use App\Models\User;
 use App\Notifications\OrderConfirmed;
 use Illuminate\Http\Request;
@@ -96,6 +98,25 @@ class OrderCont extends Controller
             'order_tab' => $order_tab,
             'ordered_items' => $ordered_items,
             'billing_tab' => $billing_tab,
+        ]);
+    }
+
+
+
+
+    function ssl_report(){
+        $ssl_orders = SslOrder::orderBy('id', 'DESC')->get();
+
+        return view('admin.order.ssl_report', [
+            'ssl_orders' => $ssl_orders,
+        ]);
+    }
+
+    function stripe_report(){
+        $stripe_orders = StripeOrder::orderBy('id', 'DESC')->get();
+
+        return view('admin.order.stripe_report', [
+            'stripe_orders' => $stripe_orders,
         ]);
     }
 }

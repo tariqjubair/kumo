@@ -73,7 +73,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="form-group">
                                 <label class="text-dark">Full Name *</label>
-                                <input type="text" name="name" class="form-control" placeholder="Receipient Name" value="{{old('name')}}">
+                                <input type="text" name="name" class="form-control" placeholder="Receipient Name" value="{{old('name') ?old('name') :Auth::guard('CustLogin')->user()->name}}">
                                 @error('name')
                                     <strong class="text-danger err">{{$message}}</strong>
                                 @enderror
@@ -82,7 +82,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label class="text-dark">Email *</label>
-                                <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('email')}}">
+                                <input type="email" name="email" class="form-control" placeholder="Email" value="{{old('email') ?old('email') :Auth::guard('CustLogin')->user()->email}}">
                                 @error('email')
                                     <strong class="text-danger err">{{$message}}</strong>
                                 @enderror

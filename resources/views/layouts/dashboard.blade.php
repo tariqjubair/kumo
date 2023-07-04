@@ -348,6 +348,8 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('order_list')}}">Order List</a></li>
+                            <li><a href="{{route('ssl_report')}}">SSLCommerz Report</a></li>
+                            <li><a href="{{route('stripe_report')}}">Stripe Report</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -481,13 +483,6 @@
 	{{-- === Customer Pass Reset === --}}
 	@if (session('cust_pass_reset'))
 	<script>
-		// Swal.fire({
-		// 	position: 'center-center',
-		// 	icon: 'success',
-		// 	title: '{{session('user')}}{{session("cust_pass_reset")}}',
-		// 	showConfirmButton: false,
-		// 	timer: 1500
-		// })
 		Swal.fire({
 			icon: 'success',
 			title: '<span class="text-danger">{{session('user')}}</span>',

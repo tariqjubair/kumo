@@ -365,4 +365,6 @@ Route::get('/new_order/{order_id}', [OrderCont::class, 'order_info'])->name('ord
 
 Route::get('/export/orders',[ExcelCont::class, 'export_orders'])->name('export.order');
 
+Route::get('/ssl_report', [OrderCont::class, 'ssl_report'])->name('ssl_report');
+Route::get('/stripe_report', [OrderCont::class, 'stripe_report'])->name('stripe_report');
 

@@ -1,72 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <head>
-    <meta charset="utf-8">
-    <title>Promotion</title>
-
     <style>
-        a {
-            color: #0087C3;
-            text-decoration: none;
-        }
-
-        body {
-            position: relative;
-            /* width: 21cm; */
-            width: 100%;
-            height: 29.7cm;
+        img {
             margin: 0 auto;
-            color: #555555;
-            background: #FFFFFF;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-family: 'Roboto', sans-serif;
         }
-
-        header {
-            padding: 10px 0;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #AAAAAA;
-        }
-
-        #logo {
-            float: left;
-            margin-top: 8px;
-        }
-
-        #logo img {
-            height: 70px;
-        }
-
-        #company {
-            float: right;
-            text-align: right;
+        .link a {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 400;
         }
     </style>
 </head>
-
-
-<body>
-    <header class="clearfix">
-        <div id="logo">
-            <img src="https://i.postimg.cc/YSMVpR7D/kumo-logo.png" alt="logo" border="0" />
-        </div>
-        <div id="company">
-            <h2 class="name">Kumo Store</h2>
-            <div>455 Foggy Heights, AZ 85004, US</div>
-            <div>(602) 519-0450</div>
-            <div><a href="mailto:company@example.com">company@example.com</a></div>
-        </div>
-        </div>
-    </header>
-</body>
-<body>
+<body style="margin: 30px;">
     <div class="item" style="text-align: center">
-        <h1>{{$header}}</h1>
+        <h1 style="margin-bottom: 30px; font-size: 40px;">
+            {{$header}}
+        </h1>
+    </div>
+{!! $promo !!}
+    <div class="link" style="text-align: center">
+        <a href="{{route('home_page')}}" target="_blank"
+            style="background:#1A82E2;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Visit Kumo Store</a>
     </div>
 </body>
-</html>
-{!! $promo !!}
 
 
 
