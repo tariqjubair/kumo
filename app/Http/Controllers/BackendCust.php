@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PromoMail;
 use App\Models\CustInfo;
+use App\Models\newsletter;
 use App\Models\OrderTab;
+use App\Notifications\TempPassword;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class BackendCust extends Controller
 {
@@ -43,5 +51,132 @@ class BackendCust extends Controller
             'cust_name' => $cust_name,
             'cust_order' => $cust_order,
         ]);
+    }
+
+    function cust_pass_reset($cust_id){
+        $cust_info = CustInfo::find($cust_id);
+        $cust_name = CustInfo::find($cust_id)->name;
+        $temp_pass = Str::random(8);
+        CustInfo::find($cust_id)->update([
+            'password' => bcrypt($temp_pass),
+        ]);
+
+        Notification::send($cust_info, new TempPassword($temp_pass));
+
+        return back()->with([
+            'user' => $cust_name,
+            'cust_pass_reset' => 'Password has been Reset and Forwarded!'
+        ]);
+    }
+
+    function newsletter_store(Request $request){
+        $news_all = newsletter::orderBy('id', 'DESC')->get();
+        $data = $request->all();
+
+        $news_set = newsletter::where(function($q) use($data){
+            if((!empty($data['inp'])) && ($data['inp'] != '') && ($data['inp'] != 'undefined')){
+                $q->where('id', $data['inp']);
+            };
+        })->first();
+
+        return view('admin.customer.newsletter', [
+            'news_all' => $news_all,
+            'news_set' => $news_set,
+        ]);
+    }
+
+
+
+    
+    function newsletter_add(Request $request){
+        $request->validate([
+            'head' => 'required|unique:newsletters,head',
+            'promo' => 'required',
+        ], [
+            'head.required' => 'Must insert Header',
+            'head.unique' => 'Header already Exists, change Name!',
+            'promo.required' => 'Must add Promotion!',
+        ]);
+        // return $request->all();
+
+        $news_item = newsletter::insertGetId([
+            'head' => $request->head,
+            'promo' => $request->promo,
+            'created_at' => Carbon::now(),
+        ]);
+
+        return back()->with('job_upd', 'New Promotion Added!');
+    }
+
+
+
+
+    function newsletter_update(Request $request){
+        $news_head = newsletter::find($request->news_id)->head;
+        if($news_head == $request->head){
+            $request->validate([
+                'promo' => 'required',
+            ], [
+                'promo.required' => 'Must add Promotion!',
+            ]);
+        }
+        else {
+            $request->validate([
+                'head' => 'required|unique:newsletters,head',
+                'promo' => 'required',
+            ], [
+                'head.required' => 'Must insert Header',
+                'head.unique' => 'Header already Exists, change Name!',
+                'promo.required' => 'Must add Promotion!',
+            ]);
+        }
+        // return $request->all();
+
+        newsletter::find($request->news_id)->update([
+            'head' => $request->head,
+            'promo' => $request->promo,
+        ]);
+        return back()->with('job_upd', 'Newsletter Updated!');
+    }
+
+
+
+
+    function newsletter_send(Request $request){
+        $news_head = newsletter::find($request->news_id)->head;
+        if($news_head == $request->head){
+            $request->validate([
+                'promo' => 'required',
+            ], [
+                'promo.required' => 'Must add Promotion!',
+            ]);
+        }
+        else {
+            $request->validate([
+                'head' => 'required|unique:newsletters,head',
+                'promo' => 'required',
+            ], [
+                'head.required' => 'Must insert Header',
+                'head.unique' => 'Header already Exists, change Name!',
+                'promo.required' => 'Must add Promotion!',
+            ]);
+        }
+
+        $header = $request->head;
+        $promo = $request->promo;
+        $cust_all = CustInfo::select('email')->get();
+
+        // === Order Invoice View (/promo) ===
+        Session([
+            'header' => $header,
+            'promo' => $promo,
+        ]);
+        Mail::to('cust.test00@gmail.com')->send(new PromoMail($header, $promo));
+
+        // foreach ($cust_all as $cust){
+        //     Mail::to($cust->email)->send(new PromoMail($header, $promo));
+        // }
+
+        return back()->with('job_upd', 'Mail Sent to All Customers!');
     }
 }

@@ -163,6 +163,12 @@ Route::get('/mailable', function () {
     return new App\Mail\OrderPlaced($mail_item);
 });
 
+Route::get('/promo', function () {
+    $header = session('header');
+    $promo = session('promo');
+    return new App\Mail\PromoMail($header, $promo);
+});
+
 
 
 // SSLCommerz ===
@@ -247,8 +253,15 @@ Route::get('/customer_list', [BackendCust::class, 'cust_list'])->name('cust_list
 Route::get('/customer/block/{cust_id}', [BackendCust::class, 'customer_block'])->name('cust.block');
 Route::get('/customer/unblock/{cust_id}', [BackendCust::class, 'customer_unblock'])->name('cust.unblock');
 Route::get('/customer/orders/{cust_id}', [BackendCust::class, 'customer_orders'])->name('backend_cust.order');
+Route::get('/customer/reset_password/{cust_id}', [BackendCust::class, 'cust_pass_reset'])->name('cust.reset_pass');
 
 Route::get('/export/customer_orders/{cust_id}',[ExcelCont::class, 'export_cust_orders'])->name('export.cust_order');
+
+Route::get('/newsletter', [BackendCust::class, 'newsletter_store'])->name('newsletter');
+Route::post('/newsletter/add', [BackendCust::class, 'newsletter_add'])->name('newsletter.add');
+Route::post('/newsletter/update', [BackendCust::class, 'newsletter_update'])->name('newsletter.update');
+Route::post('/newsletter/send', [BackendCust::class, 'newsletter_send'])->name('newsletter.send');
+
 
 
 

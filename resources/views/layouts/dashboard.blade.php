@@ -293,6 +293,7 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('cust_list')}}" aria-expanded="false">Customer List</a></li>
+                            <li><a href="{{route('newsletter')}}" aria-expanded="false">Newsletter</a></li>
                         </ul>
                     </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -476,6 +477,24 @@
 			});
 		})
 	</script>
+
+	{{-- === Customer Pass Reset === --}}
+	@if (session('cust_pass_reset'))
+	<script>
+		// Swal.fire({
+		// 	position: 'center-center',
+		// 	icon: 'success',
+		// 	title: '{{session('user')}}{{session("cust_pass_reset")}}',
+		// 	showConfirmButton: false,
+		// 	timer: 1500
+		// })
+		Swal.fire({
+			icon: 'success',
+			title: '<span class="text-danger">{{session('user')}}</span>',
+			text: '{{session("cust_pass_reset")}}',
+		})
+	</script>
+	@endif
 
 	{{-- === Job Update Confirm Session === --}}
 	@if (session('job_upd'))

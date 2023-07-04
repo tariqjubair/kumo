@@ -1,5 +1,26 @@
 @extends('layouts.dashboard')
 
+
+
+@section('header_style')
+<style>
+    .note-editor.note-airframe .note-editing-area, .note-editor.note-frame .note-editing-area {
+        min-height: 300px;
+    }
+    .note-editor.note-frame .note-editing-area .note-editable {
+        height: 250px;
+    }
+    .note-editor.note-frame .panel-heading {
+        padding: 0;
+        z-index: 1;
+        background: #f3f3f3;
+		border-bottom: 1px solid #ddd;
+    }
+</style>
+@endsection
+
+
+
 @section('content')
 <div class="page-titles">
     <ol class="breadcrumb">
@@ -146,7 +167,7 @@
                                 <textarea name="long_desc" class="form-control" id="long_desc" cols="30" rows="10"></textarea>
                             </div>
                         </div>
-                        <div class="col-xl-5 m-auto">
+                        <div class="col-xl-3 m-auto">
                             <div class="item_div mt-2 mb-4">
                                 <button type="submit" class="btn btn-primary w-100">Add Product</button>
                             </div>

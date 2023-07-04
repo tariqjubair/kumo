@@ -70,7 +70,7 @@
                                 @endif
                                 {{$cust->city ?$cust->relto_city->name.',' :''}} {{$cust->country ?$cust->relto_country->name :''}}</td>
                             <td></td>
-                            <td>{{$cust->updated_at ?$cust->updated_at->format('d-M-y') :'-'}}</td>
+                            <td>{{$cust->email_verified_at ?$cust->email_verified_at->format('d-M-y') :'-'}}</td>
                             <td style="text-align: center">
                                 <div class="dropdown">
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
@@ -83,6 +83,7 @@
                                         @else 
                                             <a class="dropdown-item" href="{{route('cust.unblock', $cust->id)}}">Unblock</a>
                                         @endif
+                                        <a class="dropdown-item" id="reset_btn" href="{{route('cust.reset_pass', $cust->id)}}">Reset Password</a>
                                     </div>
                                 </div>
                             </td>
@@ -125,5 +126,14 @@
 			responsive: true,
 		});
 	});
+</script>
+
+{{-- === Dash preloader on Submit === --}}
+<script>
+    $(document).ready(function () {
+        $("#reset_btn").click(function () {
+            $("#dash_loader").show();
+        });
+    });
 </script>
 @endsection

@@ -21,15 +21,27 @@ class CustLoginCont extends Controller
         ]);
         
         $verify = '';
+        $status = '';
         if(DB::table('cust_infos')->where('email', $request->username)->exists()){
             $verify = CustInfo::where('email', $request->username)->first()->email_verified_at;
+            $status = CustInfo::where('email', $request->username)->first()->status;
         }
         else if(DB::table('cust_infos')->where('mobile', $request->username)->exists()){
             $verify = CustInfo::where('mobile', $request->username)->first()->email_verified_at;
+            $status = CustInfo::where('mobile', $request->username)->first()->status;
         }
+        else{
+            $verify = 'invalid_user';
+        }
+
         if (!$verify){
             return back()->with([
-                'need_verify' => 'Email not Verified Yet!!'
+                'need_verify' => 'Email not Verified yet!!'
+            ]);
+        }
+        if ($status == 0){
+            return back()->with([
+                'need_verify' => 'Your Account is Blocked!',
             ]);
         }
 
