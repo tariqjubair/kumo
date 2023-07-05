@@ -8,6 +8,7 @@ use Stripe\Product;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\category;
+use App\Models\Coupon;
 use App\Models\Inventory;
 use App\Models\Thumbnail;
 use App\Models\WishTable;
@@ -297,5 +298,15 @@ class FrontendController extends Controller
             'lang_ben' => 'bn',
         ]);
         return back();
+    }
+
+
+
+    function coupon_view(){
+        $coupon_all = Coupon::orderBy('id', 'DESC')->get();
+
+        return view('frontend.coupon_view', [
+            'coupon_all' => $coupon_all,
+        ]);
     }
 }

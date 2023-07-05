@@ -74,6 +74,8 @@ Route::get('/language/english', [FrontendController::class, 'lang_eng'])->name('
 Route::get('/language/french', [FrontendController::class, 'lang_fra'])->name('lang.fra');
 Route::get('/language/bengali', [FrontendController::class, 'lang_ben'])->name('lang.ben');
 
+Route::get('/coupon/view', [FrontendController::class, 'coupon_view'])->name('coupon.view');
+
 
 
 // === Customer Register ===

@@ -198,7 +198,7 @@
 							<div class="headd-sty-left d-flex align-items-center">
 								<div class="headd-sty-01">
 									<a class="nav-brand py-0" href="#">
-										<img src="assets/img/logo.png" class="logo" alt="" />
+										<img src="{{asset('assets/img/logo.png')}}" class="logo w-100" alt="" />
 									</a>
 								</div>
 								<div class="headd-sty-02 ml-3">
@@ -426,7 +426,7 @@
 									<li><a href="#">Women's Shopping</a></li>
 									<li><a href="#">Kids's Shopping</a></li>
 									<li><a href="#">Furniture</a></li>
-									<li><a href="#">Discounts</a></li>
+									<li><a href="{{route('coupon.view')}}">Discounts</a></li>
 								</ul>
 							</div>
 						</div>
