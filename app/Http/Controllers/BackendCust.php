@@ -153,7 +153,7 @@ class BackendCust extends Controller
 
         $header = $request->head;
         $promo = $request->promo;
-        $cust_all = CustInfo::select('email')->get();
+        $cust_all = CustInfo::select('email')->whereNotNull('email_verified_at')->get();
 
         // === Order Invoice View (/promo) ===
         Session([
