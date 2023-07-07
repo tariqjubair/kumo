@@ -8,9 +8,13 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	@yield('meta')
+
+	@php
+		$site_info = App\Models\SiteinfoTab::find(1)->first();
+	@endphp
 	
-	<title>Kumo</title>
-	<link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/site_logo.png')}}">
+	<title>{{$site_info->site_name}}</title>
+	<link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/logo')}}/{{$site_info->site_icon}}">
 		
 	<!-- Custom CSS -->
 	<link href="{{asset('assets/css/plugins/animation.css')}}" rel="stylesheet">
@@ -112,7 +116,7 @@
 							@else
 								Email: 
 							@endif
-							<a href="mailto:tariq.wpdev@gmail.com" class="medium text-dark text-underline">tariq.wpdev@gmail.com</a></p>
+							<a href="mailto:{{$site_info->site_email}}" class="medium text-dark text-underline">{{$site_info->site_email}}</a></p>
 						</div>
 					</div>
 					
@@ -198,7 +202,7 @@
 							<div class="headd-sty-left d-flex align-items-center">
 								<div class="headd-sty-01">
 									<a class="nav-brand py-0" href="#">
-										<img src="{{asset('assets/img/logo.png')}}" class="logo w-100" alt="" />
+										<img src="{{asset('assets/img/logo')}}/{{$site_info->site_logo}}" class="logo w-100" alt="" />
 									</a>
 								</div>
 								<div class="headd-sty-02 ml-3">
@@ -226,7 +230,7 @@
 												@else
 													Call Us Now:
 												@endif
-												<strong class="d-block text-dark fs-md">0(800) 123-456</strong>
+												<strong class="d-block text-dark fs-md">({{$site_info->site_ph_code}}) {{$site_info->site_phone}}</strong>
 											</span>
 										</div>
 									</li>
@@ -385,13 +389,14 @@
 						
 						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
 							<div class="footer_widget">
-								<img src="assets/img/logo-light.png" class="img-footer small mb-2" alt="" />
+								<img src="{{asset('assets/img/logo')}}/{{$site_info->site_logo}}" class="img-footer small mb-2" alt="" />
 								
 								<div class="address mt-3">
-									3298 Grant Street Longview, TX<br>United Kingdom 75601	
+									{{$site_info->site_add1}}, <br>{{$site_info->site_add2}}	
 								</div>
 								<div class="address mt-3">
-									1-202-555-0106<br>help@shopper.com
+									<a href="tel:{{$site_info->site_ph_code}}{{$site_info->site_phone}}">({{$site_info->site_ph_code}}) {{$site_info->site_phone}}</a><br>
+									<a href="mailto:{{$site_info->site_email}}" class="text-danger"><u>{{$site_info->site_email}}</u></a>
 								</div>
 								<div class="address mt-3">
 									<ul class="list-inline">
@@ -412,7 +417,7 @@
 									<li><a href="{{route('contact_page')}}">Contact Us</a></li>
 									<li><a href="{{route('about_page')}}">About Page</a></li>
 									<li><a href="#">Size Guide</a></li>
-									<li><a href="#">FAQ's Page</a></li>
+									<li><a href="{{route('faq_page')}}">FAQ's Page</a></li>
 									<li><a href="#">Privacy</a></li>
 								</ul>
 							</div>
@@ -448,12 +453,19 @@
 								<h4 class="widget_title">Subscribe</h4>
 								<p>Receive updates, hot deals, discounts sent straignt in your inbox daily</p>
 								<div class="foot-news-last">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Email Address">
-										<div class="input-group-append">
-											<button type="button" class="input-group-text b-0 text-light"><i class="lni lni-arrow-right"></i></button>
+									<form action="{{route('subs.insert')}}" method="POST">
+										@csrf
+
+										<div class="input-group">
+											<input type="text" name="subs_email" class="form-control" placeholder="Email Address">
+											<div class="input-group-append">
+												<button type="submit" class="input-group-text b-0 text-light"><i class="lni lni-arrow-right"></i></button>
+											</div>
 										</div>
-									</div>
+										@error('subs_email')
+											<strong class="text-danger err">{{$message}}</strong>
+										@enderror
+									</form>
 								</div>
 								<div class="address mt-3">
 									<h5 class="fs-sm text-light">Secure Payments</h5>
@@ -695,6 +707,28 @@
 			});
 		});
 	</script> --}}
+
+	{{-- === Subscribe Done === --}}
+	@if (session('subs_done'))
+		<script>
+			Swal.fire({
+				icon: 'success',
+				title: 'Done..',
+				text: '{{session('subs_done')}}',
+			})
+		</script>
+	@endif
+
+	{{-- === Scroll to Error === --}}
+	<script>
+		$('.err').show(function(){
+			$(document).ready(function(){
+				$("html, body").animate({ 
+					scrollTop: $('.err').offset().top -400 
+				}, 1000);
+			});
+		})
+	</script>
 
 	{{-- === Stop Loader on Page Load === --}}
 	<script>

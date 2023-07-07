@@ -101,7 +101,7 @@ input.cpnCode{
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('home_page')}}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{route('shop_page')}}">Shop</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+                        <li class="breadcrumb-item active" aria-current="page">Coupons</li>
                     </ol>
                 </nav>
             </div>
@@ -123,7 +123,7 @@ input.cpnCode{
             </div>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
             @foreach ($coupon_all as $coupon)
                 @if ($coupon->validity >= Carbon\carbon::now())
                     @php

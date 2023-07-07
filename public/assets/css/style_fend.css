@@ -58,6 +58,16 @@
     animation-name: slideInDown;
 }
 
+@media(max-width: 576px){
+
+    .off_title {
+        width: 300px;
+    }
+        
+}
+
+
+
 #back2Top {
     width: 40px;
     line-height: 40px;

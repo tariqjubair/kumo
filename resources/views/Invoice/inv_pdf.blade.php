@@ -219,10 +219,10 @@ $ord_product = App\Models\OrdereditemsTab::where('order_id', $order_id)->first()
             <img src="https://i.postimg.cc/YSMVpR7D/kumo-logo.png" alt="logo" border="0" />
         </div>
         <div id="company">
-            <h2 class="name">Kumo Store</h2>
-            <div>455 Foggy Heights, AZ 85004, US</div>
-            <div>(602) 519-0450</div>
-            <div><a href="mailto:company@example.com">company@example.com</a></div>
+            <h2 class="name">{{$site_info->site_name}}</h2>
+            <div>{{$site_info->site_add1}}, {{$site_info->site_add2}}</div>
+            <div>({{$site_info->site_ph_code}}) {{$site_info->site_phone}}</div>
+            <div><a href="mailto:{{$site_info->site_email}}">{{$site_info->site_email}}</a></div>
         </div>
         </div>
     </header>

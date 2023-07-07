@@ -9,6 +9,7 @@ use App\Models\Size;
 use App\Models\Color;
 use App\Models\category;
 use App\Models\Coupon;
+use App\Models\FaqTab;
 use App\Models\Inventory;
 use App\Models\Thumbnail;
 use App\Models\WishTable;
@@ -17,6 +18,7 @@ use App\Models\Product_list;
 use Illuminate\Http\Request;
 use Jorenvh\Share\ShareFacade;
 use App\Models\OrdereditemsTab;
+use App\Models\SubsTab;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -308,5 +310,31 @@ class FrontendController extends Controller
         return view('frontend.coupon_view', [
             'coupon_all' => $coupon_all,
         ]);
+    }
+
+
+    function faq_page(){
+        $faq_all = FaqTab::orderBy('order')->get();
+        return view('frontend.faq', [
+            'faq_all' => $faq_all,
+        ]);
+    }
+
+
+    function subs_insert(Request $request){
+        $request->validate([
+            'subs_email' => 'required|email:rfc,dns|unique:subs_tabs,email',
+        ], [
+            'subs_email.required' => 'Invalid Email!',
+            'subs_email.email' => 'Invalid Email!',
+            'subs_email.unique' => 'Already Subscribed!',
+        ]);
+        // return $request->all();
+
+        SubsTab::insert([
+            'email' => $request->subs_email,
+            'created_at' => Carbon::now(),
+        ]);
+        return back()->with('subs_done', 'You have been successfully subscribed!');
     }
 }

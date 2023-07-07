@@ -6,6 +6,7 @@ use App\Mail\PromoMail;
 use App\Models\CustInfo;
 use App\Models\newsletter;
 use App\Models\OrderTab;
+use App\Models\SubsTab;
 use App\Notifications\TempPassword;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -154,6 +155,7 @@ class BackendCust extends Controller
         $header = $request->head;
         $promo = $request->promo;
         $cust_all = CustInfo::select('email')->whereNotNull('email_verified_at')->get();
+        $subs_all = SubsTab::select('email')->get();
 
         // === Order Invoice View (/promo) ===
         Session([
@@ -163,6 +165,9 @@ class BackendCust extends Controller
         // Mail::to('tariq.wpdev@gmail.com')->send(new PromoMail($header, $promo));
 
         foreach ($cust_all as $cust){
+            Mail::to($cust->email)->send(new PromoMail($header, $promo));
+        }
+        foreach ($subs_all as $cust){
             Mail::to($cust->email)->send(new PromoMail($header, $promo));
         }
 

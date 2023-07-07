@@ -16,6 +16,9 @@
         background: #f3f3f3;
 		border-bottom: 1px solid #ddd;
     }
+    .modal-dialog input {
+        margin-right: 10px;
+    }
 </style>
 @endsection
 

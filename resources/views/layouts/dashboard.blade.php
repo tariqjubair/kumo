@@ -70,7 +70,6 @@
         <!--**********************************
             Nav header end
         ***********************************-->
-		*****************************-->
 		
 		<!--**********************************
             Header start
@@ -270,6 +269,16 @@
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="{{route('home')}}">Home</a></li>
+						</ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="fad fa-store"></i>
+							<span class="nav-text">Kumo Store</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{{route('siteinfo.index')}}">Site Info</a></li>
+							<li><a href="{{route('faq.create')}}">Add New FAQ</a></li>
+							<li><a href="{{route('faq.index')}}">FAQ List</a></li>
 						</ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

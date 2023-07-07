@@ -22,6 +22,11 @@
     height: auto !important;
 }
 
+.page-titles {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
 /* === Dashboard Notification === */
 .timeline-panel h6 {
     transition: .2s;

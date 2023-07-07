@@ -4,7 +4,7 @@
 
 @section('header_style')
 <style>
-    img {
+    img.cust_img {
         border-radius: 50%;
     }
 </style>
@@ -49,7 +49,7 @@
                             <td style="text-align: center">{{$key+1}}</td>
                             <td>
                                 @if ($cust->prof_pic == null)
-                                    <img width="60" src="{{ asset('assets/img/customer.png') }}" style="opacity: {{$cust->status == 0 ?'.2' :'1'}}"/>
+                                    <img width="60" src="{{ asset('assets/img/customer.png') }}" style="opacity: {{$cust->status == 0 ?'.2' :'1'}}" class="cust_img"/>
                                 @else
                                     <img width="60" height="60" src="{{asset('uploads/customer')}}/{{$cust->prof_pic}}" alt="Customer" style="opacity: {{$cust->status == 0 ?'.2' :'1'}}">
                                 @endif

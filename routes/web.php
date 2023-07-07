@@ -15,12 +15,14 @@ use App\Http\Controllers\CustLoginCont;
 use App\Http\Controllers\cataController;
 use App\Http\Controllers\CustomerCont;
 use App\Http\Controllers\ExcelCont;
+use App\Http\Controllers\FaqCont;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubcateController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderCont;
 use App\Http\Controllers\RoleCont;
+use App\Http\Controllers\SiteinfoCont;
 use App\Http\Controllers\SocialLoginCont;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\StripePaymentController;
@@ -75,6 +77,8 @@ Route::get('/language/french', [FrontendController::class, 'lang_fra'])->name('l
 Route::get('/language/bengali', [FrontendController::class, 'lang_ben'])->name('lang.ben');
 
 Route::get('/coupon/view', [FrontendController::class, 'coupon_view'])->name('coupon.view');
+Route::get('/faq_page', [FrontendController::class, 'faq_page'])->name('faq_page');
+Route::post('/subscriber/insert', [FrontendController::class, 'subs_insert'])->name('subs.insert');
 
 
 
@@ -369,4 +373,11 @@ Route::get('/export/orders',[ExcelCont::class, 'export_orders'])->name('export.o
 
 Route::get('/ssl_report', [OrderCont::class, 'ssl_report'])->name('ssl_report');
 Route::get('/stripe_report', [OrderCont::class, 'stripe_report'])->name('stripe_report');
+
+
+// === FAQ ===
+Route::resource('faq', FaqCont::class);
+
+// === Site Setting ===
+Route::resource('siteinfo', SiteinfoCont::class);
 
