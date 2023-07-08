@@ -302,6 +302,7 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('cust_list')}}" aria-expanded="false">Customer List</a></li>
+                            <li><a href="{{route('subs_list')}}" aria-expanded="false">Subscriber List</a></li>
                             <li><a href="{{route('newsletter')}}" aria-expanded="false">Newsletter</a></li>
                         </ul>
                     </li>

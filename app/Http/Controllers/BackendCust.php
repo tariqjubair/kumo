@@ -11,6 +11,7 @@ use App\Notifications\TempPassword;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -69,6 +70,24 @@ class BackendCust extends Controller
             'cust_pass_reset' => 'Password has been Reset and Forwarded!'
         ]);
     }
+
+
+
+
+    function subs_list(){
+        $subs_all = SubsTab::all();
+        return view('admin.customer.subs_list', [
+            'subs_all' => $subs_all,
+        ]);
+    }
+
+    function subs_delete($subs_id){
+        SubsTab::find($subs_id)->delete();
+        return back()->with('del', 'Subscriber Deleted!');
+    }
+
+
+
 
     function newsletter_store(Request $request){
         $news_all = newsletter::orderBy('id', 'DESC')->get();
@@ -168,7 +187,9 @@ class BackendCust extends Controller
             Mail::to($cust->email)->send(new PromoMail($header, $promo));
         }
         foreach ($subs_all as $cust){
-            Mail::to($cust->email)->send(new PromoMail($header, $promo));
+            if (DB::table('cust_infos')->where('email', $cust->email)->doesntExist()) {
+                Mail::to($cust->email)->send(new PromoMail($header, $promo));
+            }
         }
 
         return back()->with('job_upd', 'Mail Sent to All Customers!');
