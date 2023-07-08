@@ -133,8 +133,8 @@
 					<div class="form-group sp_media">
 						<a href="{{route('github.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #7441C7"><i class="fab fa-github"></i>GitHub</a>
 						<a href="{{route('google.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #EA4335"><i class="fab fa-google"></i>Google</a>
-						{{-- <a href="{{route('facebook.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #1877F2"><i class="fab fa-facebook"></i>Facebook</a> --}}
-						<a href="{{route('twitter.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #1877F2"><i class="fab fa-twitter"></i>Twitter</a>
+						<a href="{{route('facebook.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #1877F2"><i class="fab fa-facebook"></i>Facebook</a>
+						{{-- <a href="{{route('twitter.redirect')}}" class="btn btn-md full-width text-light fs-md ft-medium add_login" id="" style="background: #1877F2"><i class="fab fa-twitter"></i>Twitter</a> --}}
 					</div>
 				</form>
 			</div>
