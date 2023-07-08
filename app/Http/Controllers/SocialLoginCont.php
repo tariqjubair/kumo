@@ -117,4 +117,46 @@ class SocialLoginCont extends Controller
             ]);
         }
     }
+
+
+
+
+    // === Twitter Login ===
+    function twitter_redirect(){
+        return Socialite::driver('twitter')->redirect();
+    }
+
+    function twitter_callback(){
+        $user = Socialite::driver('twitter')->user();
+
+        if(CustInfo::where('email', $user->getEmail())->doesntExist()){
+            CustInfo::insert([
+                'name' => $user->getName(),
+                'email' => $user->getEmail(),
+                'password' => bcrypt('@Kumo#123@'),
+                'created_at' => Carbon::now(),
+            ]);
+        }
+
+        if(Auth::guard('CustLogin')->attempt(['email' => $user->getEmail(), 'password' => '@Kumo#123@'])){
+            $full_name = $user->getName();
+            $name = explode(' ', $full_name)[0];
+
+            return redirect()->route('home_page')->with([
+                'user_login' => 'Welcome '.$name.' !',
+                'full_name' => $full_name,
+            ]);
+        }
+		else {
+            return redirect()->route('customer_login')->with([
+                'login_fail' => 'Profile with same Email already Exists!',
+            ]);
+        }
+    }
+
+
+
+
+
+
 }
