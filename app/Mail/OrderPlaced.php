@@ -9,13 +9,13 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class InvoiceMail extends Mailable
+class OrderPlaced extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
-     * 
+     *
      * @return void
      */
     public $data;
@@ -32,7 +32,7 @@ class InvoiceMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Invoice Mail',
+            subject: 'Order Placed',
         );
     }
 
@@ -44,7 +44,7 @@ class InvoiceMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'invoice.invoice_mail',
+            view: 'invoice.challan',
             with: [
                 'order_id' => $this->data,
             ]

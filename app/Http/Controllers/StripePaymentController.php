@@ -63,7 +63,7 @@ class StripePaymentController extends Controller
 
         if($charge->status == 'succeeded'){
             StripeOrder::where('order_id', $order_id)->update([
-                'status' => 'pending',
+                'status' => 'succeeded',
                 'transaction_id' => $charge->id,
                 'currency' => $charge->currency,
             ]);

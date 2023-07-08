@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\CustInfo;
 use App\Models\OrdereditemsTab;
 use App\Models\OrderTab;
+use App\Models\SiteinfoTab;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,8 +74,10 @@ class CustomerCont extends Controller
 
     function order_invoice($order_id){
         $order = '#'.$order_id;
+        $site_info = SiteinfoTab::find(1)->first();
         $pdf = FacadePdf::loadView('invoice.inv_pdf', [
             'order_id' => $order,
+            'site_info' => $site_info,
         ]);
     
         return $pdf->stream('invoice.pdf');

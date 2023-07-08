@@ -16,4 +16,8 @@ class BillingTab extends Model
     function relto_country(){
         return $this->belongsTo(Country::class, 'country');
     }
+
+    function relto_cust(){
+        return $this->belongsTo(CustInfo::class, 'customer_id');
+    }
 }

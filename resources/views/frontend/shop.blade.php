@@ -50,7 +50,7 @@
         <div class="row align-items-center justify-content-center">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="text-left py-5 mt-3 mb-3">
-                    <h1 class="ft-medium mb-3" id={{@$_GET['chk'] ?'crump' :''}}>Shop</h1>
+                    <h1 class="ft-medium mb-3" id={{@$_GET['chk'] ?'crump' :''}}>Kumo Shop</h1>
                 </div>
             </div>
         </div>
@@ -80,6 +80,16 @@
 <!-- ======================= All Product List ======================== -->
 <section class="middle">
     <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="sec_title position-relative text-center">
+                    <h2 class="off_title">Shop Items</h2>
+                    <h3 class="ft-bold pt-3">Kumo Shop</h3>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 p-xl-0">

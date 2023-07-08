@@ -219,10 +219,10 @@ $ord_product = App\Models\OrdereditemsTab::where('order_id', $order_id)->first()
             <img src="https://i.postimg.cc/YSMVpR7D/kumo-logo.png" alt="logo" border="0" />
         </div>
         <div id="company">
-            <h2 class="name">Kumo Store</h2>
-            <div>455 Foggy Heights, AZ 85004, US</div>
-            <div>(602) 519-0450</div>
-            <div><a href="mailto:company@example.com">company@example.com</a></div>
+            <h2 class="name">{{$site_info->site_name}}</h2>
+            <div>{{$site_info->site_add1}}, {{$site_info->site_add2}}</div>
+            <div>({{$site_info->site_ph_code}}) {{$site_info->site_phone}}</div>
+            <div><a href="mailto:{{$site_info->site_email}}">{{$site_info->site_email}}</a></div>
         </div>
         </div>
     </header>
@@ -231,8 +231,8 @@ $ord_product = App\Models\OrdereditemsTab::where('order_id', $order_id)->first()
             <div id="client">
                 <div class="item" style="margin-bottom: 8px">
                     <div class="to">INVOICE TO:</div>
-                    <h2 class="name">{{Auth::guard('CustLogin')->user()->name}}</h2>
-                    <div class="email"><a href="mailto:{{Auth::guard('CustLogin')->user()->email}}">{{Auth::guard('CustLogin')->user()->email}}</a></div>
+                    <h2 class="name">{{$billing_info->relto_cust->name}}</h2>
+                    <div class="email"><a href="mailto:{{$billing_info->relto_cust->email}}">{{$billing_info->relto_cust->email}}</a></div>
                 </div>
 
                 <div class="item">
@@ -300,7 +300,15 @@ $ord_product = App\Models\OrdereditemsTab::where('order_id', $order_id)->first()
         </table>
         <div id="thanks">Thank you!</div>
         <div id="notices">
-            <div>NOTICE:</div>
+            <div>Payment: 
+                @if ($order_info->payment_method == 1)
+                    {{'Cash on Delivery'}}
+                @elseif ($order_info->payment_method == 2)
+                    {{'Paid with SSLCommerz'}}
+                @elseif ($order_info->payment_method == 3)
+                    {{'Paid with Stripe'}}
+                @endif
+            </div>
             <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
         </div>
     </main>

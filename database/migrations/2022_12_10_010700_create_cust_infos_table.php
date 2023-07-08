@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('prof_pic')->nullable();
+            $table->integer('status')->default(1);
+            $table->date('email_verified_at')->nullable();
             $table->timestamps();
         });
     }

@@ -88,3 +88,9 @@ Email: tariq.wpdev@gmail
 Name: Tariq WPDev
 client_id = 286238559658-52j2c0btuq20bvqiocttpl714jjr0dgd.apps.googleusercontent.com
 secret = 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
+
+Facebook =>
+Email: tariq.wpdev@gmail
+Name: Tariq WPDev
+FACEBOOK_CLIENT_ID=164230523233721
+FACEBOOK_CLIENT_SECRET=6c672c88d00ddaba7c4b9eec94e5dcfd

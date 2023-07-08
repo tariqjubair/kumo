@@ -49,10 +49,11 @@
 <section class="middle">
     <div class="container">
     
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                <div class="text-center d-block mb-5">
-                    <h2>Shopping Cart</h2>
+                <div class="sec_title position-relative text-center">
+                    <h2 class="off_title">Shopping Cart</h2>
+                    <h3 class="ft-bold pt-3">Your Cart</h3>
                 </div>
             </div>
         </div>

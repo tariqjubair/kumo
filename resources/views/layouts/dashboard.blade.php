@@ -70,7 +70,6 @@
         <!--**********************************
             Nav header end
         ***********************************-->
-		*****************************-->
 		
 		<!--**********************************
             Header start
@@ -273,6 +272,16 @@
 						</ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="fad fa-store"></i>
+							<span class="nav-text">Kumo Store</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{{route('siteinfo.index')}}">Site Info</a></li>
+							<li><a href="{{route('faq.create')}}">Add New FAQ</a></li>
+							<li><a href="{{route('faq.index')}}">FAQ List</a></li>
+						</ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="fad fa-users"></i>
 							<span class="nav-text">Users</span>
 						</a>
@@ -285,6 +294,15 @@
 							@can('user_add')
 								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a></li>
 							@endcan
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="fad fa-users-class"></i>
+							<span class="nav-text">Customers</span>
+						</a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('cust_list')}}" aria-expanded="false">Customer List</a></li>
+                            <li><a href="{{route('newsletter')}}" aria-expanded="false">Newsletter</a></li>
                         </ul>
                     </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -339,6 +357,8 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('order_list')}}">Order List</a></li>
+                            <li><a href="{{route('ssl_report')}}">SSLCommerz Report</a></li>
+                            <li><a href="{{route('stripe_report')}}">Stripe Report</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -468,6 +488,17 @@
 			});
 		})
 	</script>
+
+	{{-- === Customer Pass Reset === --}}
+	@if (session('cust_pass_reset'))
+	<script>
+		Swal.fire({
+			icon: 'success',
+			title: '<span class="text-danger">{{session('user')}}</span>',
+			text: '{{session("cust_pass_reset")}}',
+		})
+	</script>
+	@endif
 
 	{{-- === Job Update Confirm Session === --}}
 	@if (session('job_upd'))

@@ -85,6 +85,16 @@
 <!-- ======================= Dashboard Detail ======================== -->
 <section class="middle">
     <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="sec_title position-relative text-center">
+                    <h2 class="off_title">Customer Orders</h2>
+                    <h3 class="ft-bold pt-3">Your Orders</h3>
+                </div>
+            </div>
+        </div>
+
         <div class="row align-items-start justify-content-between">
         
             {{-- === Customer Dashboard === --}}
@@ -165,9 +175,11 @@
                                         @endif
                                     </div>
                                 </div>
+                                @if ($order->order_status != 1 && $order->order_status != 6)
                                 <div class="inv_link ml-4">
                                     <a href="{{route('order.inv', substr($order->order_id, 1))}}" title="View Invoice" target="_blank"><img width="45px" src="{{asset('assets/img/invoice.png')}}" alt=""></a>
                                 </div>
+                                @endif
                             </div>
                         </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BackendCust;
 use Psy\Util\Str;
 use App\Models\City;
 use App\Models\Length;
@@ -14,12 +15,14 @@ use App\Http\Controllers\CustLoginCont;
 use App\Http\Controllers\cataController;
 use App\Http\Controllers\CustomerCont;
 use App\Http\Controllers\ExcelCont;
+use App\Http\Controllers\FaqCont;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SubcateController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderCont;
 use App\Http\Controllers\RoleCont;
+use App\Http\Controllers\SiteinfoCont;
 use App\Http\Controllers\SocialLoginCont;
 use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\StripePaymentController;
@@ -73,6 +76,10 @@ Route::get('/language/english', [FrontendController::class, 'lang_eng'])->name('
 Route::get('/language/french', [FrontendController::class, 'lang_fra'])->name('lang.fra');
 Route::get('/language/bengali', [FrontendController::class, 'lang_ben'])->name('lang.ben');
 
+Route::get('/coupon/view', [FrontendController::class, 'coupon_view'])->name('coupon.view');
+Route::get('/faq_page', [FrontendController::class, 'faq_page'])->name('faq_page');
+Route::post('/subscriber/insert', [FrontendController::class, 'subs_insert'])->name('subs.insert');
+
 
 
 // === Customer Register ===
@@ -102,6 +109,9 @@ Route::get('/google/callback', [SocialLoginCont::class, 'google_callback'])->nam
 
 Route::get('/facebook/redirect', [SocialLoginCont::class, 'facebook_redirect'])->name('facebook.redirect');
 Route::get('/facebook/callback', [SocialLoginCont::class, 'facebook_callback'])->name('facebook.callback');
+
+Route::get('/twitter/redirect', [SocialLoginCont::class, 'twitter_redirect'])->name('twitter.redirect');
+Route::get('/twitter/callback', [SocialLoginCont::class, 'twitter_callback'])->name('twitter.callback');
 
 
 
@@ -159,7 +169,13 @@ Route::get('/order_failed', [CheckoutCont::class, 'order_failed'])->name('order.
 // Mail Check ===
 Route::get('/mailable', function () {
     $mail_item = session('mail_item');
-    return new App\Mail\InvoiceMail($mail_item);
+    return new App\Mail\OrderPlaced($mail_item);
+});
+
+Route::get('/promo', function () {
+    $header = session('header');
+    $promo = session('promo');
+    return new App\Mail\PromoMail($header, $promo);
 });
 
 
@@ -238,6 +254,23 @@ Route::post('/roles/users/update_roles', [RoleCont::class, 'user_role_update'])-
 Route::get('/roles/users/remove/{user_id}', [RoleCont::class, 'user_role_remove'])->name('user_role.remove');
 
 Route::post('/get_user_status', [RoleCont::class, 'user_status_pulse']);
+
+
+
+// === Backend Customers ===
+Route::get('/customer_list', [BackendCust::class, 'cust_list'])->name('cust_list');
+Route::get('/customer/block/{cust_id}', [BackendCust::class, 'customer_block'])->name('cust.block');
+Route::get('/customer/unblock/{cust_id}', [BackendCust::class, 'customer_unblock'])->name('cust.unblock');
+Route::get('/customer/orders/{cust_id}', [BackendCust::class, 'customer_orders'])->name('backend_cust.order');
+Route::get('/customer/reset_password/{cust_id}', [BackendCust::class, 'cust_pass_reset'])->name('cust.reset_pass');
+
+Route::get('/export/customer_orders/{cust_id}',[ExcelCont::class, 'export_cust_orders'])->name('export.cust_order');
+
+Route::get('/newsletter', [BackendCust::class, 'newsletter_store'])->name('newsletter');
+Route::post('/newsletter/add', [BackendCust::class, 'newsletter_add'])->name('newsletter.add');
+Route::post('/newsletter/update', [BackendCust::class, 'newsletter_update'])->name('newsletter.update');
+Route::post('/newsletter/send', [BackendCust::class, 'newsletter_send'])->name('newsletter.send');
+
 
 
 
@@ -341,4 +374,23 @@ Route::get('/new_order/{order_id}', [OrderCont::class, 'order_info'])->name('ord
 
 Route::get('/export/orders',[ExcelCont::class, 'export_orders'])->name('export.order');
 
+Route::get('/ssl_report', [OrderCont::class, 'ssl_report'])->name('ssl_report');
+Route::get('/stripe_report', [OrderCont::class, 'stripe_report'])->name('stripe_report');
 
+
+// === FAQ ===
+Route::resource('faq', FaqCont::class);
+
+// === Site Setting ===
+Route::resource('siteinfo', SiteinfoCont::class);
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

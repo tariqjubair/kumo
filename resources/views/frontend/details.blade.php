@@ -116,6 +116,16 @@
 <!-- ======================= Product Detail ======================== -->
 <section class="middle">
     <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="sec_title position-relative text-center">
+                    <h2 class="off_title">Item Description</h2>
+                    <h3 class="ft-bold pt-3">Product Details</h3>
+                </div>
+            </div>
+        </div>
+        
         <div class="row justify-content-between">
 
             {{-- === Thumbnail Slider === --}}

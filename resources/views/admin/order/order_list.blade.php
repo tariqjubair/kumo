@@ -47,10 +47,10 @@
                                         {{'Stripe'}}
                                     @endif
                                 </td>
-                                <td>{{number_format($order->total)}}</td>
+                                <td>{{number_format($order->total)}} &#2547;</td>
                                 <td>
                                     @if ($order->order_status == 1)
-                                        <span class="badge badge-info">{{'Order Placed'}}</span>
+                                        <span class="badge badge-outline-dark">{{'Order Placed'}}</span>
                                     @elseif ($order->order_status == 2)
                                         <span class="badge badge-success">{{'Confirmed'}}</span>
                                     @elseif ($order->order_status == 3)
@@ -70,15 +70,18 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="{{route('order.info', $order->id)}}">View Order</a>
+
                                             <form action="{{route('order_status.update')}}" method="POST">
                                                 @csrf
-
                                                 <input type="hidden" name="order_id" value="{{$order->order_id}}">
-                                                <button class="dropdown-item" name="status" value="2">Confirm</button>
-                                                <button class="dropdown-item" name="status" value="3">Processing</button>
-                                                <button class="dropdown-item" name="status" value="4">Ready to Deliver</button>
-                                                <button class="dropdown-item" name="status" value="5">Delivered</button>
-                                                <button class="dropdown-item" name="status" value="6">Cancel</button>
+                                                @if ($order->order_status == 1 )
+                                                    <button class="dropdown-item" name="status" value="2" id="conf_btn">Confirm</button>
+                                                    <button class="dropdown-item" name="status" value="6" id="canc_btn">Cancel</button>
+                                                @elseif ($order->order_status != 1 && $order->order_status != 6)
+                                                    <button class="dropdown-item" name="status" value="3">Processing</button>
+                                                    <button class="dropdown-item" name="status" value="4">Ready to Deliver</button>
+                                                    <button class="dropdown-item" name="status" value="5">Delivered</button>
+                                                @endif
                                             </form>
                                         </div>
                                     </div>
@@ -105,5 +108,17 @@
             responsive: true,
         });
 	} );
+</script>
+
+{{-- === Dash preloader on Submit === --}}
+<script>
+    $(document).ready(function () {
+        $("#conf_btn").click(function () {
+            $("#dash_loader").show();
+        });
+        $("#canc_btn").click(function () {
+            $("#dash_loader").show();
+        });
+    });
 </script>
 @endsection

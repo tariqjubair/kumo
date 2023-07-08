@@ -48,7 +48,7 @@
                                             style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                             
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            Hi <span style="font-weight: 600">{{$user->name}}</span>, your current role is <span style="color: blue; font-weight:600">{{$user->getRoleNames()->first()}}</span>. Here is the list of permissions provided to you:
+                                            Hi <span style="font-weight: 600">{{$user->name}}</span>, your current role is <span style="color: blue; font-weight:600">{{$user->getRoleNames()->first()}}</span>.<br> Here is the list of permissions provided to you:
                                         </p>
                                         <p>
                                             @foreach ($user->getAllPermissions() as $sl=>$perm) 
