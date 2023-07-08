@@ -110,6 +110,9 @@ Route::get('/google/callback', [SocialLoginCont::class, 'google_callback'])->nam
 Route::get('/facebook/redirect', [SocialLoginCont::class, 'facebook_redirect'])->name('facebook.redirect');
 Route::get('/facebook/callback', [SocialLoginCont::class, 'facebook_callback'])->name('facebook.callback');
 
+Route::get('/twitter/redirect', [SocialLoginCont::class, 'twitter_redirect'])->name('twitter.redirect');
+Route::get('/twitter/callback', [SocialLoginCont::class, 'twitter_callback'])->name('twitter.callback');
+
 
 
 // === Customer ===
