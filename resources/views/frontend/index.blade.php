@@ -1,5 +1,51 @@
 @extends('layouts.master')
 
+
+
+@section('header_css')
+<style>
+    a.cate_menu {
+        cursor: pointer;
+        transition: .3s;
+    }
+    .killore--block-link-content img {
+        transition: .2s;
+    }
+    .killore--block-link-content a:hover {
+        letter-spacing: 1.5px;
+        color:rgba(255, 0, 0, 0.8);
+    }
+    .killore--block-link-content a:hover .anc_text {
+        color:#ff0000cc;
+    }
+    .killore--block-link-content a:hover img {
+        transform: scale(1.2);
+    }
+
+    .cats_side_wrap .cata_item {
+        border: 1px solid #e9ecef;
+        transition: .3s;
+    }
+    .cats_side_wrap img {
+        transition: .2s;
+    }
+    .cats_side_wrap p {
+        transition: .2s;
+    }
+    .cats_side_wrap a:hover img {
+        transform: scale(1.2);
+    }
+    .cats_side_wrap a:hover .cata_item {
+        border: 1px solid #ff0000cc !important;
+    }
+    .cats_side_wrap a:hover p {
+        color: #ff0000cc !important;
+    }
+</style>
+@endsection
+
+
+
 @section('content')
 <!-- ======================= Category & Slider ======================== -->
 <section class="p-0">
@@ -21,7 +67,9 @@
                     <div class="killore--block-link-content">
                         <ul>
                             @foreach ($cata_all as $cata)
-                            <li><a href="javascript:void(0);"><img width="25" src="{{asset('uploads/category')}}/{{$cata->cata_image}}" alt="Category Image"> &nbsp;{{$cata->cata_name}}</a></li>
+                            <li>
+                                <a class="cate_menu" data-custom-value="{{$cata->id}}"><img width="25" src="{{asset('uploads/category')}}/{{$cata->cata_image}}" alt="Category Image"> &nbsp;<span class="anc_text">{{$cata->cata_name}}</span></a>
+                            </li>
                             @endforeach
                         </ul>
                     </div>
@@ -226,7 +274,7 @@
         <div class="row justify-content-center">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="position-relative text-center">
-                    <a href="shop-style-1.html" class="btn stretched-link borders">Explore More<i class="lni lni-arrow-right ml-2"></i></a>
+                    <a href="{{route('shop_page')}}" class="btn stretched-link borders">Explore More<i class="lni lni-arrow-right ml-2"></i></a>
                 </div>
             </div>
         </div>
@@ -290,7 +338,7 @@
                 <div class="tags_explore text-center">
                     <h2 class="mb-0 text-white ft-bold">Big Sale Up To 70% Off</h2>
                     <p class="text-light fs-lg mb-4">Exclussive Offers For Limited Time</p><p>
-                    <a href="#" class="btn btn-lg bg-white px-5 text-dark ft-medium">Explore Your Order</a>
+                    <a href="{{route('coupon.view')}}" class="btn btn-lg bg-white px-5 text-dark ft-medium">Explore Your Order</a>
                 </p></div>
             </div>
         </div>
@@ -306,8 +354,8 @@
         <div class="row justify-content-center">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 <div class="sec_title position-relative text-center">
-                    <h2 class="off_title">Popular Categories</h2>
-                    <h3 class="ft-bold pt-3">Trending Categories</h3>
+                    <h2 class="off_title">All Categories</h2>
+                    <h3 class="ft-bold pt-3">Our Categories</h3>
                 </div>
             </div>
         </div>
@@ -317,8 +365,18 @@
             @foreach ($cata_all_in as $cata)
                 <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-4">
                     <div class="cats_side_wrap text-center mx-auto mb-3">
-                        <div class="sl_cat_01"><div class="d-inline-flex align-items-center justify-content-center p-4 circle mb-2 border"><a href="javascript:void(0);" class="d-block"><img src="{{asset('uploads/category')}}/{{$cata->cata_image}}" class="img-fluid" width="40" alt=""></a></div></div>
-                        <div class="sl_cat_02"><h6 class="m-0 ft-medium fs-sm"><a href="javascript:void(0);">{{$cata->cata_name}}</a></h6></div>
+                        <a data-custom-value="{{$cata->id}}" class="cate_menu">
+                            <div class="sl_cat_01">
+                                <div class="d-inline-flex align-items-center justify-content-center p-4 circle mb-2 cata_item">
+                                    <div class="d-block"><img src="{{asset('uploads/category')}}/{{$cata->cata_image}}" class="img-fluid" width="40" alt=""></div>
+                                </div>
+                            </div>
+                            <div class="sl_cat_02">
+                                <h6 class="m-0 ft-medium fs-sm">
+                                    <p>{{$cata->cata_name}}</p>
+                                </h6>
+                            </div>
+                        </a>
                     </div>
                 </div>
             @endforeach
@@ -571,4 +629,19 @@
     </div>
 </section>
 <!-- ======================= Top Seller End ============================ -->
+@endsection
+
+
+
+@section('footer_script')
+
+{{-- === Cate Search === --}}
+<script>
+    $('.cate_menu').click(function(){
+        var cate_id = $(this).data('custom-value');
+
+        var search_link = "{{route('shop_page')}}" + "?cate=" + cate_id;
+        window.location.href = search_link;
+    });
+</script>
 @endsection

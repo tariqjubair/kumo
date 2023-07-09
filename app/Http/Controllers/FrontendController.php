@@ -27,10 +27,10 @@ class FrontendController extends Controller
 {
     // === Frontend Home ===
     function home_page(){
-        $cata_all = category::take(6)->get();
+        $cata_all = category::take(7)->get();
         $cata_all_in = category::all();
-        // $product_all = Product_list::inRandomOrder()->take(8)->get();
-        $product_all = Product_list::all();
+        $product_all = Product_list::inRandomOrder()->take(8)->get();
+        // $product_all = Product_list::all();
         $product_recent = Product_list::orderBy('updated_at','desc')->take(3)->get();
 
         $top_seller = OrdereditemsTab::groupBy('product_id')
@@ -45,7 +45,6 @@ class FrontendController extends Controller
         ->orderBy('sum', 'DESC')
         ->take(3)
         ->get();
-
 
         return view('frontend.index', [
             'cata_all' => $cata_all,
