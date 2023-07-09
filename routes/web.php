@@ -263,8 +263,10 @@ Route::get('/customer/block/{cust_id}', [BackendCust::class, 'customer_block'])-
 Route::get('/customer/unblock/{cust_id}', [BackendCust::class, 'customer_unblock'])->name('cust.unblock');
 Route::get('/customer/orders/{cust_id}', [BackendCust::class, 'customer_orders'])->name('backend_cust.order');
 Route::get('/customer/reset_password/{cust_id}', [BackendCust::class, 'cust_pass_reset'])->name('cust.reset_pass');
-
 Route::get('/export/customer_orders/{cust_id}',[ExcelCont::class, 'export_cust_orders'])->name('export.cust_order');
+
+Route::get('/subscriber_list',[BackendCust::class, 'subs_list'])->name('subs_list');
+Route::get('/subscriber/delete/{subs_id}',[BackendCust::class, 'subs_delete'])->name('subs.delete');
 
 Route::get('/newsletter', [BackendCust::class, 'newsletter_store'])->name('newsletter');
 Route::post('/newsletter/add', [BackendCust::class, 'newsletter_add'])->name('newsletter.add');

@@ -55,7 +55,11 @@ class SocialLoginCont extends Controller
     }
 
     function google_callback(){
-        $user = Socialite::driver('google')->user();
+        // Live Use ===
+        // $user = Socialite::driver('google')->stateless()->user();
+        
+        //Localhost Use
+		$user = Socialite::driver('google')->user();
 
         if(CustInfo::where('email', $user->getEmail())->doesntExist()){
             CustInfo::insert([

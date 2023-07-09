@@ -49,9 +49,9 @@
                             <td style="text-align: center">{{$key+1}}</td>
                             <td>
                                 @if ($cust->prof_pic == null)
-                                    <img width="60" src="{{ asset('assets/img/customer.png') }}" style="opacity: {{$cust->status == 0 ?'.2' :'1'}}" class="cust_img"/>
+                                    <img width="60" src="{{ asset('assets/img/customer.png') }}" style="opacity: {{$cust->status == 0 ?'.2' :'1'}}; border-radius: 50%" class="cust_img"/>
                                 @else
-                                    <img width="60" height="60" src="{{asset('uploads/customer')}}/{{$cust->prof_pic}}" alt="Customer" style="opacity: {{$cust->status == 0 ?'.2' :'1'}}">
+                                    <img width="60" height="60" src="{{asset('uploads/customer')}}/{{$cust->prof_pic}}" alt="Customer" style="opacity: {{$cust->status == 0 ?'.2' :'1'}}; border-radius: 50%">
                                 @endif
                             </td>
                             <td>
@@ -69,7 +69,12 @@
                                     {!! '<br>' !!}
                                 @endif
                                 {{$cust->city ?$cust->relto_city->name.',' :''}} {{$cust->country ?$cust->relto_country->name :''}}</td>
-                            <td></td>
+                            <td style="text-align: center">
+                                @php
+                                    $cust_order = App\Models\OrderTab::where('customer_id', $cust->id)->where('order_status', '!=', 6) ->count();
+                                @endphp
+                                {{$cust_order != 0 ?$cust_order :'-'}}
+                            </td>
                             <td>{{$cust->email_verified_at ?$cust->email_verified_at->format('d-M-y') :'-'}}</td>
                             <td style="text-align: center">
                                 <div class="dropdown">
