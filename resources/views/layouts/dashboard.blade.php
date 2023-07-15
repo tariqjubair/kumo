@@ -269,6 +269,8 @@
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="{{route('home')}}">Home</a></li>
+							<li><a href="{{route('custom.report')}}">Custom Report</a></li>
+							<li><a href="{{route('target.setting')}}">Target Settings</a></li>
 						</ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -390,7 +392,7 @@
         <!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
+        <div class="footer pt-5">
             <div class="copyright">
                 <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2020</p>
             </div>
@@ -478,6 +480,7 @@
 	<script src="//cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	{{-- === Scroll to Error === --}}
 	<script>

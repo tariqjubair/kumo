@@ -23,6 +23,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        
+        return view('admin.dashboard.home');
+    }
+
+    function custom_report(){
+        $order_all = [];
+        $order_count = '';
+        $all_cust = [];
+        return view('admin.dashboard.custom_report', [
+            'order_all' => $order_all,
+            'order_count' => $order_count,
+            'all_cust' => $all_cust,
+        ]);
+    }
+
+    function target_setting(){
+        return view('admin.dashboard.target_setting');
     }
 }

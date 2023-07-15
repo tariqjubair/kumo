@@ -14,7 +14,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3>Order List: <a href="{{route('export.cust_order', $cust_id)}}" class="btn btn-success btn-xxs shadow ml-3">Download</a></h3>
+                <h3>Customer Orders: <a href="{{route('export.cust_order', $cust_id)}}" class="btn btn-success btn-xxs shadow ml-3">Download</a></h3>
                 <h4>Total: {{count($cust_order)}}</h4>
             </div>
             <div class="card-body">
@@ -59,7 +59,7 @@
                                     @elseif ($order->order_status == 5)
                                         <span class="badge badge-primary">{{'Delivered'}}</span>
                                     @elseif ($order->order_status == 6)
-                                        <span class="badge badge-danger">{{'Canceled'}}</span>
+                                        <span class="badge badge-danger">{{'Cancelled'}}</span>
                                     @endif
                                 </td>
                                 <td style="text-align: center">

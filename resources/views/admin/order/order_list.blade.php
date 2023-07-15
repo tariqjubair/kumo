@@ -9,7 +9,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-xl-12">
         <div class="card">
             <div class="card-header">
                 <h3>Order List: <a href="{{route('export.order')}}" class="btn btn-success btn-xxs shadow ml-3">Download</a></h3>
@@ -60,7 +60,7 @@
                                     @elseif ($order->order_status == 5)
                                         <span class="badge badge-primary">{{'Delivered'}}</span>
                                     @elseif ($order->order_status == 6)
-                                        <span class="badge badge-danger">{{'Canceled'}}</span>
+                                        <span class="badge badge-danger">{{'Cancelled'}}</span>
                                     @endif
                                 </td>
                                 <td style="text-align: center">

@@ -206,6 +206,8 @@ Route::controller(StripePaymentController::class)->group(function(){
 
 // === Dashboard ===
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/custom_report', [App\Http\Controllers\HomeController::class, 'custom_report'])->name('custom.report');
+Route::get('/home/target_setting', [App\Http\Controllers\HomeController::class, 'target_setting'])->name('target.setting');
 
 
 // ==== Users ====

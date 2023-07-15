@@ -19,7 +19,7 @@
             @elseif ($order_tab->order_status == 5)
                 <span class="text-primary">Order Delivered</span>
             @else
-                <span class="text-danger">Order Canceled</span>
+                <span class="text-danger">Order Cancelled</span>
             @endif
             </a></li>
     </ol>
