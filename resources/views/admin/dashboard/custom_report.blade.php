@@ -164,7 +164,7 @@
         <div class="card">
             <div class="card-header">
                 <h3>Products Sold:</h3>
-                <h4>Total: </h4>
+                <h4>Total: {{count($sold_products)}}</h4>
             </div>
             <div class="card-body">
                 <table class="table stripe sp_col" cellspacing="0" width="100%" id="product_table">
@@ -177,7 +177,7 @@
                         </tr>   
                     </thead>
                     <tbody>
-                        {{-- @foreach ($all_cust as $key=>$cust) --}}
+                        @foreach ($sold_products as $key=>$product)
                         <tr style="background: white">
                             <td style="text-align: center"></td>
                             <td>
@@ -188,7 +188,7 @@
                                 
                             </td>
                         </tr>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

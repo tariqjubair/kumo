@@ -31,10 +31,12 @@ class HomeController extends Controller
         $order_all = [];
         $order_count = '';
         $all_cust = [];
+        $sold_products = [];
         return view('admin.dashboard.custom_report', [
             'order_all' => $order_all,
             'order_count' => $order_count,
             'all_cust' => $all_cust,
+            'sold_products' => $sold_products,
         ]);
     }
 
