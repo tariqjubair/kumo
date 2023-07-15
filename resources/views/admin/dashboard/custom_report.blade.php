@@ -56,7 +56,7 @@
                     <div class="card-body p-4">
                         <div class="media">
                             <span class="mr-3">
-                                <i class="fad fa-box-usd"></i>
+                                <i class="fad fa-box-check"></i>
                             </span>
                             <div class="media-body text-white text-right">
                                 <p class="mb-1">Orders Confirmed</p>
@@ -71,7 +71,7 @@
                     <div class="card-body p-4">
                         <div class="media">
                             <span class="mr-3">
-                                <i class="fad fa-parachute-box"></i>
+                                <i class="fad fa-truck-container"></i>
                             </span>
                             <div class="media-body text-white text-right">
                                 <p class="mb-1">Orders Delivered</p>
@@ -86,7 +86,7 @@
                     <div class="card-body p-4">
                         <div class="media">
                             <span class="mr-3">
-                                <i class="fad fa-credit-card-front"></i>
+                                <i class="fad fa-envelope-open-dollar"></i>
                             </span>
                             <div class="media-body text-white text-right">
                                 <p class="mb-1">Sales Amount</p>
@@ -97,14 +97,14 @@
                 </div>
             </div>
             <div class="col-sm-6 col-xl-6">
-                <div class="widget-stat card bg-danger">
+                <div class="widget-stat card" style="background: rgb(179, 15, 28)">
                     <div class="card-body p-4">
                         <div class="media">
-                            <span class="mr-3">
+                            <span class="mr-3" style="background: rgba(255, 255, 255, 0.25); color: #fff">
                                 <i class="fad fa-window-close"></i>
                             </span>
                             <div class="media-body text-white text-right">
-                                <p class="mb-1">Orders Cancelled</p>
+                                <p class="mb-1">Order Cancelled</p>
                                 <h3 class="text-white">23</h3>
                             </div>
                         </div>

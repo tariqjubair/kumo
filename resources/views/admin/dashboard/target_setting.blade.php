@@ -23,32 +23,32 @@
                 <h3>Daily Targets:</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('user.info.update')}}" method="POST">
+                <form action="{{route('daily_target.update')}}" method="POST">
                     @csrf
                     <div class="item_div mb-4">
                         <label class="form-lable">Daily Order Target:</label>
-                        <input type="text" name="daily_order" class="form-control" value="">
+                        <input type="number" min="0" name="daily_order" class="form-control" value="{{$daily_target->order}}">
                         @error('daily_order')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Daily Sales Target:</label>
-                        <input type="text" name="daily_sales" class="form-control" value="">
+                        <input type="string" min="0" name="daily_sales" class="form-control" value="{{number_format($daily_target->sales)}}">
                         @error('daily_sales')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Daily Visitor Target:</label>
-                        <input type="text" name="daily_visitor" class="form-control" value="">
+                        <input type="number" min="0" name="daily_visitor" class="form-control" value="{{$daily_target->visitor}}">
                         @error('daily_visitor')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Daily Delivery Target:</label>
-                        <input type="text" name="daily_delivery" class="form-control" value="">
+                        <input type="number" min="0" name="daily_delivery" class="form-control" value="{{$daily_target->delivery}}">
                         @error('daily_delivery')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
@@ -64,32 +64,32 @@
                 <h3>Weekly Targets:</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('user.info.update')}}" method="POST">
+                <form action="{{route('weekly_target.update')}}" method="POST">
                     @csrf
                     <div class="item_div mb-4">
                         <label class="form-lable">Weekly Order Target:</label>
-                        <input type="text" name="weekly_order" class="form-control" value="">
+                        <input type="number" min="0" name="weekly_order" class="form-control" value="{{$weekly_target->order}}">
                         @error('daily_order')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Weekly Sales Target:</label>
-                        <input type="text" name="weekly_sales" class="form-control" value="">
+                        <input type="string" min="0" name="weekly_sales" class="form-control" value="{{number_format($weekly_target->sales)}}">
                         @error('daily_sales')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Weekly Visitor Target:</label>
-                        <input type="text" name="weekly_visitor" class="form-control" value="">
+                        <input type="number" min="0" name="weekly_visitor" class="form-control" value="{{$weekly_target->visitor}}">
                         @error('daily_visitor')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Weekly Delivery Target:</label>
-                        <input type="text" name="weekly_delivery" class="form-control" value="">
+                        <input type="number" min="0" name="weekly_delivery" class="form-control" value="{{$weekly_target->delivery}}">
                         @error('daily_delivery')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
@@ -105,32 +105,32 @@
                 <h3>Monthly Targets:</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('user.info.update')}}" method="POST">
+                <form action="{{route('monthly_target.update')}}" method="POST">
                     @csrf
                     <div class="item_div mb-4">
                         <label class="form-lable">Monthly Order Target:</label>
-                        <input type="text" name="monthly_order" class="form-control" value="">
+                        <input type="number" min="0" name="monthly_order" class="form-control" value="{{$monthly_target->order}}">
                         @error('daily_order')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Monthly Sales Target:</label>
-                        <input type="text" name="monthly_sales" class="form-control" value="">
+                        <input type="string" min="0" name="monthly_sales" class="form-control" value="{{number_format($monthly_target->sales)}}">
                         @error('daily_sales')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Monthly Visitor Target:</label>
-                        <input type="text" name="monthly_visitor" class="form-control" value="">
+                        <input type="number" min="0" name="monthly_visitor" class="form-control" value="{{$monthly_target->visitor}}">
                         @error('daily_visitor')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror
                     </div>
                     <div class="item_div mb-4">
                         <label class="form-lable">Monthly Delivery Target:</label>
-                        <input type="text" name="monthly_delivery" class="form-control" value="">
+                        <input type="number" min="0" name="monthly_delivery" class="form-control" value="{{$monthly_target->delivery}}">
                         @error('daily_delivery')
                             <strong class="text-danger">{{$message}}</strong>
                         @enderror

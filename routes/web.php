@@ -209,6 +209,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/home/custom_report', [App\Http\Controllers\HomeController::class, 'custom_report'])->name('custom.report');
 Route::get('/home/target_setting', [App\Http\Controllers\HomeController::class, 'target_setting'])->name('target.setting');
 
+Route::post('/home/target_setting/daily', [App\Http\Controllers\HomeController::class, 'daily_target_update'])->name('daily_target.update');
+Route::post('/home/target_setting/weekly', [App\Http\Controllers\HomeController::class, 'weekly_target_update'])->name('weekly_target.update');
+Route::post('/home/target_setting/monthly', [App\Http\Controllers\HomeController::class, 'monthly_target_update'])->name('monthly_target.update');
+
+
 
 // ==== Users ====
 Route::get('/user_list', [userController::class, 'user_list'])->name('user_list');
