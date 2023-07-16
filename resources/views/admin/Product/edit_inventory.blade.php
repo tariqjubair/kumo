@@ -23,8 +23,9 @@
                         <div class="col-xl-6">
                             <input type="hidden" name="inv_id" value="{{$inv_info->id}}">
                             <div class="item_div mb-4">
-                                <label class="form-lable">Update Color:</label>
-                                <select name="color_upd" class="form-control">
+                                <label class="form-lable">Product Color:</label>
+                                <input type="text" class="form-control" value="{{$inv_info->relto_color->color_name}}" readonly>
+                                {{-- <select name="color_upd" class="form-control">
                                     <option value="">-- Select Color</option>
                                     @foreach ($color_all as $color)
                                         <option {{($color->id == $inv_info->color) ?'selected': ' '}} 
@@ -33,13 +34,14 @@
                                 </select>
                                 @error('color_upd')
                                     <strong class="text-danger">{{$message}}</strong>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="item-div mb-4">
-                                <label for="" class="form-lable">Add Size:</label>
-                                <select name="size_upd" class="form-control">
+                                <label for="" class="form-lable">Product Size:</label>
+                                <input type="text" class="form-control" value="{{$inv_info->relto_size->size}}" readonly>
+                                {{-- <select name="size_upd" class="form-control">
                                     <option value="">-- Select Size </option>
                                     @foreach ($avail_size as $size)
                                         <option {{($size->id == $inv_info->size) ?'selected': ' '}}
@@ -48,7 +50,7 @@
                                 </select>
                                 @error('size')
                                     <strong class="text-danger">{{$message}}</strong>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
                         <div class="col-xl-6">

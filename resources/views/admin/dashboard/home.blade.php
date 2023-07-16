@@ -25,12 +25,12 @@
                         <i class="fad fa-box-check text-success" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Weekly Orders</p>
+                        <p class="fs-14 mb-2">Orders in 7 Days</p>
                         <span class="title text-black font-w600">{{$weekly_orders}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-success" style="width: {{$weekly_orders/$weekly_target->order * 100}}%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-success" style="width: {{$weekly_target->order ?$weekly_orders/$weekly_target->order * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -46,12 +46,12 @@
                         <i class="fad fa-envelope-open-dollar text-secondary" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Weekly Sales</p>
+                        <p class="fs-14 mb-2">Sales in 7 Days</p>
                         <span class="title text-black font-w600">{{number_format($weekly_sales)}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-secondary" style="width: {{$weekly_sales/$weekly_target->sales * 100}}%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-secondary" style="width: {{$weekly_target->sales ?$weekly_sales/$weekly_target->sales * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                         <i class="fas fa-user-friends text-danger" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Weekly Visitors</p>
+                        <p class="fs-14 mb-2">Visitors in 7 Days</p>
                         <span class="title text-black font-w600">250</span>
                     </div>
                 </div>
@@ -88,12 +88,12 @@
                         <i class="fad fa-truck-container text-primary" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Weekly Delivery</p>
+                        <p class="fs-14 mb-2">Delivery in 7 Days</p>
                         <span class="title text-black font-w600">{{$weekly_delivery}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-primary" style="width: {{$weekly_delivery/$weekly_target->delivery * 100}}%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-primary" style="width: {{$weekly_target->delivery ?$weekly_delivery/$weekly_target->delivery * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
             <canvas id="weekly_sales"></canvas>
         </div>
         <div class="item text-center mt-4">
-            <span class="text-danger">Sales in Last 7 Days</span>
+            <span class="text-danger">Sales in 7 Days</span>
         </div>
     </div>
     <div class="col-8 m-auto pt-3 col-sm-8 m-sm-auto pt-sm-5 col-xl-4 pt-xl-0">
@@ -118,7 +118,76 @@
             <canvas id="weekly_orders"></canvas>
         </div>
         <div class="item text-center mt-4">
-            <span class="text-danger">Orders in Last 7 Days</span>
+            <span class="text-danger">Orders in 7 Days</span>
+        </div>
+    </div>
+</div>
+
+{{-- === Order Summary === --}}
+<div class="page-titles mt-5">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active"><a href="javascript:void(0)">Order Counter: All-Time</a></li>
+    </ol>
+</div>
+<div class="row">
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card bg-info">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="fad fa-shopping-bag"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Unattended Orders</p>
+                        <h3 class="text-white">{{$today_unattended}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card bg-success">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="fad fa-shopping-bag"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Order Confirmed</p>
+                        <h3 class="text-white">{{$today_unattended}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card bg-danger">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="fad fa-shopping-bag"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Order Cancelled</p>
+                        <h3 class="text-white">{{$today_unattended}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card bg-primary">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="fad fa-shopping-bag"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Order Delivered</p>
+                        <h3 class="text-white">{{$today_unattended}}</h3>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -126,8 +195,7 @@
 {{-- === Today's Order === --}}
 <div class="page-titles mt-5">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="javascript:void(0)">Order Summary: Today
-                ({{Carbon\carbon::now()->format('d-M-y')}})</a></li>
+        <li class="breadcrumb-item active"><a href="javascript:void(0)">Order Summary: Today ({{Carbon\carbon::now()->format('d-M-y')}})</a></li>
     </ol>
 </div>
 
@@ -142,11 +210,11 @@
                     </span>
                     <div class="media-body">
                         <p class="fs-14 mb-2">Today's Orders</p>
-                        <span class="title text-black font-w600">42%</span>
+                        <span class="title text-black font-w600">{{$today_orders}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-success" style="width: 42%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-success" style="width: {{$daily_target->order ?$today_orders/$daily_target->order * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -163,11 +231,11 @@
                     </span>
                     <div class="media-body">
                         <p class="fs-14 mb-2">Today's Sales</p>
-                        <span class="title text-black font-w600">60%</span>
+                        <span class="title text-black font-w600">{{number_format($today_sales)}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-secondary" style="width: 82%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-secondary" style="width: {{$daily_target->sales ?$today_sales/$daily_target->sales * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -205,11 +273,11 @@
                     </span>
                     <div class="media-body">
                         <p class="fs-14 mb-2">Today's Delivery</p>
-                        <span class="title text-black font-w600">15</span>
+                        <span class="title text-black font-w600">{{$today_delivery}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-primary" style="width: 42%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-primary" style="width: {{$daily_target->delivery ?$today_delivery/$daily_target->delivery * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -229,8 +297,8 @@
                         <i class="fad fa-shopping-bag"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Order Placed</p>
-                        <h3 class="text-white">23</h3>
+                        <p class="mb-1">Unattended Orders</p>
+                        <h3 class="text-white">{{$today_unattended}}</h3>
                     </div>
                 </div>
             </div>
@@ -245,7 +313,7 @@
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Order Processing</p>
-                        <h3 class="text-white">23</h3>
+                        <h3 class="text-white">{{$today_order_processing}}</h3>
                     </div>
                 </div>
             </div>
@@ -260,7 +328,7 @@
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Order Ready</p>
-                        <h3 class="text-white">23</h3>
+                        <h3 class="text-white">{{$today_order_ready}}</h3>
                     </div>
                 </div>
             </div>
@@ -275,7 +343,7 @@
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Order Cancelled</p>
-                        <h3 class="text-white">23</h3>
+                        <h3 class="text-white">{{$today_order_cancelled}}</h3>
                     </div>
                 </div>
             </div>
@@ -290,7 +358,7 @@
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Products Sold</p>
-                        <h3 class="text-white">6</h3>
+                        <h3 class="text-white">{{$today_product_sold}}</h3>
                     </div>
                 </div>
             </div>
@@ -305,7 +373,7 @@
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Inventory Updated</p>
-                        <h3 class="text-white">25</h3>
+                        <h3 class="text-white">{{$today_inv_upd}}</h3>
                     </div>
                 </div>
             </div>

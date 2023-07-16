@@ -615,14 +615,14 @@ class ProductController extends Controller
     // === Update Inventory ===
     function update_inventory(Request $request){
         $request->validate([
-            'color_upd' => 'required',
-            'size_upd' => 'required',
+            // 'color_upd' => 'required',
+            // 'size_upd' => 'required',
             'quantity_upd' => 'required|gte:0',
         ]);
 
         Inventory::find($request->inv_id)->update([
-            'color' => $request->color_upd,
-            'size' => $request->size_upd,
+            // 'color' => $request->color_upd,
+            // 'size' => $request->size_upd,
             'quantity' => $request->quantity_upd,
         ]);
         return back()->with('inv_upd', 'Inventory Updated Successfully!');

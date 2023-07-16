@@ -157,6 +157,7 @@ class CheckoutCont extends Controller
                     'size_id' => $cart->size_id,
                     'quantity' => $cart->quantity,
                     'price' => $cart->relto_product->after_disc,
+                    'created_at' => Carbon::now(),
                 ]);
 
                 // === Subtract Inventory ===
