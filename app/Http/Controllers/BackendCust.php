@@ -6,6 +6,7 @@ use App\Mail\PromoMail;
 use App\Models\CustInfo;
 use App\Models\newsletter;
 use App\Models\OrderTab;
+use App\Models\PromoCounter;
 use App\Models\SubsTab;
 use App\Notifications\TempPassword;
 use Carbon\Carbon;
@@ -191,6 +192,11 @@ class BackendCust extends Controller
                 Mail::to($cust->email)->send(new PromoMail($header, $promo));
             }
         }
+
+        PromoCounter::insert([
+            'header' => $header,
+            'created_at' => Carbon::now(),
+        ]);
 
         return back()->with('job_upd', 'Mail Sent to All Customers!');
     }

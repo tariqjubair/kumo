@@ -7,8 +7,6 @@
 @endsection
 
 @section('content')
-
-{{-- === Dashboard === --}}
 <div class="page-titles">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active"><a href="javascript:void(0)">Sales Report: Last 7 Days</a></li>
@@ -102,8 +100,6 @@
         </div>
     </div>
 </div>
-
-{{-- === Weekly Chart === --}}
 <div class="row pt-3">
     <div class="col-sm-12 col-xl-8">
         <div>
@@ -123,7 +119,7 @@
     </div>
 </div>
 
-{{-- === Order Summary === --}}
+{{-- === Order Counter === --}}
 <div class="page-titles mt-5">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active"><a href="javascript:void(0)">Order Counter: All-Time</a></li>
@@ -135,11 +131,11 @@
             <div class="card-body p-4">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="fad fa-shopping-bag"></i>
+                        <i class="fad fa-exclamation-triangle"></i>
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Unattended Orders</p>
-                        <h3 class="text-white">{{$today_unattended}}</h3>
+                        <h3 class="text-white">{{$order_unattended}}</h3>
                     </div>
                 </div>
             </div>
@@ -150,11 +146,11 @@
             <div class="card-body p-4">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="fad fa-shopping-bag"></i>
+                        <i class="fad fa-box-check"></i>
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Order Confirmed</p>
-                        <h3 class="text-white">{{$today_unattended}}</h3>
+                        <h3 class="text-white">{{$order_confirmed}}</h3>
                     </div>
                 </div>
             </div>
@@ -165,11 +161,11 @@
             <div class="card-body p-4">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="fad fa-shopping-bag"></i>
+                        <i class="fad fa-times-square"></i>
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Order Cancelled</p>
-                        <h3 class="text-white">{{$today_unattended}}</h3>
+                        <h3 class="text-white">{{$order_cancelled}}</h3>
                     </div>
                 </div>
             </div>
@@ -180,11 +176,71 @@
             <div class="card-body p-4">
                 <div class="media">
                     <span class="mr-3">
-                        <i class="fad fa-shopping-bag"></i>
+                        <i class="fad fa-truck-container"></i>
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Order Delivered</p>
-                        <h3 class="text-white">{{$today_unattended}}</h3>
+                        <h3 class="text-white">{{$order_delivered}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card bg-warning">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="fad fa-box-open"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Orders Over a Week</p>
+                        <h3 class="text-white">{{$order_over_week}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card" style="background: #FF2400">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3" style="background: rgba(255, 255, 255, 0.25); color: #fff">
+                        <i class="fad fa-truck-loading"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Not Delivered in Month</p>
+                        <h3 class="text-white">{{$order_over_month}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card bg-secondary">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3">
+                        <i class="fad fa-envelope-open-dollar"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Total Sales</p>
+                        <h3 class="text-white">{{number_format((float)$sales_total/100000, 1, '.', '')}} Lac</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="widget-stat card" style="background: #36454F">
+            <div class="card-body p-4">
+                <div class="media">
+                    <span class="mr-3" style="background: rgba(255, 255, 255, 0.25); color: #fff">
+                        <i class="fad fa-newspaper"></i>
+                    </span>
+                    <div class="media-body text-white text-right">
+                        <p class="mb-1">Newsletter Sent</p>
+                        <h3 class="text-white">{{$promo_mail}}</h3>
                     </div>
                 </div>
             </div>
@@ -198,8 +254,6 @@
         <li class="breadcrumb-item active"><a href="javascript:void(0)">Order Summary: Today ({{Carbon\carbon::now()->format('d-M-y')}})</a></li>
     </ol>
 </div>
-
-{{-- === Todays Target === --}}
 <div class="row">
     <div class="col-sm-6 col-xl-3">
         <div class="card avtivity-card">
@@ -286,24 +340,7 @@
         </div>
     </div>
 </div>
-
-{{-- === Todays Features === --}}
 <div class="row">
-    <div class="col-sm-6 col-xl-3">
-        <div class="widget-stat card bg-info">
-            <div class="card-body p-4">
-                <div class="media">
-                    <span class="mr-3">
-                        <i class="fad fa-shopping-bag"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Unattended Orders</p>
-                        <h3 class="text-white">{{$today_unattended}}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-sm-6 col-xl-3">
         <div class="widget-stat card bg-warning">
             <div class="card-body p-4">
@@ -364,21 +401,6 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="widget-stat card" style="background: rgb(255, 108, 10)">
-            <div class="card-body p-4">
-                <div class="media">
-                    <span class="mr-3" style="background: rgba(255, 255, 255, 0.25); color: #fff">
-                        <i class="fad fa-inventory"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Inventory Updated</p>
-                        <h3 class="text-white">{{$today_inv_upd}}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 {{-- === Monthly Orders === --}}
@@ -388,8 +410,6 @@
                 ({{Carbon\carbon::now()->format('M-y')}})</a></li>
     </ol>
 </div>
-
-{{-- === Monthly Target === --}}
 <div class="row">
     <div class="col-sm-6 col-xl-3">
         <div class="card avtivity-card">
@@ -399,12 +419,12 @@
                         <i class="fad fa-box-check text-success" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Monthly Orders</p>
-                        <span class="title text-black font-w600">42%</span>
+                        <p class="fs-14 mb-2">Orders in {{Carbon\carbon::today()->format('M')}}</p>
+                        <span class="title text-black font-w600">{{$monthly_orders}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-success" style="width: 42%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-success" style="width: {{$monthly_target->order ?$monthly_orders/$monthly_target->order * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -420,12 +440,12 @@
                         <i class="fad fa-envelope-open-dollar text-secondary" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Monthly Sales</p>
-                        <span class="title text-black font-w600">60%</span>
+                        <p class="fs-14 mb-2">Sales in {{Carbon\carbon::today()->format('M')}}</p>
+                        <span class="title text-black font-w600">{{number_format($monthly_sales)}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-secondary" style="width: 82%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-secondary" style="width: {{$monthly_target->sales ?$monthly_sales/$monthly_target->sales * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -441,7 +461,7 @@
                         <i class="fas fa-user-friends text-danger" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Monthly Visitors</p>
+                        <p class="fs-14 mb-2">Visitors in {{Carbon\carbon::today()->format('M')}}</p>
                         <span class="title text-black font-w600">250</span>
                     </div>
                 </div>
@@ -462,12 +482,12 @@
                         <i class="fad fa-truck-container text-primary" style="font-size: 35px; line-height: 80px"></i>
                     </span>
                     <div class="media-body">
-                        <p class="fs-14 mb-2">Monthly Delivery</p>
-                        <span class="title text-black font-w600">15</span>
+                        <p class="fs-14 mb-2">Delivery in {{Carbon\carbon::today()->format('M')}}</p>
+                        <span class="title text-black font-w600">{{$monthly_delivery}}</span>
                     </div>
                 </div>
                 <div class="progress" style="height:5px;">
-                    <div class="progress-bar bg-primary" style="width: 42%; height:5px;" role="progressbar">
+                    <div class="progress-bar bg-primary" style="width: {{$monthly_target->delivery ?$monthly_delivery/$monthly_target->delivery * 100 :0}}%; height:5px;" role="progressbar">
                         <span class="sr-only">42% Complete</span>
                     </div>
                 </div>
@@ -476,24 +496,7 @@
         </div>
     </div>
 </div>
-
-{{-- === Monthly Features === --}}
 <div class="row">
-    <div class="col-sm-6 col-xl-3">
-        <div class="widget-stat card bg-info">
-            <div class="card-body p-4">
-                <div class="media">
-                    <span class="mr-3">
-                        <i class="fad fa-shopping-bag"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Order Placed in {{Carbon\carbon::now()->format('M')}}</p>
-                        <h3 class="text-white">23</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-sm-6 col-xl-3">
         <div class="widget-stat card" style="background: rgb(179, 15, 28)">
             <div class="card-body p-4">
@@ -502,38 +505,8 @@
                         <i class="fad fa-window-close"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Order Cancelled</p>
-                        <h3 class="text-white">23</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="widget-stat card bg-warning">
-            <div class="card-body p-4">
-                <div class="media">
-                    <span class="mr-3">
-                        <i class="fad fa-box-open"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Orders Over a Week</p>
-                        <h3 class="text-white">23</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
-        <div class="widget-stat card" style="background: #FF2400">
-            <div class="card-body p-4">
-                <div class="media">
-                    <span class="mr-3" style="background: rgba(255, 255, 255, 0.25); color: #fff">
-                        <i class="fad fa-truck-loading"></i>
-                    </span>
-                    <div class="media-body text-white text-right">
-                        <p class="mb-1">Due Orders before {{Carbon\carbon::now()->format('M')}}</p>
-                        <h3 class="text-white">23</h3>
+                        <p class="mb-1">Order Cancelled in {{Carbon\carbon::now()->format('M')}}</p>
+                        <h3 class="text-white">{{$monthly_order_cancelled}}</h3>
                     </div>
                 </div>
             </div>
@@ -548,7 +521,7 @@
                     </span>
                     <div class="media-body text-white text-right">
                         <p class="mb-1">Newsletter Sent in {{Carbon\carbon::now()->format('M')}}</p>
-                        <h3 class="text-white">23</h3>
+                        <h3 class="text-white">{{$monthly_promo_mail}}</h3>
                     </div>
                 </div>
             </div>
@@ -562,8 +535,8 @@
                         <i class="fas fa-bags-shopping"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Products Sold</p>
-                        <h3 class="text-white">6</h3>
+                        <p class="mb-1">Products Sold in {{Carbon\carbon::now()->format('M')}}</p>
+                        <h3 class="text-white">{{$monthly_product_sold}}</h3>
                     </div>
                 </div>
             </div>
@@ -577,16 +550,14 @@
                         <i class="fad fa-inventory"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Inventory Updated</p>
-                        <h3 class="text-white">25</h3>
+                        <p class="mb-1">Inventory Updated in {{Carbon\carbon::now()->format('M')}}</p>
+                        <h3 class="text-white">{{$monthly_inv_upd}}</h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-{{-- === Monthly Chart === --}}
 <div class="row pt-3">
     <div class="col-sm-12 col-xl-8">
         <div>
@@ -715,18 +686,18 @@
     });
 </script>
 
-{{-- === Week Sale Diff === --}}
+{{-- === Monthly Sales === --}}
 <script>
     const week_sale_diff = document.getElementById('week_sale_diff');
     new Chart(week_sale_diff, {
         type: 'line',
         data: {
-            labels: ['Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Seven', 'Today'
+            labels: ['Weekday 1', 'Weekday 2', 'Weekday 3', 'Weekday 4', 'Weekday 5', 'Weekday 6', 'Weekday 7'
             ],
             datasets: [
                 {
                     label: 'Week 01',
-                    data: [19000, 3000, 5000, 2000, 3000, 15000, 12500],
+                    data: [{{$md1_sales}}, {{$md2_sales}}, {{$md3_sales}}, {{$md4_sales}}, {{$md5_sales}}, {{$md6_sales}}, {{$md7_sales}}],
                     borderColor: [
                         'rgba(255, 99, 132, 0.8)',
                     ],
@@ -735,7 +706,7 @@
                 },
                 {
                     label: 'Week 02',
-                    data: [2000, 3500, 13000, 21000, 9000, 15000, 1500],
+                    data: [{{$md8_sales}}, {{$md9_sales}}, {{$md10_sales}}, {{$md11_sales}}, {{$md12_sales}}, {{$md13_sales}}, {{$md14_sales}}],
                     borderColor: [
                         'rgba(255, 159, 64, 0.8)',
                     ],
@@ -744,7 +715,7 @@
                 },
                 {
                     label: 'Week 03',
-                    data: [5000, 7500, 5000, 18000, 7000, 8000, 5500],
+                    data: [{{$md15_sales}}, {{$md16_sales}}, {{$md17_sales}}, {{$md18_sales}}, {{$md19_sales}}, {{$md20_sales}}, {{$md21_sales}}],
                     borderColor: [
                         'rgba(255, 205, 86, 0.8)',
                     ],
@@ -753,7 +724,7 @@
                 },
                 {
                     label: 'Week 04',
-                    data: [10000, 7800, 11000, 19000, 9500, 9000, 9600],
+                    data: [{{$md22_sales}}, {{$md23_sales}}, {{$md24_sales}}, {{$md25_sales}}, {{$md26_sales}}, {{$md27_sales}}, {{$md28_sales}}],
                     borderColor: [
                         'rgba(75, 192, 192, 0.8)',
                     ],
@@ -762,7 +733,7 @@
                 },
                 {
                     label: 'Week 05',
-                    data: [6000, 9900, 18000, 7500, 10500, 7000, 9600],
+                    data: [{{$md29_sales}}, {{$md30_sales}}, {{$md31_sales}}, 0, 0, 0, 0],
                     borderColor: [
                         'rgba(54, 162, 235, 0.8)',
                     ],
@@ -781,17 +752,17 @@
     });
 </script>
 
-{{-- === Week Sale Total === --}}
+{{-- === Monthly Orders === --}}
 <script>
     const week_sale_total = document.getElementById('week_sale_total');
     new Chart(week_sale_total, {
         type: 'pie',
         data: {
-            labels: ['Week 01', 'Week 02', 'Week 03', 'Week 04', 'Week 05'],
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
             datasets: [
                 {
                     label: 'Orders',
-                    data: [12, 19, 3, 5, 2],
+                    data: [{{$w1_order}}, {{$w2_order}}, {{$w3_order}}, {{$w4_order}}, {{$w5_order}}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.8)',
                         'rgba(255, 159, 64, 0.8)',
@@ -819,13 +790,12 @@
     new Chart(yearly_sales, {
         type: 'bar',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Seven', 'Eight', 'Nine', 'Ten',
-                'Eleven', 'Twelve'
-            ],
+            labels: ['{{$m12}}', '{{$m11}}', '{{$m10}}', '{{$m9}}', '{{$m8}}', '{{$m7}}', '{{$m6}}', '{{$m5}}', '{{$m4}}', '{{$m3}}',
+                '{{$m2}}', '{{$m1}}'],
             datasets: [
                 {
                     label: 'Sales:',
-                    data: [12000, 19000, 3000, 5000, 2000, 3000, 15000, 8000, 9000, 10000, 11000, 12000],
+                    data: [{{$m12_sales}}, {{$m11_sales}}, {{$m10_sales}}, {{$m9_sales}}, {{$m8_sales}}, {{$m7_sales}}, {{$m6_sales}}, {{$m5_sales}}, {{$m4_sales}}, {{$m3_sales}}, {{$m2_sales}}, {{$m1_sales}}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(255, 159, 64, 0.2)',
@@ -862,20 +832,19 @@
     new Chart(yearly_orders, {
         type: 'polarArea',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Seven', 'Eight', 'Nine', 'Ten',
-                'Eleven', 'Twelve'
-            ],
+            labels: ['{{$m12}}', '{{$m11}}', '{{$m10}}', '{{$m9}}', '{{$m8}}', '{{$m7}}', '{{$m6}}', '{{$m5}}', '{{$m4}}', '{{$m3}}',
+                '{{$m2}}', '{{$m1}}'],
             datasets: [
                 {
                     label: 'Orders',
-                    data: [12, 19, 3, 5, 2, 3, 15, 8, 9, 10, 11, 12],
+                    data: [{{$m12_order}}, {{$m11_order}}, {{$m10_order}}, {{$m9_order}}, {{$m8_order}}, {{$m7_order}}, {{$m6_order}}, {{$m5_order}}, {{$m4_order}}, {{$m3_order}}, {{$m2_order}}, {{$m1_order}}],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.8)',
                         'rgba(255, 159, 64, 0.8)',
                         'rgba(255, 205, 86, 0.8)',
                         'rgba(75, 192, 192, 0.8)',
                         'rgba(54, 162, 235, 0.8)',
-                        'rgba(3, 3, 231, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
                     ],
                     borderWidth: 1
                 },
