@@ -21,6 +21,11 @@
 .card {
     height: auto !important;
 }
+.avtivity-card {
+    -webkit-box-shadow: 6px 6px 5px 0px rgba(85,85,85,1);
+    -moz-box-shadow: 6px 6px 5px 0px rgba(85,85,85,1);
+    box-shadow: 6px 6px 5px 0px rgba(85,85,85,1);
+}
 
 .page-titles {
     margin-bottom: 5px;

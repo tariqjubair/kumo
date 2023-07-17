@@ -2,7 +2,9 @@
 
 @section('header_style')
 <style>
-
+    .item {
+        color: #555555
+    }
 </style>
 @endsection
 
