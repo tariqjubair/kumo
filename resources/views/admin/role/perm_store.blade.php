@@ -114,7 +114,7 @@ h5.sp_chk {
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <a class="dropdown-item" href="{{route('perm.edit', $group->id)}}">Edit</a>
-                                                    <button class="dropdown-item group_del" value="{{route('perm_group.delete', $group->id)}}">Delete</button>
+                                                    <button type="button" class="dropdown-item group_del" value="{{route('perm_group.delete', $group->id)}}">Delete</button>
                                                 </div>
                                             </div>
                                         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustInfo;
 use App\Models\DashTarget;
 use App\Models\Inventory;
 use App\Models\OrdereditemsTab;
@@ -89,7 +90,13 @@ class HomeController extends Controller
         $today_order_processing = OrderTab::where('updated_at', 'like', '%' . Carbon::today()->format('Y-m-d') . '%')->where('order_status', 3)->count();
         $today_order_ready = OrderTab::where('updated_at', 'like', '%' . Carbon::today()->format('Y-m-d') . '%')->where('order_status', 4)->count();
         $today_order_cancelled = OrderTab::where('updated_at', 'like', '%' . Carbon::today()->format('Y-m-d') . '%')->where('order_status', 6)->count();
-        $today_product_sold = OrdereditemsTab::where('created_at', 'like', '%' . Carbon::today()->format('Y-m-d') . '%')->get()->unique('product_id')->count();
+        $today_product_sold = OrdereditemsTab::where('created_at', 'like', '%' . Carbon::today()->format('Y-m-d') . '%')
+        ->orderBy('sum', 'DESC')
+        ->groupBy('product_id')
+        ->groupBy('color_id')
+        ->groupBy('size_id')
+        ->selectRaw('sum(quantity) as sum, color_id, size_id, product_id')
+        ->get()->count();
 
         // === Monthly ===
         $monthly_orders = OrderTab::where('created_at', '>', Carbon::today()->subMonth(1)->endOfMonth())->where('order_status', '!=', 6)->count();
@@ -98,23 +105,29 @@ class HomeController extends Controller
         $monthly_delivery = OrderTab::where('created_at', '>', Carbon::today()->subMonth(1)->endOfMonth())->where('order_status', 5)->count();
         $monthly_order_cancelled = OrderTab::where('created_at', '>', Carbon::today()->subMonth(1)->endOfMonth())->where('order_status', 6)->count();
         $monthly_promo_mail = PromoCounter::where('created_at', '>', Carbon::today()->subMonth(1)->endOfMonth())->count();
-        $monthly_product_sold = OrdereditemsTab::where('created_at', '>', Carbon::today()->subMonth(1)->endOfMonth())->get()->unique('product_id')->count();
+        $monthly_product_sold = OrdereditemsTab::where('created_at', '>', Carbon::today()->subMonth(1)->endOfMonth())
+        ->orderBy('sum', 'DESC')
+        ->groupBy('product_id')
+        ->groupBy('color_id')
+        ->groupBy('size_id')
+        ->selectRaw('sum(quantity) as sum, color_id, size_id, product_id')
+        ->get()->count();
         $monthly_inv_upd = Inventory::where('updated_at', '>', Carbon::today()->subMonth(1)->endOfMonth())->count();
         $w1_order = OrderTab::whereBetween('created_at', [
             Carbon::today()->startOfMonth(),
-            Carbon::today()->startOfMonth()->addDay(6),
+            Carbon::today()->startOfMonth()->addDay(6)->addHour(23)->addMinute(59)->addSecond(59),
         ])->where('order_status', '!=', 6)->count();
         $w2_order = OrderTab::whereBetween('created_at', [
             Carbon::today()->startOfMonth()->addDay(7),
-            Carbon::today()->startOfMonth()->addDay(13),
+            Carbon::today()->startOfMonth()->addDay(13)->addHour(23)->addMinute(59)->addSecond(59),
         ])->where('order_status', '!=', 6)->count();
         $w3_order = OrderTab::whereBetween('created_at', [
             Carbon::today()->startOfMonth()->addDay(14),
-            Carbon::today()->startOfMonth()->addDay(20),
+            Carbon::today()->startOfMonth()->addDay(20)->addHour(23)->addMinute(59)->addSecond(59),
         ])->where('order_status', '!=', 6)->count();
         $w4_order = OrderTab::whereBetween('created_at', [
             Carbon::today()->startOfMonth()->addDay(21),
-            Carbon::today()->startOfMonth()->addDay(27),
+            Carbon::today()->startOfMonth()->addDay(27)->addHour(23)->addMinute(59)->addSecond(59),
         ])->where('order_status', '!=', 6)->count();
         $w5_order = OrderTab::whereBetween('created_at', [
             Carbon::today()->startOfMonth()->addDay(28),
@@ -380,18 +393,77 @@ class HomeController extends Controller
         ]);
     }
 
-    function custom_report(){
-        $order_all = [];
-        $order_count = '';
-        $all_cust = [];
-        $sold_products = [];
+
+
+    // === Custom Report ===
+    function custom_report(Request $request){
+        if($request->start_dt){
+            $start_dt = $request->start_dt;
+        }
+        else {
+            $start_dt = Carbon::today();
+        }
+        if($request->end_dt){
+            $end_dt = $request->end_dt;
+        }
+        else {
+            $end_dt = Carbon::today()->addDay(1);
+        }
+
+        // return Carbon::now()->startOfMonth()->addDays(6)->addHour(23)->addMinute(59)->addSecond(59)->format('d-M-y h:i:s A');
+        // return Carbon::today()->endOfMonth()->format('d-M-y h:i:s A');
+
+        $custom_orders = OrderTab::whereBetween('created_at', [
+            $start_dt, $end_dt
+        ])->where('order_status', '!=', 6)->count();
+        $custom_delivery = OrderTab::whereBetween('updated_at', [
+            $start_dt, $end_dt
+        ])->where('order_status', 5)->count();
+        $custom_sales = OrderTab::whereBetween('created_at', [
+            $start_dt, $end_dt
+        ])->where('order_status', '!=', 6)->sum('gtotal');
+        $custom_cancel = OrderTab::whereBetween('created_at', [
+            $start_dt, $end_dt
+        ])->where('order_status', 6)->count();
+
+        $order_cust = OrderTab::whereBetween('created_at', [
+            $start_dt, $end_dt
+        ])->where('order_status', '!=', 6)
+        ->orderBy('sum', 'DESC')
+        ->groupBy('customer_id')
+        ->selectRaw('sum(gtotal) as sum, customer_id')
+        ->get();
+
+        $order_product = OrdereditemsTab::whereBetween('created_at', [
+            $start_dt, $end_dt
+        ])->orderBy('sum', 'DESC')
+        ->groupBy('product_id')
+        ->groupBy('color_id')
+        ->groupBy('size_id')
+        ->selectRaw('sum(quantity) as sum, color_id, size_id, product_id')
+        ->get();
+
+        $order_all = OrderTab::whereBetween('created_at', [
+            $start_dt, $end_dt
+        ])->orderByDesc('id')->get();
+        
         return view('admin.dashboard.custom_report', [
+            'start_dt' => $start_dt,
+            'end_dt' => $end_dt,
+
+            'custom_orders' => $custom_orders,
+            'custom_delivery' => $custom_delivery,
+            'custom_sales' => $custom_sales,
+            'custom_cancel' => $custom_cancel,
+
+            'order_cust' => $order_cust,
+            'order_product' => $order_product,
             'order_all' => $order_all,
-            'order_count' => $order_count,
-            'all_cust' => $all_cust,
-            'sold_products' => $sold_products,
         ]);
     }
+
+
+
 
     function target_setting(){
         $daily_target = DashTarget::where('target', 'daily')->first();

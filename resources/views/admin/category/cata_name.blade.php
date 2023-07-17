@@ -36,7 +36,7 @@
                                 <img width="60" height="60" src="{{asset('uploads/category')}}/{{$cata->cata_image}}" alt="Category">
                             </td>
                             <td>{{$cata->cata_name}}</td>
-                            <td>{{$cata->relto_user->name}}</td>
+                            <td>{{$cata->relto_user ?$cata->relto_user->name :'Other User'}}</td>
                             <td style="text-align: center">
                                 <div class="dropdown">
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
@@ -114,7 +114,7 @@
                                 <img width="60" height="60" src="{{asset('uploads/category')}}/{{$cata->cata_image}}" alt="Category">
                             </td>
                             <td>{{$cata->cata_name}}</td>
-                            <td>{{$cata->relto_user->name}}</td>
+                            <td>{{$cata->relto_user ?$cata->relto_user->name :'Other User'}}</td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">

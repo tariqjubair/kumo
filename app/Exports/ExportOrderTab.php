@@ -13,6 +13,6 @@ class ExportOrderTab implements FromCollection
     */
     public function collection()
     {
-        return OrderTab::all();
+        return OrderTab::orderByDesc('id')->get();
     }
 }

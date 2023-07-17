@@ -213,6 +213,7 @@ Route::post('/home/target_setting/daily', [App\Http\Controllers\HomeController::
 Route::post('/home/target_setting/weekly', [App\Http\Controllers\HomeController::class, 'weekly_target_update'])->name('weekly_target.update');
 Route::post('/home/target_setting/monthly', [App\Http\Controllers\HomeController::class, 'monthly_target_update'])->name('monthly_target.update');
 
+Route::get('/export/custom_orders',[ExcelCont::class, 'export_custom_orders'])->name('export.custom_orders');
 
 
 // ==== Users ====
@@ -382,6 +383,7 @@ Route::post('/order_list/order_status_update', [OrderCont::class, 'order_status_
 Route::get('/new_order/{order_id}', [OrderCont::class, 'order_info'])->name('order.info');
 
 Route::get('/export/orders',[ExcelCont::class, 'export_orders'])->name('export.order');
+Route::get('/export/selected_orders',[ExcelCont::class, 'export_selected_orders'])->name('export.selected_order');
 
 Route::get('/ssl_report', [OrderCont::class, 'ssl_report'])->name('ssl_report');
 Route::get('/stripe_report', [OrderCont::class, 'stripe_report'])->name('stripe_report');

@@ -151,7 +151,7 @@
                         <i class="fad fa-box-check"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Order Confirmed</p>
+                        <p class="mb-1">Orders Received</p>
                         <h3 class="text-white">{{$order_confirmed}}</h3>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                         <i class="fad fa-times-square"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Order Cancelled</p>
+                        <p class="mb-1">Orders Cancelled</p>
                         <h3 class="text-white">{{$order_cancelled}}</h3>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                         <i class="fad fa-truck-container"></i>
                     </span>
                     <div class="media-body text-white text-right">
-                        <p class="mb-1">Order Delivered</p>
+                        <p class="mb-1">Orders Delivered</p>
                         <h3 class="text-white">{{$order_delivered}}</h3>
                     </div>
                 </div>

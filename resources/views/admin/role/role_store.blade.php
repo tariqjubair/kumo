@@ -17,6 +17,7 @@
                 <h3>Manage Rolls:</h3>
                 <h4>Total: {{$roles_all->count()}}</h4>
             </div>
+            
             <div class="card-body">
                 <table class="table table-striped stripe sp_col" cellspacing="0" width="100%" id="roll_table">
                     <thead>
@@ -29,7 +30,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($roles_all as $key=>$role)
+                        @foreach ($roles_all->where('name', '!=', 'Super Admin') as $key=>$role)
                             <tr style="background: white">
                                 <td style="text-align: center">{{$key+1}}</td>
                                 <td>{{$role->name}}</td>
@@ -40,7 +41,13 @@
                                 </td>
                                 <td style="text-align: center">
                                     <div class="dropdown">
-                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown"
+                                            @if ($role->name == 'Admin')
+                                                @if (Auth::user()->getRoleNames()->first() != 'Super Admin')
+                                                    {{'disabled'}}
+                                                @endif
+                                            @endif
+                                            >
                                             <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">

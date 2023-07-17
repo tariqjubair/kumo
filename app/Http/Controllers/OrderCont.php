@@ -13,6 +13,7 @@ use App\Models\SslOrder;
 use App\Models\StripeOrder;
 use App\Models\User;
 use App\Notifications\OrderConfirmed;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -24,13 +25,35 @@ class OrderCont extends Controller
         $this->middleware('auth');
     }
 
-    function order_list(){
+    function order_list(Request $request){
+        $start_dt = OrderTab::first()->created_at;
+        $end_dt = Carbon::today()->addDay(1);
+
+        $data = $request->all();
         $order_all = OrderTab::orderByDesc('id')->get();
-        $order_count = OrderTab::all()->count();
+        $custom_orders = OrderTab::where(function($q) use($data){
+			if(((!empty($data['start'])) && ($data['start'] != '') && ($data['start'] != 'undefined')) || ((!empty($data['end'])) && ($data['end'] != '') && ($data['end'] != 'undefined'))){
+				$q->whereBetween('created_at', [$data['start'], $data['end']]);
+			};
+            if((!empty($data['pay'])) && ($data['pay'] != '') && ($data['pay'] != 'undefined')){
+				$q->where('payment_method', $data['pay']);
+			};
+            if((!empty($data['status'])) && ($data['status'] != '') && ($data['status'] != 'undefined')){
+				$q->where('order_status', $data['status']);
+			};
+		})->orderByDesc('id')->get();
+
+        if ($data){
+			$order_info = $custom_orders;
+		}
+		else {
+			$order_info = $order_all;
+		}
 
         return view('admin.order.order_list', [
-            'order_all' => $order_all,
-            'order_count' => $order_count,
+            'order_info' => $order_info,
+            'start_dt' => $start_dt,
+            'end_dt' => $end_dt,
         ]);
     }
 

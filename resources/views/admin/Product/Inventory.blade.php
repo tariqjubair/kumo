@@ -103,7 +103,7 @@
                     </thead>
                     <tbody>
                         @foreach ($inventory_info as $key=>$inv)
-                        <tr 
+                        <tr style="background: white"
                         @if(session('repeat_entry'))
                             class="{{$inv->id == session('repeat_entry') ?'text-danger' :''}} repeated"
                         @endif
@@ -155,7 +155,7 @@
                     </thead>
                     <tbody>
                         @foreach ($trashed_inv_info as $key=>$inv)
-                        <tr>
+                        <tr style="background: white">
                             <td>{{$key+1}}</td>
                             <td>{{$inv->relto_color->color_name}}</td>
                             <td>{{$inv->relto_size->size}}</td>

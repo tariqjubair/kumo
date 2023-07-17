@@ -2,6 +2,52 @@
 
 
 
+@section('header_style')
+<style>
+    .sp_top {
+    margin-bottom: 12px;
+}
+
+.perm_item {
+    position: relative;
+}
+
+.timeline {
+    border: 1px solid #f0f1f5;
+    border-radius: 10px;
+    min-height: 190px;
+}
+
+.head-chk{
+    padding: 18px 20px !important;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.sub_chk {
+    padding: 10px 20px;
+}
+
+h5.sp_chk {
+    margin: 4px 0 0 8px;
+}
+
+.float {
+    position: absolute;
+    top: 13px;
+    right: 20px;
+}
+
+@media(max-width: 767.98px){
+    .sm_flex {
+        flex-direction: column;
+    }
+}
+</style>
+@endsection
+
+
+
 @section('content')
 <div class="page-titles">
     <ol class="breadcrumb">
@@ -19,7 +65,7 @@
                 <input type="hidden" name="role_id" value="{{$role_info->id}}">
 
                 <div class="card-header sm_flex">
-                    <h3>Update Role Permissions:</h3>
+                    <h3>Update Role Permissions: <span class="text-danger">{{$role_info->name}}</span></h3>
                     <div class="custom-control custom-checkbox checkbox-primary check-lg mr-3 sp_top">
                         <input type="checkbox" class="custom-control-input" id="chk_all" name="perm_id[]" value="">
                         <label class="custom-control-label" for="chk_all">
