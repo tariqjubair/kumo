@@ -34,6 +34,7 @@
                                 <td>{{$charge->charge}}</td>
                                 <td style="text-align: center">
                                     <div class="dropdown">
+                                        @can('control_delivery')
                                         <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                             <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                         </button>
@@ -41,6 +42,11 @@
                                             <a class="dropdown-item edt_loc" href="{{route('edit.location', $charge->id)}}">Edit</a>
                                             <button class="dropdown-item loc_del" value="{{route('delete.location', $charge->id)}}">Delete</button>
                                         </div>
+                                        @else
+                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                            <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                        </button>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -52,6 +58,8 @@
     </div>
 
     {{-- === Add Location === --}}
+    @can('control_delivery')
+        
     <div class="col-xl-4">
         <div class="card">
             <div class="card-header">
@@ -79,6 +87,8 @@
             </div>
         </div>
     </div>
+
+    @endcan
 </div>
 @endsection
 

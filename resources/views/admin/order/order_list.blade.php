@@ -8,11 +8,14 @@
     </ol>
 </div>
 
+@can('order_view')
+    
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header">
                 <h3>{{@$_GET['gen'] ?'Selected Orders' :'Orders All'}}: 
+                    @can('download_order_list')
                     @if (@$_GET['gen'])
                         <a href="{{route('export.selected_order', [
                             'start_dt' => @$_GET['start'],
@@ -23,7 +26,7 @@
                     @else
                         <a href="{{route('export.order')}}" class="btn btn-success btn-xxs shadow ml-3">Download</a>
                     @endif
-                    
+                    @endcan
                 </h3>
                 <h4>Total: {{count($order_info)}}</h4>
             </div>
@@ -139,6 +142,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="{{route('order.info', $order->id)}}">View Order</a>
 
+                                            @can('update_order')
                                             <form action="{{route('order_status.update')}}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="order_id" value="{{$order->order_id}}">
@@ -151,6 +155,7 @@
                                                     <button class="dropdown-item" name="status" value="5">Delivered</button>
                                                 @endif
                                             </form>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>
@@ -162,6 +167,27 @@
         </div>
     </div>
 </div>
+
+@else
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text  font-weight-bold">403</h1>
+                        <h4><i class="fa fa-times-circle text-danger"></i> Forbidden Error!</h4>
+                        <p>You do not have permission to view this resource.</p>
+						<div>
+                            <a class="btn btn-primary" href="{{route('home')}}">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@endcan
 @endsection
 
 

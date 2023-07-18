@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BillingTab;
 use App\Models\City;
 use App\Models\User;
 use App\Models\Country;
@@ -75,6 +76,7 @@ class CustomerCont extends Controller
     function order_invoice($order_id){
         $order = '#'.$order_id;
         $site_info = SiteinfoTab::find(1)->first();
+
         $pdf = FacadePdf::loadView('invoice.inv_pdf', [
             'order_id' => $order,
             'site_info' => $site_info,

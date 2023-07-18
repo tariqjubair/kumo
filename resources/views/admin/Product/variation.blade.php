@@ -34,6 +34,7 @@
                             <td><span class="badge" style="background-color: {{$color->color_code}}; Color: transparent; width: 80px">{{$color->color_code}}</span></td>
                             <td style="text-align: center">
                                 <div class="dropdown">
+                                    @can('control_variation')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
@@ -45,8 +46,12 @@
                                         @else
                                             <button class="dropdown-item del_color" value="{{route('color.delete', $color->id)}}">Delete</button>
                                         @endif
-
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -81,6 +86,7 @@
                             <td>{{$size->size_type}}</td>
                             <td>
                                 <div class="dropdown">
+                                    @can('control_variation')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
@@ -92,8 +98,12 @@
                                         @else
                                             <button class="dropdown-item del_size" value="{{route('size.delete', $size->id)}}">Delete</button>
                                         @endif
-
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -102,8 +112,10 @@
                 </table>
             </div>
         </div>
-
     </div>
+
+    @can('control_variation')
+        
     <div class="col-xl-4">
 
         {{-- === Add Color-Name === --}}
@@ -230,6 +242,7 @@
             </div>
         </div>
     </div>
+    @endcan
 </div>
 @endsection
 

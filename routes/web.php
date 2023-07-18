@@ -343,13 +343,6 @@ Route::get('/product/variation/edit_size_type/{measure_id}', [ProductController:
 Route::post('/product/variation/update_size_type', [ProductController::class, 'update_measure'])->name('measure.update');
 
 
-// === Length ===
-Route::post('/product/variation/add_length', [ProductController::class, 'add_length'])->name('add.length');
-Route::get('/product/variation/delete_length/{length_id}', [ProductController::class, 'del_length'])->name('length.delete');
-Route::get('/product/variation/edit_length/{length_id}', [ProductController::class, 'edit_length'])->name('length.edit');
-Route::post('/product/variation/update_length', [ProductController::class, 'update_length'])->name('length.update');
-
-
 // === Product Delete ===
 Route::get('/product/delete_product/{product_id}', [ProductController::class, 'del_product'])->name('product.delete');
 Route::get('/product/force_delete_product/{product_id}', [ProductController::class, 'force_del_product'])->name('product.force_delete');

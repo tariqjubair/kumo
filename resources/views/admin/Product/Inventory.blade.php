@@ -10,6 +10,8 @@
 </div>
 
 <div class="row">
+
+    @can('inventory_control')
     <div class="col-xl-12">
 
         {{-- === Add Inventory === --}}
@@ -77,6 +79,8 @@
             </div>
         </div>
     </div>
+    @endcan
+
     <div class="col-xl-12">
 
         {{-- === Current Inventory List === --}}
@@ -113,9 +117,10 @@
                             <td>{{$inv->relto_size->size}}</td>
                             <td>{{$inv->quantity}}</td>
                             <td>{{$inv->updated_at}}</td>
-                            <td>{{$inv->relto_user->name}}</td>
+                            <td>{{$inv->relto_user ?$inv->relto_user->name :'Other User'}}</td>
                             <td>
                                 <div class="dropdown">
+                                    @can('inventory_control')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
@@ -123,6 +128,11 @@
                                         <a class="dropdown-item edt_btn" href="{{route('inv.edit', $inv->id)}}">Edit</a>
                                         <button class="dropdown-item inventory_del" value="{{route('inventory.delete', $inv->id)}}">Delete</button>
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -161,9 +171,10 @@
                             <td>{{$inv->relto_size->size}}</td>
                             <td>{{$inv->quantity}}</td>
                             <td>{{$inv->updated_at}}</td>
-                            <td>{{$inv->relto_user->name}}</td>
+                            <td>{{$inv->relto_user ?$inv->relto_user->name :'Other User'}}</td>
                             <td>
                                 <div class="dropdown">
+                                    @can('inventory_control')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
@@ -171,6 +182,11 @@
                                         <a class="dropdown-item edt_btn" href="{{route('inv.restore', $inv->id)}}">Restore</a>
                                         <button class="dropdown-item inv_force_del" value="{{route('inv_force.delete', $inv->id)}}">Force Delete</button>
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

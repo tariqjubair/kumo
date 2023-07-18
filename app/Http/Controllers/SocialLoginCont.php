@@ -58,7 +58,7 @@ class SocialLoginCont extends Controller
         // Live Use ===
         // $user = Socialite::driver('google')->stateless()->user();
         
-        //Localhost Use
+        //Localhost Use ===
 		$user = Socialite::driver('google')->user();
 
         if(CustInfo::where('email', $user->getEmail())->doesntExist()){

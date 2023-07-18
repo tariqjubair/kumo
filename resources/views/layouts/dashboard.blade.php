@@ -368,10 +368,13 @@
 							<span class="nav-text">Coupons</span>
 						</a>
                         <ul aria-expanded="false">
+							@can('control_coupon')
                             <li><a href="{{route('add.coupon')}}">Add New Coupon</a></li>
+							@endcan
 							<li><a href="{{route('coupon_list')}}">Coupon List</a></li>
                         </ul>
                     </li>
+					@can('charges_menu_view')
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="fad fa-file-invoice-dollar"></i>
 							<span class="nav-text">Charges</span>
@@ -380,16 +383,21 @@
                             <li><a href="{{route('charge.delivery')}}">Delivery Charge</a></li>
                         </ul>
                     </li>
+					@endcan
+					@can('order_menu_view')
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="fad fa-shopping-bag"></i>
 							<span class="nav-text">Order</span>
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('order_list')}}">Order List</a></li>
+							@can('transaction_report_view')
                             <li><a href="{{route('ssl_report')}}">SSLCommerz Report</a></li>
                             <li><a href="{{route('stripe_report')}}">Stripe Report</a></li>
+							@endcan
                         </ul>
                     </li>
+					@endcan
                 </ul>
 				<div class="copyright">
 					<p><strong>Gymove Admin Dashboard</strong> © 2022 All Rights Reserved</p>

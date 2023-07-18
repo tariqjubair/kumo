@@ -13,6 +13,7 @@
         <div class="card">
             <div class="card-header">
                 <h3>Coupons:</h3>
+                <h4>Total: {{count($coupon_all)}}</h4>
             </div>
             <div class="card-body">
                 <table class="table table-striped stripe sp_col" cellspacing="0" width="100%" id="coupon_table">
@@ -58,6 +59,7 @@
                             :'Expired'}}</td>
                             <td style="text-align: center">
                                 <div class="dropdown">
+                                    @can('control_coupon')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
@@ -65,6 +67,11 @@
                                         <a class="dropdown-item" href="{{route('coupon.edit', $coupon->id)}}">Edit</a>
                                         <button class="dropdown-item del_coupon" value="{{route('coupon.soft_del', $coupon->id)}}">Delete</button>
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -82,6 +89,7 @@
         <div class="card">
             <div class="card-header">
                 <h3>Trashed Coupons:</h3>
+                <h4>Total Trashed: {{count($coupon_trashed)}}</h4>
             </div>
             <div class="card-body">
                 <table class="table table-striped stripe sp_col" cellspacing="0" width="100%" id="coupon_trashed_table">
@@ -117,6 +125,7 @@
                             <td>{{carbon\carbon::now()->diffInDays($coupon->validity)}} Days</td>
                             <td style="text-align: center">
                                 <div class="dropdown">
+                                    @can('control_coupon')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
@@ -124,6 +133,11 @@
                                         <a class="dropdown-item" href="{{route('coupon.restore', $coupon->id)}}">Restore</a>
                                         <button class="dropdown-item coupon_fdel" value="{{route('coupon.force_del', $coupon->id)}}">Force Delete</button>
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

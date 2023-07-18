@@ -25,6 +25,8 @@
     </ol>
 </div>
 
+@can('order_view')
+    
 <div class="row">
 
     {{-- === Ordered Items === --}}
@@ -33,6 +35,7 @@
             <div class="card-header">
                 <h3>Order ID: {{$order_id}}</h3>
 
+                @can('update_order')
                 @if ($order_tab->order_status == 1)
                     <form action="{{route('order_status.update')}}" method="POST" id="status_form">
                         @csrf
@@ -40,7 +43,10 @@
                         <button class="btn btn-outline-success btn-xs mr-2 status_btn" name="status" value="2" id="conf_btn">Confirm</button>
                         <button class="btn btn-outline-danger btn-xs status_btn" name="status" value="6" id="canc_btn">Cancel</button>
                     </form>
+                @elseif ($order_tab->order_status != 1 && $order_tab->order_status != 6) 
+                    <a href="{{route('order.inv', substr($order_id, 1))}}" target="_blank" class="btn btn-outline-primary btn-xs">Get Invoice</a>
                 @endif
+                @endcan
                 <h4>Total: {{$ordered_items->count()}}</h4>
             </div>
             <div class="card-body">
@@ -134,6 +140,27 @@
         </div>
     </div>
 </div>
+
+@else
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text  font-weight-bold">403</h1>
+                        <h4><i class="fa fa-times-circle text-danger"></i> Forbidden Error!</h4>
+                        <p>You do not have permission to view this resource.</p>
+						<div>
+                            <a class="btn btn-primary" href="{{route('home')}}">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@endcan
 @endsection
 
 

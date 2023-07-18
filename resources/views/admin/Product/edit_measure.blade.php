@@ -9,6 +9,8 @@
     </ol>
 </div>
 
+@can('control_variation')
+    
 <div class="row">
     <div class="col-xl-6 m-auto">
         <div class="card">
@@ -32,6 +34,8 @@
         </div>
     </div>
 </div>
+
+@endcan
 @endsection
 
 @section('footer_script')

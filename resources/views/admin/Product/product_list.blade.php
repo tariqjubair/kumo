@@ -193,7 +193,9 @@
                         </tbody>
                     </table>
 
+                    @can('product_control')
                     <button type="button" class="btn btn-warning d-none product_chk_del" id="chk_del">Delete All-Checked</button>
+                    @endcan
                 </form>
 
             </div>
@@ -247,8 +249,10 @@
                                             <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
+                                            @can('product_control')
                                             <a class="dropdown-item edt_btn" href="{{route('product.restore', $product->id)}}">Restore</a>
                                             <button type="button" class="dropdown-item product_force_del" value="{{route('product.force_delete', $product->id)}}">Force Delete</button>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>
@@ -257,8 +261,10 @@
                         </tbody>
                     </table>
 
+                    @can('product_control')
                     <button class="btn btn-success d-none chk_tr_btn" formaction="{{route('restore.checked')}}">Restore Checked</button>
                     <button type="button" class="btn btn-danger d-none chk_tr_btn product_chk_tr_del">Force Delete Checked</button>
+                    @endcan
                 </form>
             </div>
         </div>
