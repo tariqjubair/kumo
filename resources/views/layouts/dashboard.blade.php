@@ -269,8 +269,12 @@
 						</a>
 						<ul aria-expanded="false">
 							<li><a href="{{route('home')}}">Home</a></li>
+							@can('custom_report_view')
 							<li><a href="{{route('custom.report')}}">Custom Report</a></li>
+							@endcan
+							@can('target_view')
 							<li><a href="{{route('target.setting')}}">Target Settings</a></li>
+							@endcan
 						</ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
@@ -278,8 +282,12 @@
 							<span class="nav-text">Kumo Store</span>
 						</a>
 						<ul aria-expanded="false">
+							@can('site_info_update')
 							<li><a href="{{route('siteinfo.index')}}">Site Info</a></li>
+							@endcan
+							@can('add_faq')
 							<li><a href="{{route('faq.create')}}">Add New FAQ</a></li>
+							@endcan
 							<li><a href="{{route('faq.index')}}">FAQ List</a></li>
 						</ul>
                     </li>
@@ -291,33 +299,47 @@
                             <li><a href="{{route('user.profile')}}">Profile</a></li>
                             <li><a href="{{route('user.role')}}">Role & Permissions</a></li>
                             <li><a href="{{route('user.notif')}}">Notifications</a></li>
+							@can('user_view')
                             <li><a href="{{route('user_list')}}" aria-expanded="false">User List</a>
+							@endcan
                             </li>
 							@can('user_add')
 								<li><a href="{{route('add.user')}}" aria-expanded="false">Add User</a></li>
 							@endcan
                         </ul>
                     </li>
+					@can('customer_menu_view')
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="fad fa-users-class"></i>
 							<span class="nav-text">Customers</span>
 						</a>
                         <ul aria-expanded="false">
+							@can('customer_view')
                             <li><a href="{{route('cust_list')}}" aria-expanded="false">Customer List</a></li>
                             <li><a href="{{route('subs_list')}}" aria-expanded="false">Subscriber List</a></li>
+							@endcan
+							@can('newsletter_view')
                             <li><a href="{{route('newsletter')}}" aria-expanded="false">Newsletter</a></li>
+							@endcan
                         </ul>
                     </li>
+					@endcan
+					@can('roles_menu_view')
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="fad fa-project-diagram"></i>
 						<span class="nav-text">Roles</span>
 						</a>
 						<ul aria-expanded="false">
+							@can('roles_control')
 							<li><a href="{{route('perm.store')}}">Create New Role</a></li>
+							@endcan
 							<li><a href="{{route('role.store')}}">Manage Roles</a></li>
+							@can('view_assigned_users')
 							<li><a href="{{route('role.users')}}">Assigned Users</a></li>
+							@endcan
 						</ul>
 					</li>
+					@endcan
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="fad fa-sitemap"></i>
 							<span class="nav-text">Categories</span>
@@ -332,9 +354,13 @@
 							<span class="nav-text">Products</span>
 						</a>
                         <ul aria-expanded="false">
+							@can('add_product')
                             <li><a href="{{route('add.product')}}">Add New Product</a></li>
+							@endcan
 							<li><a href="{{route('product_list')}}">Product List</a></li>
+							@can('view_variation')
 							<li><a href="{{route('product.variation')}}">Variation</a></li>
+							@endcan
                         </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

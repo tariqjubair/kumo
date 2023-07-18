@@ -48,57 +48,78 @@
     </ol>
 </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xl-6 col-lg-8 m-auto">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Edit Role & Permissions:</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{route('user_role.update')}}" method="POST">
-                        @csrf
-                        <input type="hidden" name="user_id" value="{{$user_info->id}}">
+@can('assigned_users_control')
+    
+<div class="row">
+    <div class="col-xl-6 col-lg-8 m-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3>Edit Role & Permissions:</h3>
+            </div>
+            <div class="card-body">
+                <form action="{{route('user_role.update')}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{$user_info->id}}">
 
-                        <div class="item_div mb-4">
-                            <label class="form-lable">User:</label>
-                            <input type="text" name="" class="form-control" value="{{$user_info->name}}" readonly>
-                        </div>
-                        <div class="item_div mb-4">
-                            <label class="form-lable">Assign Rolls:</label>
-                            <select name="role_id[]" class="form-control" multiple size="5">
-                                @foreach ($roles_all as $role)
-                                    <option {{$role->id == old('role_id') ?'selected' :''}} 
-                                        {{$user_info->hasRole($role->name) ?'selected' :''}} 
-                                        value="{{$role->id}}">{{$role->name}}</option>
-                                @endforeach
-                            </select>
-                            <p class="blw_text">* Press Ctrl for Multiple Selection</p>
-                            @error('role_id')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <div class="item_div mb-4">
-                            <label class="form-lable">Additional Permissions: (Optional)</label>
-                            <select name="perm_id[]" class="form-control select2" multiple="multiple">
-                                <option value="">-- Select Permissions --</option>
-                                @foreach ($perm_all as $perm)
-                                    <option {{collect(old('perm_id'))->contains($perm->id) ?'selected' :''}} 
-                                    {{DB::table('model_has_permissions')->where('permission_id', $perm->id)->where('model_id', $user_info->id)->exists() ?'selected' :''}}
-                                    value="{{$perm->id}}">{{$perm->name}}</option>
-                                @endforeach
-                            </select>
-                            @error('perm_id')
-                                <strong class="text-danger">{{$message}}</strong>
-                            @enderror
-                        </div>
-                        <button type="submit" id="upd_user_role_btn" class="btn btn-primary">Update User Role</button>
-                    </form>
-                </div>
+                    <div class="item_div mb-4">
+                        <label class="form-lable">User:</label>
+                        <input type="text" name="" class="form-control" value="{{$user_info->name}}" readonly>
+                    </div>
+                    <div class="item_div mb-4">
+                        <label class="form-lable">Assign Rolls:</label>
+                        <select name="role_id[]" class="form-control" multiple size="5">
+                            @foreach ($roles_all as $role)
+                                <option {{$role->id == old('role_id') ?'selected' :''}} 
+                                    {{$user_info->hasRole($role->name) ?'selected' :''}} 
+                                    value="{{$role->id}}">{{$role->name}}</option>
+                            @endforeach
+                        </select>
+                        <p class="blw_text">* Press Ctrl for Multiple Selection</p>
+                        @error('role_id')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <div class="item_div mb-4">
+                        <label class="form-lable">Additional Permissions: (Optional)</label>
+                        <select name="perm_id[]" class="form-control select2" multiple="multiple">
+                            <option value="">-- Select Permissions --</option>
+                            @foreach ($perm_all as $perm)
+                                <option {{collect(old('perm_id'))->contains($perm->id) ?'selected' :''}} 
+                                {{DB::table('model_has_permissions')->where('permission_id', $perm->id)->where('model_id', $user_info->id)->exists() ?'selected' :''}}
+                                value="{{$perm->id}}">{{$perm->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('perm_id')
+                            <strong class="text-danger">{{$message}}</strong>
+                        @enderror
+                    </div>
+                    <button type="submit" id="upd_user_role_btn" class="btn btn-primary">Update User Role</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+@else
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text  font-weight-bold">403</h1>
+                        <h4><i class="fa fa-times-circle text-danger"></i> Forbidden Error!</h4>
+                        <p>You do not have permission to view this resource.</p>
+						<div>
+                            <a class="btn btn-primary" href="{{route('home')}}">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@endcan
 @endsection
 
 

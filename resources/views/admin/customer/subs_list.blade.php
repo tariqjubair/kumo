@@ -17,6 +17,9 @@
         <li class="breadcrumb-item active"><a href="javascript:void(0)">Subscriber List</a></li>
     </ol>
 </div>
+
+@can('customer_view')
+    
 <div class="row">
 
     {{-- === User List === --}}
@@ -44,12 +47,18 @@
                             <td>{{$cust->created_at->format('d-M-y')}}</td>
                             <td style="text-align: center">
                                 <div class="dropdown">
+                                    @can('customer_control')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <button class="dropdown-item del_subs" value="{{route('subs.delete', $cust->id)}}">Delete</button>
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -60,6 +69,27 @@
         </div>
     </div>
 </div>
+
+@else
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text  font-weight-bold">403</h1>
+                        <h4><i class="fa fa-times-circle text-danger"></i> Forbidden Error!</h4>
+                        <p>You do not have permission to view this resource.</p>
+						<div>
+                            <a class="btn btn-primary" href="{{route('home')}}">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@endcan
 @endsection
 
 @section('footer_script')

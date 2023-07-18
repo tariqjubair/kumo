@@ -39,6 +39,7 @@
                             <td>{{$sub_cata->measure}}</td>
                             <td style="text-align: center">
                                 <div class="dropdown">
+                                    @can('category_control')
                                     <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                         <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                     </button>
@@ -46,6 +47,11 @@
                                         <a class="dropdown-item edt_btn" href="{{route('subcategory.edit', $sub_cata->id)}}">Edit</a>
                                         <a class="dropdown-item del_btn" href="{{route('subcategory.delete', $sub_cata->id)}}">Delete</a>
                                     </div>
+                                    @else
+                                    <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                        <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -55,6 +61,9 @@
             </div>
         </div>
     </div>
+
+    @can('category_add')
+        
     <div class="col-xl-4">
         <div class="card">
             <div class="card-header">
@@ -99,7 +108,11 @@
             </div>
         </div>
     </div>
+    @endcan
 </div>
+
+@can('category_trash')
+    
 <div class="row">
     <div class="col-xl-8">
         <div class="card">
@@ -147,6 +160,8 @@
         </div>
     </div>
 </div>
+
+@endcan
 @endsection
 
 @section('footer_script')

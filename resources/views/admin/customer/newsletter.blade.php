@@ -32,6 +32,7 @@
     </ol>
 </div>
 
+@can('newsletter_view')
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
@@ -46,7 +47,11 @@
                     <div class="col-xl-7">
                         <div class="item_div mb-4">
                             <label class="form-lable">Header:</label>
-                            <input type="text" name="head" class="form-control" value="{{@$_GET['inp'] ?$news_set->head :''}}">
+                            <input type="text" name="head" class="form-control" value="{{@$_GET['inp'] ?$news_set->head :''}}"
+                            @can('newsletter_control')
+                            @else
+                                {{'readonly'}}
+                            @endcan>
                             @error('head')
                                 <strong class="text-danger">{{$message}}</strong>
                             @enderror
@@ -79,6 +84,8 @@
                             @enderror
                         </div>
                     </div>
+
+                    @can('newsletter_control')
                     <div class="col-xl-12">
                         <div class="item_div mt-2 mb-4 text-center">
                             @if (@$_GET['inp'])
@@ -89,11 +96,33 @@
                             <button formaction="{{route('newsletter.send')}}" class="btn btn-secondary ml-2" id="mail_btn">Send Mail</button>
                         </div>
                     </div>
+                    @endcan
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@else
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text  font-weight-bold">403</h1>
+                        <h4><i class="fa fa-times-circle text-danger"></i> Forbidden Error!</h4>
+                        <p>You do not have permission to view this resource.</p>
+						<div>
+                            <a class="btn btn-primary" href="{{route('home')}}">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@endcan
 @endsection
 
 

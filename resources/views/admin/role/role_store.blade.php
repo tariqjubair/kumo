@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-header">
                 <h3>Manage Rolls:</h3>
-                <h4>Total: {{$roles_all->count()}}</h4>
+                <h4>Total: {{$roles_all->count() - 1}}</h4>
             </div>
             
             <div class="card-body">
@@ -41,19 +41,24 @@
                                 </td>
                                 <td style="text-align: center">
                                     <div class="dropdown">
-                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown"
-                                            @if ($role->name == 'Admin')
-                                                @if (Auth::user()->getRoleNames()->first() != 'Super Admin')
-                                                    {{'disabled'}}
-                                                @endif
-                                            @endif
-                                            >
+                                        @can('roles_control')
+                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                             <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item edt_btn" href="{{route('role.edit', $role->id)}}">Edit</a>
-                                            <button class="dropdown-item del_role" value="{{route('role.delete', $role->id)}}">Delete</button>
+                                            <button class="dropdown-item del_role" value="{{route('role.delete', $role->id)}}"
+                                                @if ($role->name == 'Admin')
+                                                @if (Auth::user()->getRoleNames()->first() != 'Super Admin')
+                                                    {{'disabled'}}
+                                                @endif
+                                            @endif>Delete</button>
                                         </div>
+                                        @else
+                                        <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                            <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                        </button>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -63,6 +68,9 @@
             </div>
         </div>
     </div>
+
+    @can('roles_control')
+        
     <div class="col-xl-3">
         <div class="card">
             <div class="card-header">
@@ -101,6 +109,7 @@
             </div>
         </div>
     </div>
+    @endcan
 </div>
 @endsection
 

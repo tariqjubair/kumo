@@ -11,6 +11,8 @@
     </ol>
 </div>
 
+@can('view_assigned_users')
+    
 <div class="row">
     <div class="col-xl-12 m-auto">
         <div class="card">
@@ -46,6 +48,7 @@
                                     </td>
                                     <td style="text-align: center">
                                         <div class="dropdown">
+                                            @can('assigned_users_control')
                                             <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown">
                                                 <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
                                             </button>
@@ -53,6 +56,11 @@
                                                 <a class="dropdown-item edt_btn" href="{{route('user_role.edit', $user->id)}}">Edit</a>
                                                 <button class="dropdown-item remove_role" value="{{route('user_role.remove', $user->id)}}">Remove</button>
                                             </div>
+                                            @else
+                                            <button type="button" class="btn btn-primary light sharp" data-toggle="dropdown" disabled>
+                                                <svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+                                            </button>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
@@ -66,7 +74,26 @@
 </div>
 @endsection
 
-
+@else
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text  font-weight-bold">403</h1>
+                        <h4><i class="fa fa-times-circle text-danger"></i> Forbidden Error!</h4>
+                        <p>You do not have permission to view this resource.</p>
+						<div>
+                            <a class="btn btn-primary" href="{{route('home')}}">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+@endcan
 
 @section('footer_script')
 
