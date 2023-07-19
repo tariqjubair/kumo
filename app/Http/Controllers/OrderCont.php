@@ -90,7 +90,7 @@ class OrderCont extends Controller
                 ->send(new OrderCancelled($billing_info));
             }
 
-            // === Subtract Inventory ===
+            // === Increment Inventory ===
             // foreach ($item_info as $item){
             //     Inventory::where('product_id', $item->product_id)->where('color', $item->color_id)->where('size', $item->size_id)->increment('quantity', $item->quantity);
             // }
