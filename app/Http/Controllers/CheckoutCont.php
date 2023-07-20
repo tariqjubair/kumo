@@ -24,19 +24,20 @@ class CheckoutCont extends Controller
 {
     // Checkout Page ===
     function checkout(){
-        if(!Auth::guard('CustLogin')->check()){
+        if(Auth::guard('CustLogin')->check()){
+            $cart_info = cartMod::where('customer_id', Auth::guard('CustLogin')->id())->get();
+            $countries = Country::all();
+            // $cities = City::all();
+    
+            return view('frontend.checkout', [
+                'cart_info' => $cart_info,
+                'countries' => $countries,
+                // 'cities' => $cities,
+            ]);
+        }
+        else {
             return redirect()->route('customer_login')->with('cart_login', 'Please Login/Register to use Cart/Checkout');
         }
-
-        $cart_info = cartMod::where('customer_id', Auth::guard('CustLogin')->id())->get();
-        $countries = Country::all();
-        $cities = City::all();
-
-        return view('frontend.checkout', [
-            'cart_info' => $cart_info,
-            'countries' => $countries,
-            'cities' => $cities,
-        ]);
     }
 
     // Ajax: Get City ===

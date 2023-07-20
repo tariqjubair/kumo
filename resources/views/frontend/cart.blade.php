@@ -219,13 +219,6 @@
 
 @section('footer_script')
 
-{{-- === Avoid Looping for GET === --}}
-<script>    
-    if(typeof window.history.pushState == 'function') {
-        window.history.pushState({}, "Hide", '<?php echo $_SERVER['PHP_SELF'];?>');
-    }
-</script>
-
 {{-- === No Cart Added Msg === --}}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
@@ -240,7 +233,7 @@
 </script>
 
 {{-- === Leave Page Alert === --}}
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+{{-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> --}}
 
 @if ($discount != 0)
 <script>
@@ -269,7 +262,7 @@
 @if ($btn == 'click')
 <script>
     $('html, body').animate({
-        scrollTop: $('.scr_amount').offset().top -200
+        scrollTop: $('.scr_amount').offset().top -300
     }, 'slow');
 </script>
 @endif

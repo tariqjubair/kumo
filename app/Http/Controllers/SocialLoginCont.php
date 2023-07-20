@@ -24,12 +24,12 @@ class SocialLoginCont extends Controller
             CustInfo::insert([
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
-                'password' => bcrypt('@Kumo#123@'),
+                'password' => bcrypt('Git@Kumo#123@'),
                 'created_at' => Carbon::now(),
             ]);
         }
 
-        if(Auth::guard('CustLogin')->attempt(['email' => $user->getEmail(), 'password' => '@Kumo#123@'])){
+        if(Auth::guard('CustLogin')->attempt(['email' => $user->getEmail(), 'password' => 'Git@Kumo#123@'])){
             $full_name = $user->getName();
             $name = explode(' ', $full_name)[0];
 
@@ -65,12 +65,12 @@ class SocialLoginCont extends Controller
             CustInfo::insert([
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
-                'password' => bcrypt('@Kumo#123@'),
+                'password' => bcrypt('G@Kumo#123@'),
                 'created_at' => Carbon::now(),
             ]);
         }
 
-        if(Auth::guard('CustLogin')->attempt(['email' => $user->getEmail(), 'password' => '@Kumo#123@'])){
+        if(Auth::guard('CustLogin')->attempt(['email' => $user->getEmail(), 'password' => 'G@Kumo#123@'])){
             $full_name = $user->getName();
             $name = explode(' ', $full_name)[0];
 
@@ -101,12 +101,12 @@ class SocialLoginCont extends Controller
             CustInfo::insert([
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
-                'password' => bcrypt('@Kumo#123@'),
+                'password' => bcrypt('FB@Kumo#123@'),
                 'created_at' => Carbon::now(),
             ]);
         }
 
-        if(Auth::guard('CustLogin')->attempt(['email' => $user->getEmail(), 'password' => '@Kumo#123@'])){
+        if(Auth::guard('CustLogin')->attempt(['email' => $user->getEmail(), 'password' => 'FB@Kumo#123@'])){
             $full_name = $user->getName();
             $name = explode(' ', $full_name)[0];
 
