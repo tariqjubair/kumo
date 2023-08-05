@@ -32,7 +32,7 @@ class ProductController extends Controller
     function add_product(){
         $cata_all = Category::all();
         $subcata_all = Subcategory::all();
-        return view('admin.Product.add_product', [
+        return view('admin.product.add_product', [
             'cata_all' => $cata_all,
             'subcata_all' => $subcata_all,
         ]);
@@ -121,7 +121,7 @@ class ProductController extends Controller
         $product_trashed = Product_list::onlyTrashed()->orderBy('product_name')->get();
         $product_all = Product_list::orderBy('product_name')->get();
 
-        return view('admin.Product.product_list', [
+        return view('admin.product.product_list', [
             'cata_all' => $cata_all,
             'subcata_all' => $subcata_all,
             'product_trashed' => $product_trashed,
@@ -256,7 +256,7 @@ class ProductController extends Controller
         $subcata_name = Subcategory::where('id', $product_info->subcata_id)->get()->first()->sub_cata_name; 
         $subcata_info = Subcategory::where('cata_id', $product_info->cata_id)->get(); 
 
-        return view('admin.Product.edit_product', [
+        return view('admin.product.edit_product', [
             'product_info' => $product_info,
             'cata_all' => $cata_all,
             'cata_name' => $cata_name,
@@ -352,7 +352,7 @@ class ProductController extends Controller
         $size_all = Size::all();
         $measure_all = measure::orderBy('size_type')->get();
 
-        return view('admin.Product.variation', [
+        return view('admin.product.variation', [
             'color_all' => $color_all,
             'size_all' => $size_all,
             'measure_all' => $measure_all,
@@ -377,7 +377,7 @@ class ProductController extends Controller
     function edit_color($color_id){
         $color_info = Color::find($color_id);
 
-        return view('admin.Product.edit_color', [
+        return view('admin.product.edit_color', [
             'color_info' => $color_info,
         ]);
     }
@@ -433,7 +433,7 @@ class ProductController extends Controller
         $size_info = Size::find($size_id);
         $measure_all = measure::all();
 
-        return view('admin.Product.edit_size', [
+        return view('admin.product.edit_size', [
             'size_info' => $size_info,
             'measure_all' => $measure_all,
         ]);
@@ -476,7 +476,7 @@ class ProductController extends Controller
     // === Edit Measure ===
     function edit_measure($measure_id){
         $measure_info = measure::find($measure_id);
-        return view('admin.Product.edit_measure', [
+        return view('admin.product.edit_measure', [
             'measure_info' => $measure_info,
         ]);
     }
@@ -515,7 +515,7 @@ class ProductController extends Controller
             $avail_size = Size::where('size_type', $measure)->get();
         }
 
-        return view('admin.Product.Inventory', [
+        return view('admin.product.inventory', [
             'product_info' => $product_info,
             'inventory_info' => $inventory_info,
             'trashed_inv_info' => $trashed_inv_info,
@@ -601,7 +601,7 @@ class ProductController extends Controller
         $color_all = Color::all();
         $size_all = Size::all();
 
-        return view('admin.Product.edit_inventory', [
+        return view('admin.product.edit_inventory', [
             'inv_info' => $inv_info,
             'product_info' => $product_info,
 
